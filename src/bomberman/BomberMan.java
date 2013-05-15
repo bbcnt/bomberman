@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class BomberMan extends JFrame implements ActionListener{
-	
+	 
 	
 	private Container container = getContentPane();
 	private ComboPanel comboPanel = new ComboPanel();
