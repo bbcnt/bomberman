@@ -7,10 +7,11 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
 
-public class Client {
+public class Client implements Runnable{
 
    PrintWriter output;
    BufferedReader input;
+   Thread thread;
    
    public void connect(String serverIpString, int serverPort) {
       
@@ -46,6 +47,12 @@ public class Client {
          e.printStackTrace();
       }
       
+      thread = new Thread(this);
+      thread.start();
+   }
+
+   @Override
+   public void run() {
       Scanner scan = new Scanner(System.in);
       while (true) {
          
@@ -53,6 +60,7 @@ public class Client {
          output.flush();
          
       }
+      
    }
 
 }

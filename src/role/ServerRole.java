@@ -1,4 +1,4 @@
-package startMenu;
+package role;
 
 import java.io.IOException;
 import java.net.InetAddress;

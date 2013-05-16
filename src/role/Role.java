@@ -1,4 +1,4 @@
-package startMenu;
+package role;
 
 public abstract class Role {
 

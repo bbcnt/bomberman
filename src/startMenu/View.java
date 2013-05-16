@@ -11,6 +11,9 @@ import java.util.Observer;
 
 import javax.imageio.ImageIO;
 
+import role.ClientRole;
+import role.ServerRole;
+
 public class View extends JFrame implements Observer {
 	 
 	
@@ -51,13 +54,13 @@ public class View extends JFrame implements Observer {
 		ipAdress.setForeground(Color.magenta);
 		ipserver.setForeground(Color.magenta);
 		portserver.setForeground(Color.magenta);
-			try {
+		/*	try {
 				titre.setIcon(new ImageIcon(ImageIO.read( new File("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\logo.gif") ) ));
 				
 			} catch (IOException e) {
 				//e.printStackTrace();
 			}
-		
+		*/
 	
 
 		bouton.setPreferredSize(new Dimension(100, 40));

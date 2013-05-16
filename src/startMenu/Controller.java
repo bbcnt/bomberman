@@ -1,11 +1,8 @@
 package startMenu;
 
-public class Bomerman {
+public class Controller {
 
-   /**
-    * @param args
-    */
-   public static void main(String[] args) {
+   public Controller() {
       
       Model model = new Model();
       View view = new View(model);

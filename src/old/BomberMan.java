@@ -1,4 +1,4 @@
-package bomberman;
+package old;
 import java.awt.*;// pour la gestion de la fenetre
 import java.awt.event.*;
 

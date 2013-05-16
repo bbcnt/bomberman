@@ -1,4 +1,4 @@
-package startMenu;
+package role;
 
 import network.Client;
 
@@ -9,6 +9,7 @@ public class ClientRole extends Role {
    public void connectServer(String serverIp, Integer serverPort) {
       client = new Client();
       client.connect(serverIp, serverPort);
+      
    }
 
 }
