@@ -34,7 +34,7 @@ public class View extends JFrame implements Observer {
   private Model model;
 
 
-	public View(Model model) {
+	public View(final Model model) {
 	   this.model = model;
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension dimEcran = tk.getScreenSize(); 
@@ -61,9 +61,21 @@ public class View extends JFrame implements Observer {
 	
 
 		bouton.setPreferredSize(new Dimension(100, 40));
-		bouton.setEnabled(false);
+		bouton.setEnabled(true);
+		bouton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
+         }
+		});
 		bouton1.setPreferredSize(new Dimension(100, 40));
-		bouton1.setEnabled(false);
+		bouton1.setEnabled(true);
+		bouton1.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent arg0) {
+            ((ServerRole)model.getRole()).startServer(7777);
+         }
+		});
 		bouton2.setPreferredSize(new Dimension(100, 40));
 		bouton2.setEnabled(false);
 		
@@ -102,7 +114,9 @@ public class View extends JFrame implements Observer {
 		this.setContentPane(backPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+		this.setVisible(true);
+		this.repaint();
+		
 	}
 
 	class ImagePanel extends JPanel {

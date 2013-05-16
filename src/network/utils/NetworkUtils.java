@@ -10,7 +10,7 @@ public class NetworkUtils {
       String ipAddress = null;
       
       try {
-         ipAddress =  InetAddress.getLocalHost().toString();
+         ipAddress =  InetAddress.getLocalHost().getHostAddress();
       }
       catch (UnknownHostException e) {
          e.printStackTrace();

@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
 
-public class Client {
+public class CopyOfClient {
 
    PrintWriter output;
    BufferedReader input;
@@ -53,6 +53,15 @@ public class Client {
          output.flush();
          
       }
+   }
+   
+   /**
+    * @param args
+    */
+   public static void main(String[] args) {
+      CopyOfClient c = new CopyOfClient();
+      c.connect("127.0.0.1", 7777);
+
    }
 
 }

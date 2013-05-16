@@ -6,40 +6,37 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
 
-public class Server implements Runnable {
+public class CopyOfServer {
    
-   ServerSocket serverSocket;
-   Thread thread;
-   
-   public void startServer(int port) {
-
+  
+   /**
+    * @param args
+    */
+   public static void main(String[] args) {
+      
+      int port = 7777;
+      //int port = Integer.valueOf(args[0]);
+      
+      ServerSocket serverSocket = null;
       try {
          serverSocket = new ServerSocket(port);
       } catch (IOException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
       }
-      
-      thread = new Thread(this);
-      thread.start();
-      
-      System.out.println("Server started");
 
-   }
-   
-   public void run() {
       while (true) {
          try {
-            System.out.println("Waiting for connections");
             Socket socket = serverSocket.accept();
             new ServerConnection(socket);
-            System.out.println("Connection accepted");
+            
             
          } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
          }
       }
+
    }
 
 }
