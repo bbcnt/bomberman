@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
 
-public class server {
+public class Server {
    
   
    /**
@@ -14,7 +14,8 @@ public class server {
     */
    public static void main(String[] args) {
       
-      int port = Integer.valueOf(args[0]);
+      int port = 7777;
+      //int port = Integer.valueOf(args[0]);
       
       ServerSocket serverSocket = null;
       try {
@@ -24,13 +25,16 @@ public class server {
          e.printStackTrace();
       }
 
-      try {
-         serverSocket.accept();
-         
-         
-      } catch (IOException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
+      while (true) {
+         try {
+            Socket socket = serverSocket.accept();
+            new ServerConnection(socket);
+            
+            
+         } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
       }
 
    }

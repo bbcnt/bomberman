@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.Scanner;
 
-public class client {
+public class Client {
 
    PrintWriter output;
    BufferedReader input;
@@ -44,13 +45,22 @@ public class client {
          }
          e.printStackTrace();
       }
+      
+      Scanner scan = new Scanner(System.in);
+      while (true) {
+         
+         output.println(scan.nextLine());
+         output.flush();
+         
+      }
    }
    
    /**
     * @param args
     */
    public static void main(String[] args) {
-      // TODO Auto-generated method stub
+      Client c = new Client();
+      c.connect("127.0.0.1", 7777);
 
    }
 
