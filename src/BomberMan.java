@@ -1,4 +1,3 @@
-package bomberman;
 import java.awt.*;// pour la gestion de la fenetre
 import java.awt.event.*;
 
@@ -9,11 +8,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class BomberMan extends JFrame implements ActionListener{
-	 
+	
 	
 	private Container container = getContentPane();
 	private ComboPanel comboPanel = new ComboPanel();
-	private JComboBox comboPanel2 = new JComboBox();
+	private ComboPanel comboserver = new ComboPanel("--");
 	private JButton bouton = new JButton("Rejoindre");
 	private JButton bouton1 = new JButton("Créer");
 	private JButton bouton2 = new JButton("Lancer");
@@ -21,11 +20,13 @@ public class BomberMan extends JFrame implements ActionListener{
 	private JLabel ipAdress = new JLabel("IP: xxx.xxx.xxx");
 	private JLabel ipserver = new JLabel("IP Serveur:");
 	private JLabel portserver = new JLabel("Port:");
+	private JLabel port = new JLabel("Port:");
 	private Font titreFont = new Font ("Serif", Font.BOLD | Font.ITALIC,64);
 	private Font ipFont = new Font ("Serif", Font.BOLD | Font.ITALIC,40);
     private String filename = new String("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\Bomberman2.jpg");
     private JTextField iptext = new JTextField(10);
     private JTextField porttext = new JTextField(10);
+    private JTextField port2 = new JTextField(10);
     private JPanel[] panel = new JPanel[5];
 
 
@@ -45,6 +46,7 @@ public class BomberMan extends JFrame implements ActionListener{
 		ipAdress.setForeground(Color.magenta);
 		ipserver.setForeground(Color.magenta);
 		portserver.setForeground(Color.magenta);
+		port.setForeground(Color.magenta);
 			try {
 				titre.setIcon(new ImageIcon(ImageIO.read( new File("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\logo.gif") ) ));
 				
@@ -57,16 +59,14 @@ public class BomberMan extends JFrame implements ActionListener{
 		bouton.setPreferredSize(new Dimension(100, 40));
 		bouton.setEnabled(false);
 		bouton1.setPreferredSize(new Dimension(100, 40));
-		bouton1.setEnabled(false);
+		bouton1.setEnabled(true);
+		bouton1.addActionListener(this);
 		bouton2.setPreferredSize(new Dimension(100, 40));
 		bouton2.setEnabled(false);
+		bouton2.addActionListener(this);
 		
 		ImagePanel backPanel = new ImagePanel(filename);
 		backPanel.setLayout(new GridLayout(6, 1));//position du bouton
-	   
-		comboPanel2.addItem("--");
-		comboPanel2.setEditable(true);
-		comboPanel2.setMaximumRowCount(4);
 		
 		panel[0] = new JPanel();
 		panel[1] = new JPanel();
@@ -140,6 +140,26 @@ public class BomberMan extends JFrame implements ActionListener{
 	public class ComboPanel extends JPanel {
 		private String choices[] = { "--","Client", "Serveur"};
 		private JComboBox combo = new JComboBox();
+		private JComboBox comboPanel2 = new JComboBox();
+		
+		public ComboPanel(String maps){
+			comboPanel2.addItem(maps);
+			comboPanel2.setEditable(true);
+			comboPanel2.setMaximumRowCount(4);
+			add(comboPanel2);
+			comboPanel2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				     JComboBox cb = (JComboBox)e.getSource();
+			         String maps = cb.getSelectedItem().toString();
+			         comboPanel2.addItem(maps);
+			         
+					if(port.getText() != "" && comboPanel2.getSelectedItem().toString() != "--" )
+					{
+						bouton2.setEnabled(true);
+					}
+				}
+			});
+		}
 		public ComboPanel(){
 			
 			for(int i = 0; i < choices.length; i++)
@@ -154,9 +174,9 @@ public class BomberMan extends JFrame implements ActionListener{
 						
 						panel[3].remove(bouton1);
 						panel[3].remove(bouton2);
-						panel[4].remove(portserver);
-						panel[4].remove(porttext);
-						panel[4].remove(comboPanel2);
+						panel[4].remove(port);
+						panel[4].remove(port2);
+						panel[4].remove(comboserver);
 						
 						panel[3].add(bouton);
 						panel[4].add(ipserver);
@@ -176,12 +196,14 @@ public class BomberMan extends JFrame implements ActionListener{
 						panel[3].remove(bouton);
 						panel[4].remove(ipserver);
 					    panel[4].remove(iptext);
-						
+					    panel[4].remove(portserver);
+					    panel[4].remove(porttext);
+					    
 					    panel[3].add(bouton1);
 						panel[3].add(bouton2);
-						panel[4].add(portserver);
-						panel[4].add(porttext);
-						panel[4].add(comboPanel2);
+						panel[4].add(port);
+						panel[4].add(port2);
+						panel[4].add(comboserver);
 						panel[4].validate();
 						panel[4].repaint();
 						panel[3].validate();
@@ -197,13 +219,16 @@ public class BomberMan extends JFrame implements ActionListener{
 						panel[3].remove(bouton1);
 						panel[3].remove(bouton2);
 						panel[4].remove(portserver);
+						panel[4].remove(port);
 						panel[4].remove(porttext);
-						panel[4].remove(comboPanel2);
+						panel[4].remove(port2);
+						panel[4].remove(comboserver);
 						panel[4].validate();
 						panel[4].repaint();
 						panel[3].validate();
 						panel[3].repaint();
 					}
+					
 				}
 			});
 		}
@@ -211,10 +236,38 @@ public class BomberMan extends JFrame implements ActionListener{
 		
 	}
 
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+public class Maps extends JFrame{
+	public Maps(String name){
 		
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Dimension dimEcran = tk.getScreenSize(); 
+		//permet de definir la taille et la position de la fenetre
+		setBounds((dimEcran.width -400)/2, (dimEcran.height - 400)/2, 400, 400);
+		setVisible(true);//permet de rendre visible la fenetre
+		setResizable(false);
+		setTitle(name);// definir le titre
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object click = e.getSource();
+		if(click == bouton1){
+			new Maps("gaetan"); 
+		
+		}
+		if(iptext.getText() != "" && porttext.getText()!= "")
+		{
+			bouton.setEnabled(true);
+		}
+		
+		//verifier le contenu de port 
+		//verifier le contenu de ip adresse
+		//activer le bouton rejoindre
+		//verifier l etat du port(server)
+		//verifier la selection d une map
+		// activer le bouton lancer
+		// si le bouton creer est selectioner ouvri une nouvelle page
 		
 	}
 
