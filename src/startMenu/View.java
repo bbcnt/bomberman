@@ -3,14 +3,8 @@ import java.awt.*;// pour la gestion de la fenetre
 import java.awt.event.*;
 
 import javax.swing.*;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.imageio.ImageIO;
-
 import role.ClientRole;
 import role.ServerRole;
 import startMenu.Model.ScreenObservers;

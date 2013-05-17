@@ -2,7 +2,6 @@ package role;
 
 import startMenu.Model;
 import network.Client;
-import network.SenderReceiver;
 
 public class ClientRole extends Role {
 

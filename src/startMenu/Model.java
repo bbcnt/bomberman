@@ -1,8 +1,6 @@
 package startMenu;
 
 import java.util.Observable;
-import java.util.Observer;
-
 import role.ClientRole;
 import role.Role;
 import role.ServerRole;
