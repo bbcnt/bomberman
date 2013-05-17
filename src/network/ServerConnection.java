@@ -14,7 +14,6 @@ public class ServerConnection implements Runnable {
    private Socket socket;
    private SenderReceiver sr;
    
-
    public ServerConnection(Socket socket, SenderReceiver sr) {
       
       this.socket = socket;

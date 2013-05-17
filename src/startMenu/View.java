@@ -1,7 +1,10 @@
 package startMenu;
 import java.awt.*;// pour la gestion de la fenetre
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -26,7 +29,7 @@ public class View extends JFrame implements Observer {
 	private JLabel portserver = new JLabel("Port:");
 	private Font titreFont = new Font ("Serif", Font.BOLD | Font.ITALIC,64);
 	private Font ipFont = new Font ("Serif", Font.BOLD | Font.ITALIC,40);
-   private String filename = new String("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\Bomberman2.jpg");
+   private String filename = new String("Bomberman2.jpg");
    private JTextField iptext = new JTextField(10);
    private JTextField porttext = new JTextField(10);
    private JPanel[] panel = new JPanel[5];
@@ -52,13 +55,13 @@ public class View extends JFrame implements Observer {
 		ipAdress.setForeground(Color.magenta);
 		ipserver.setForeground(Color.magenta);
 		portserver.setForeground(Color.magenta);
-		/*	try {
-				titre.setIcon(new ImageIcon(ImageIO.read( new File("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\logo.gif") ) ));
+			try {
+				titre.setIcon(new ImageIcon(ImageIO.read( new File("logo.gif") ) ));
 				
 			} catch (IOException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
-		*/
+		
 	
 
 		bouton.setPreferredSize(new Dimension(100, 40));
