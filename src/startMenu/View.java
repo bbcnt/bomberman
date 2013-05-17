@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 
 import role.ClientRole;
 import role.ServerRole;
+import startMenu.Model.ScreenObservers;
+import startMenu.Model.ServerIpObservers;
 
 public class View extends JFrame implements Observer {
 	 
@@ -21,6 +23,7 @@ public class View extends JFrame implements Observer {
 	private ComboPanel comboPanel = new ComboPanel();
 	private JComboBox comboPanel2 = new JComboBox();
 	private JButton bouton = new JButton("Rejoindre");
+	private JLabel serverStatusMessages = new JLabel("servermessages");
 	private JButton bouton1 = new JButton("Créer");
 	private JButton bouton2 = new JButton("Lancer");
 	private JLabel titre = new JLabel("BOMBERMAN");
@@ -68,7 +71,11 @@ public class View extends JFrame implements Observer {
 		bouton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
+            if (model.getRole().getConnected()) {
+               model.getRole().send("POKE");
+            } else {
+               ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
+            }
          }
 		});
 		bouton1.setPreferredSize(new Dimension(100, 40));
@@ -76,7 +83,11 @@ public class View extends JFrame implements Observer {
 		bouton1.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent arg0) {
-            ((ServerRole)model.getRole()).startServer(7777);
+            if (model.getRole().getConnected()) {
+               model.getRole().send("POKE");
+            } else {
+               ((ServerRole)model.getRole()).startServer(Integer.valueOf(porttext.getText()));
+            }
          }
 		});
 		bouton2.setPreferredSize(new Dimension(100, 40));
@@ -228,10 +239,17 @@ public class View extends JFrame implements Observer {
 	}
 
    @Override
-   public void update(Observable arg0, Object arg1) {
+   public void update(Observable obs, Object arg) {
       
-      ipAdress.setText(model.getRole().getIpAddress());
-      repaint();
+      if (obs instanceof ServerIpObservers){
+         ipAdress.setText(model.getRole().getIpAddress());
+         repaint();
+      } else if(obs instanceof ScreenObservers) {
+         bouton.setText((String)arg);
+         bouton1.setText((String)arg);
+         repaint();
+      }
+
       
    }
 

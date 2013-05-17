@@ -10,10 +10,13 @@ public class ServerConnection implements Runnable {
 
    private Thread thread = null;
    private PrintWriter output = null;
-   private BufferedReader input = null;
+   private BufferedReader input = null;  
+   SenderReceiver sr;
    
 
-   public ServerConnection(Socket socket) {
+   public ServerConnection(Socket socket, SenderReceiver sr) {
+      
+      this.sr = sr;
       
       thread = new Thread(this);
       
@@ -33,20 +36,20 @@ public class ServerConnection implements Runnable {
       thread.start();
    }
    
+   public void sendMessage(String message) {
+      output.println(message);
+      output.flush();
+   }
+   
    @Override
    public void run() {
-
-      output.println("Connection established!");
-      try {
-         System.out.println("waiting for a message");
-         System.out.println(input.readLine());
-         System.out.println("got the message");
-      } catch (IOException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
+      while (true) {
+         try {
+            sr.receive(input.readLine());
+         } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
       }
-      //output.flush();
-      System.out.println("asdf");
    }
-
 }

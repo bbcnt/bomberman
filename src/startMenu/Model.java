@@ -11,6 +11,8 @@ public class Model {
 
    private Role role;
    private ServerIpObservers serverIpObservers;
+   private ScreenObservers screenObservers;
+   private String screen;
    
    class ServerIpObservers extends Observable {
       public void notifyAllObservers() {
@@ -19,14 +21,18 @@ public class Model {
       }
    }
    
+   class ScreenObservers extends Observable {
+      public void notifyAllObservers() {
+         setChanged();
+         notifyObservers(screen);
+      }
+   }
+   
    public Model() {
       serverIpObservers = new ServerIpObservers();
+      screenObservers = new ScreenObservers();
    }
-   
-   public void addServerIpObserver(Observer o) {
-      serverIpObservers.addObserver(o);
-   }
-   
+      
    public Role getRole() {
       return role;
    }
@@ -34,18 +40,41 @@ public class Model {
    /**
     * @param view the view to set
     */
-   public void addView(View view) {
+   public void addServerIpObserver(View view) {
       this.serverIpObservers.addObserver(view);
    }
 
+   /**
+    * @param view the view to set
+    */
+   public void addScreenObserver(View view) {
+      this.screenObservers.addObserver(view);
+   }
+   
    public void setRoleToClient() {
-      role = new ClientRole();
+      role = new ClientRole(this);
       serverIpObservers.notifyAllObservers();
    }
    
    public void setRoleToServer() {
-      role = new ServerRole();
+      role = new ServerRole(this);
       serverIpObservers.notifyAllObservers();
    }
 
+   /**
+    * @return the screen
+    */
+   public String getScreen() {
+      return screen;
+   }
+
+   /**
+    * @param screen the screen to set
+    */
+   public void setScreen(String screen) {
+      this.screen = screen;
+      screenObservers.notifyAllObservers();
+   }
+
+   
 }

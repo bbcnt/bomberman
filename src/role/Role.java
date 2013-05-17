@@ -1,9 +1,20 @@
 package role;
 
-public abstract class Role {
+import startMenu.Model;
+import network.SenderReceiver;
+
+public abstract class Role implements SenderReceiver {
 
    private Integer port;
-   private String ipAddress;
+   private String ipAddress; 
+   private Model model;
+   private Boolean connected;
+   
+   public Role(Model model) {
+      this.model = model;
+      connected = false;
+   }
+   
    /**
     * @return the port
     */
@@ -28,5 +39,32 @@ public abstract class Role {
    public void setIpAddress(String ipAddress) {
       this.ipAddress = ipAddress;
    }
+
+   /**
+    * @return the model
+    */
+   public Model getModel() {
+      return model;
+   }
+
+   /**
+    * @return the connected
+    */
+   public Boolean getConnected() {
+      return connected;
+   }
+
+   /**
+    * @param connected the connected to set
+    */
+   protected void setConnected(Boolean connected) {
+      this.connected = connected;
+   }
+   
+   @Override
+   public void receive(String message) {
+      model.setScreen(message);
+   }
+
    
 }

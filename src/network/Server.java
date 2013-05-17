@@ -10,6 +10,12 @@ public class Server implements Runnable {
    
    ServerSocket serverSocket;
    Thread thread;
+   ServerConnection serverConnection;
+   SenderReceiver sr;
+   
+   public Server(SenderReceiver sr) {
+      this.sr = sr;
+   }
    
    public void startServer(int port) {
 
@@ -27,12 +33,13 @@ public class Server implements Runnable {
 
    }
    
+   
    public void run() {
       while (true) {
          try {
             System.out.println("Waiting for connections");
             Socket socket = serverSocket.accept();
-            new ServerConnection(socket);
+            serverConnection = new ServerConnection(socket, sr);
             System.out.println("Connection accepted");
             
          } catch (IOException e) {
@@ -41,5 +48,14 @@ public class Server implements Runnable {
          }
       }
    }
+
+
+   /**
+    * @return the serverConnection
+    */
+   public ServerConnection getServerConnection() {
+      return serverConnection;
+   }
+   
 
 }

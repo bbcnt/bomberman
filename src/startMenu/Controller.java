@@ -6,7 +6,8 @@ public class Controller {
       
       Model model = new Model();
       View view = new View(model);
-      model.addView(view);
+      model.addServerIpObserver(view);
+      model.addScreenObserver(view);
      
    }
 

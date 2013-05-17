@@ -7,11 +7,18 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
 
+import startMenu.Model;
+
 public class Client implements Runnable{
 
    PrintWriter output;
    BufferedReader input;
    Thread thread;
+   SenderReceiver sr;
+   
+   public Client(SenderReceiver sr) {
+      this.sr = sr;
+   }
    
    public void connect(String serverIpString, int serverPort) {
       
@@ -51,16 +58,19 @@ public class Client implements Runnable{
       thread.start();
    }
 
+   public void sendMessage(String message) {
+      output.println(message);
+      output.flush();
+   }
+   
    @Override
    public void run() {
-      Scanner scan = new Scanner(System.in);
       while (true) {
-         
-         output.println(scan.nextLine());
-         output.flush();
-         
+         try {
+            sr.receive(input.readLine());
+         } catch (Exception e) {
+            e.printStackTrace();
+         }         
       }
-      
    }
-
 }
