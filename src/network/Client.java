@@ -11,10 +11,11 @@ import startMenu.Model;
 
 public class Client implements Runnable{
 
-   PrintWriter output;
-   BufferedReader input;
-   Thread thread;
-   SenderReceiver sr;
+   private PrintWriter output;
+   private BufferedReader input;
+   private Thread thread;
+   private SenderReceiver sr;
+   private Socket socket;
    
    public Client(SenderReceiver sr) {
       this.sr = sr;
@@ -22,8 +23,8 @@ public class Client implements Runnable{
    
    public void connect(String serverIpString, int serverPort) {
       
-      InetAddress serverIp = null;;
-      Socket socket = null;
+      InetAddress serverIp = null;
+      socket = null;
       
       try {
          serverIp = InetAddress.getByName(serverIpString);
@@ -70,6 +71,11 @@ public class Client implements Runnable{
             sr.receive(input.readLine());
          } catch (Exception e) {
             e.printStackTrace();
+            try {
+               socket.close();
+            } catch (IOException e1) {
+               e1.printStackTrace();
+            }
          }         
       }
    }

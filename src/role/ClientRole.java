@@ -16,7 +16,7 @@ public class ClientRole extends Role {
       client = new Client(this);
       client.connect(serverIp, serverPort);
       super.setConnected(true);
-      this.getModel().setScreen("poke server");
+      this.getModel().setScreen("connected");
    }
 
    @Override

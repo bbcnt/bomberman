@@ -10,12 +10,14 @@ public class ServerConnection implements Runnable {
 
    private Thread thread = null;
    private PrintWriter output = null;
-   private BufferedReader input = null;  
-   SenderReceiver sr;
+   private BufferedReader input = null;
+   private Socket socket;
+   private SenderReceiver sr;
    
 
    public ServerConnection(Socket socket, SenderReceiver sr) {
       
+      this.socket = socket;
       this.sr = sr;
       
       thread = new Thread(this);
@@ -49,6 +51,11 @@ public class ServerConnection implements Runnable {
          } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            try {
+               socket.close();
+            } catch (IOException e1) {
+               e1.printStackTrace();
+            }
          }
       }
    }

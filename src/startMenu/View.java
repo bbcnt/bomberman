@@ -32,12 +32,13 @@ public class View extends JFrame implements Observer {
 	private JLabel portserver = new JLabel("Port:");
 	private Font titreFont = new Font ("Serif", Font.BOLD | Font.ITALIC,64);
 	private Font ipFont = new Font ("Serif", Font.BOLD | Font.ITALIC,40);
-    private String filename = new String("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\Bomberman2.jpg");
-    private JTextField iptext = new JTextField(10);
-    private JTextField porttext = new JTextField(10);
-    private JPanel[] panel = new JPanel[5];
-    
-  private Model model;
+   private String filename = new String("C:\\Users\\gaetan\\Desktop\\2emeSemestre\\GEN\\Test2\\src\\Bomberman2.jpg");
+   private JTextField iptext = new JTextField(10);
+   private JTextField porttext = new JTextField(10);
+   private JPanel[] panel = new JPanel[5];
+   
+   private int pokeCounter = 0;
+   private Model model;
 
 
 	public View(final Model model) {
@@ -72,7 +73,7 @@ public class View extends JFrame implements Observer {
          @Override
          public void actionPerformed(ActionEvent e) {
             if (model.getRole().getConnected()) {
-               model.getRole().send("POKE");
+               model.getRole().send("POKE" + pokeCounter++);
             } else {
                ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
             }
@@ -84,7 +85,7 @@ public class View extends JFrame implements Observer {
          @Override
          public void actionPerformed(ActionEvent arg0) {
             if (model.getRole().getConnected()) {
-               model.getRole().send("POKE");
+               model.getRole().send("POKE" + pokeCounter++);
             } else {
                ((ServerRole)model.getRole()).startServer(Integer.valueOf(porttext.getText()));
             }
