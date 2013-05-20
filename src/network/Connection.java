@@ -4,25 +4,41 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
-public class ServerConnection implements Runnable {
+public class Connection implements Runnable {
 
-   private Thread thread = null;
-   private PrintWriter output = null;
-   private BufferedReader input = null;
+   private PrintWriter output;
+   private BufferedReader input;
    private Socket socket;
-   private SenderReceiver sr;
+   private Reciever reciever;
+   private Thread thread;
    
-   public ServerConnection(Socket socket, SenderReceiver sr) {
-      
+   
+   public Connection(Socket socket, Reciever reciever) {
+      this.reciever = reciever;
       this.socket = socket;
-      this.sr = sr;
-      
+      initialiseOutputInput();
       thread = new Thread(this);
-      
+      thread.start();
+   }
+   
+   public Connection(InetAddress serverIp, Integer serverPort, Reciever reciever) {
+      this.reciever = reciever;
       try {
-         output = new PrintWriter(socket.getOutputStream(), true);
+         this.socket = new Socket(serverIp, serverPort);
+         initialiseOutputInput();
+         thread = new Thread(this);
+         thread.start();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+   
+   public void initialiseOutputInput() {
+      try {
+         output = new PrintWriter(socket.getOutputStream());
          input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       } catch (IOException e) {
          try {
@@ -33,11 +49,9 @@ public class ServerConnection implements Runnable {
          }
          e.printStackTrace();
       }
-      
-      thread.start();
    }
    
-   public void sendMessage(String message) {
+   public void send(String message) {
       output.println(message);
       output.flush();
    }
@@ -46,16 +60,15 @@ public class ServerConnection implements Runnable {
    public void run() {
       while (true) {
          try {
-            sr.receive(input.readLine());
+            reciever.recieve(input.readLine());
          } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             try {
                socket.close();
             } catch (IOException e1) {
                e1.printStackTrace();
             }
-         }
+         }         
       }
    }
 }

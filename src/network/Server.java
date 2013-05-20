@@ -3,15 +3,16 @@ package network;
 import java.io.IOException;
 import java.net.*;
 
-public class Server implements Runnable {
+import role.Role;
+
+public class Server extends NetworkComponent {
    
    ServerSocket serverSocket;
    Thread thread;
-   ServerConnection serverConnection;
-   SenderReceiver sr;
+   Role role;
    
-   public Server(SenderReceiver sr) {
-      this.sr = sr;
+   public Server(Role role) {
+      this.role = role;
    }
    
    public void startServer(int port) {
@@ -30,13 +31,12 @@ public class Server implements Runnable {
 
    }
    
-   
    public void run() {
       while (true) {
          try {
             System.out.println("Waiting for connections");
             Socket socket = serverSocket.accept();
-            serverConnection = new ServerConnection(socket, sr);
+            super.getConnections().add(new Connection(socket, role));
             System.out.println("Connection accepted");
             
          } catch (IOException e) {
@@ -46,13 +46,6 @@ public class Server implements Runnable {
       }
    }
 
-
-   /**
-    * @return the serverConnection
-    */
-   public ServerConnection getServerConnection() {
-      return serverConnection;
-   }
    
 
 }

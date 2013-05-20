@@ -1,9 +1,8 @@
 package startMenu;
 
 import java.util.Observable;
-import role.ClientRole;
-import role.Role;
-import role.ServerRole;
+
+import role.*;
 
 public class Model {
 

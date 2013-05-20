@@ -1,7 +1,7 @@
 package role;
 
-import startMenu.Model;
 import network.Client;
+import startMenu.Model;
 
 public class ClientRole extends Role {
 
@@ -17,11 +17,8 @@ public class ClientRole extends Role {
       super.setConnected(true);
       this.getModel().setScreen("connected");
    }
-
-   @Override
+   
    public void send(String message) {
       client.sendMessage(message);
-      
    }
-
 }

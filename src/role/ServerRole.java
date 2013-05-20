@@ -1,9 +1,9 @@
 package role;
 
 
-import startMenu.Model;
 import network.Server;
 import network.utils.NetworkUtils;
+import startMenu.Model;
 
 public class ServerRole extends Role {
    
@@ -21,9 +21,7 @@ public class ServerRole extends Role {
       this.getModel().setScreen("started");
    }
    
-   @Override
    public void send(String message) {
-      server.getServerConnection().sendMessage(message);
+      server.sendMessage(message);
    }
-     
 }

@@ -1,15 +1,15 @@
 package role;
 
+import network.Reciever;
 import startMenu.Model;
-import network.SenderReceiver;
 
-public abstract class Role implements SenderReceiver {
+public abstract class Role implements Reciever {
 
    private Integer port;
    private String ipAddress; 
    private Model model;
    private Boolean connected;
-   
+      
    public Role(Model model) {
       this.model = model;
       connected = false;
@@ -62,9 +62,10 @@ public abstract class Role implements SenderReceiver {
    }
    
    @Override
-   public void receive(String message) {
+   public void recieve(String message) {
       model.setScreen(message);
    }
-
+   
+   public abstract void send(String message);
    
 }

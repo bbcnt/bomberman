@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
-import role.ClientRole;
-import role.ServerRole;
+
+import role.*;
 import startMenu.Model.ScreenObservers;
 import startMenu.Model.ServerIpObservers;
 
