@@ -34,7 +34,7 @@ public class Game extends StateBasedGame {
 			appGc = new AppGameContainer(new Game(gameName));
 			appGc.setDisplayMode(810, 650, false);
 			appGc.setShowFPS(false);
-			
+			appGc.setMinimumLogicUpdateInterval(150);
 			appGc.setTargetFrameRate(60);
 			appGc.start();
 			

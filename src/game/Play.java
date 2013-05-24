@@ -13,6 +13,7 @@ public class Play extends BasicGameState{
 
 	private Image indestructible;
 	private Image background;
+	private Image[] hero1;
 	private Player p1;
 	private boolean[][] movesMatrix = new boolean[Map.WIDTH][Map.HEIGHT];
 	int time = 0;
@@ -33,7 +34,13 @@ public class Play extends BasicGameState{
 		map.initMap();
 		indestructible = new Image("res/indestructible.png");
 		background = new Image("res/background_tile.png");
-		p1 = new Player(new Image("res/test-1.png"), 5, 5, 1);
+		hero1 = new Image[4];
+		hero1[0] = new Image("res/hero_down.png");
+		hero1[1] = new Image("res/hero_up.png");
+		hero1[2] = new Image("res/hero_left.png");
+		hero1[3] = new Image("res/hero_right.png");
+		
+		p1 = new Player(hero1, 5, 5, 1);
 		//map = new TiledMap("res/map.tmx");
 		
 			
@@ -62,21 +69,37 @@ public class Play extends BasicGameState{
 		{
 			for(int j = 1; j < 18; j++)
 			{
-				if(map.getData(i,j) == 0)
-				{
+				/*if(map.getData(i,j) == 0)
+				{*/
 					g.drawImage(background, i * 30, j * 30);
 					movesMatrix[i][j] = true;
-				}
+					
+				/*}
 				if(map.getData(i,j) == 1)
 				{
 					g.drawImage(indestructible, i * 30, j * 30);
-					movesMatrix[i][j] = true;
-				}
+					movesMatrix[i][j] = false;
+				}*/
 				
 			}
 		}
-		
-		g.drawImage(p1.hero, p1.X() * 30, p1.Y() * 30); //essayer avec y = 15
+		switch(p1.getOrientation())
+		{
+		case 0: 	
+			g.drawImage(p1.hero_down, p1.X() * 30, (p1.Y() * 30) -15 );
+			break;
+		case 1: 
+			g.drawImage(p1.hero_up, p1.X() * 30, (p1.Y() * 30) -15 );
+			break;
+		case 2:
+			g.drawImage(p1.hero_left, p1.X() * 30, (p1.Y() * 30) -15 );
+			break;
+		case 3: 
+			g.drawImage(p1.hero_right, p1.X() * 30, (p1.Y() * 30) -15 );
+			break;
+			
+		}
+		//g.drawImage(p1.hero, p1.X() * 30, (p1.Y() * 30) -15 ); //essayer avec y = 15
 		//map.render(0, 0, 0); //Dessin du background
 		//map.render(0, 0, 1); //Dessin des indéstructibles
 		g.drawImage(new Image("res/score.png"), 0, 571);
@@ -96,37 +119,46 @@ public class Play extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		
-		time += delta;
+	
 		
 		Input input = gc.getInput();
 		
 		if(input.isKeyDown(Input.KEY_DOWN))
 			if(p1.Y() + 1 <= Map.HEIGHT)
-				if(movesMatrix[p1.X()][p1.Y() +1] == true)
+				if(movesMatrix[p1.X()][p1.Y() + 1] == true) {
 					p1.setY(p1.Y() +1);
+					p1.setOrientation(0);
+				}
 
 		if(input.isKeyDown(Input.KEY_UP))
 			if(p1.Y() - 1 >= 0)
-				if(movesMatrix[p1.X()][p1.Y() -1] == true)
+				if(movesMatrix[p1.X()][p1.Y() - 1] == true) {
 					p1.setY(p1.Y() - 1);
-		
-		if(input.isKeyDown(Input.KEY_RIGHT))
-			if(p1.X() + 1 <= Map.WIDTH)
-				if(movesMatrix[p1.X() +1 ][p1.Y()] == true)
-					p1.setX(p1.X() + 1);
+					p1.setOrientation(1);
+				}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 			if(p1.X() - 1 >= 0)
-				if(movesMatrix[p1.X() - 1][p1.Y()] == true)
+				if(movesMatrix[p1.X() - 1][p1.Y()] == true) {
 					p1.setX(p1.X() - 1);
+					p1.setOrientation(2);
+				}
+		
+		if(input.isKeyDown(Input.KEY_RIGHT))
+			if(p1.X() + 1 <= Map.WIDTH)
+				if(movesMatrix[p1.X() + 1][p1.Y()] == true) {
+					p1.setX(p1.X() + 1);
+					p1.setOrientation(3);
+				}
+		
+
 		
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
 			if(p1.getBombAmt() > 0)
 			{
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
-						p1.getFirePower(), p1, p1.X(), p1.Y()));
+				p1.getFirePower(), p1, p1.X(), p1.Y()));
 				p1.setBombAmt(p1.getBombAmt() - 1);
 			}
 			

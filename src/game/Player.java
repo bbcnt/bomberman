@@ -3,8 +3,12 @@ package game;
 import org.newdawn.slick.*;
 
 public class Player {
-
-	public Image hero;
+	
+	public Image hero_down;
+	public Image hero_up;
+	public Image hero_left;
+	public Image hero_right;
+	private int orientation; // 0 up, 1 left, 2 down, 3 right
 	private int posX;
 	private int posY;
 	private int number;
@@ -15,11 +19,15 @@ public class Player {
     
 
 	
-    public Player(Image image, int x, int y, int number)
+    public Player(Image[] image, int x, int y, int number)
     {
-    	this.hero = image;
+    	hero_down = image[0];
+    	hero_up = image[1];
+    	hero_left = image[2];
+    	hero_right = image[3];
     	posX = x;
     	posY = y;
+    	orientation = 0;
     	this.number = number;
     	alive = true;
     	firePower = 1;
@@ -36,5 +44,7 @@ public class Player {
     public void setBombAmt(int a){ bombAmt = a; }
     public int getFirePower() { return firePower; }
     public void setFirePower(int fp) { firePower = fp; }
+    public int getOrientation() { return orientation; }
+    public void setOrientation(int o) { orientation = o; }
 	
 }
