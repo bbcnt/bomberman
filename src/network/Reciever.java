@@ -1,5 +1,5 @@
 package network;
 
 public interface Reciever {
-   public void recieve(String message);
+   public void recieve(Object message);
 }

@@ -62,8 +62,8 @@ public abstract class Role implements Reciever {
    }
    
    @Override
-   public void recieve(String message) {
-      model.setScreen(message);
+   public void recieve(Object message) {
+      model.setScreen((String)message);
    }
    
    public abstract void send(String message);

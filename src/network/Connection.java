@@ -1,16 +1,16 @@
 package network;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
 public class Connection implements Runnable {
 
-   private PrintWriter output;
-   private BufferedReader input;
+   private ObjectOutputStream output;
+   private ObjectInputStream input;
    private Socket socket;
    private Reciever reciever;
    private Thread thread;
@@ -38,8 +38,8 @@ public class Connection implements Runnable {
    
    public void initialiseOutputInput() {
       try {
-         output = new PrintWriter(socket.getOutputStream());
-         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+         output = new ObjectOutputStream(socket.getOutputStream());
+         input = new ObjectInputStream(socket.getInputStream());
       } catch (IOException e) {
          try {
             socket.close();
@@ -51,16 +51,19 @@ public class Connection implements Runnable {
       }
    }
    
-   public void send(String message) {
-      output.println(message);
-      output.flush();
+   public void send(Object message) {
+      try {
+         output.writeObject(message);
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
    }
    
    @Override
    public void run() {
       while (true) {
          try {
-            reciever.recieve(input.readLine());
+            reciever.recieve(input.readObject());
          } catch (Exception e) {
             e.printStackTrace();
             try {
