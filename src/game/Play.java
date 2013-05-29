@@ -106,14 +106,22 @@ public class Play extends BasicGameState{
 		g.drawString(" : " + p1.getBombAmt(), 45, 615);
 		g.drawString(" : " + p1.getFirePower(), 200, 615);
 		
-		if(!bombList.isEmpty())
+		
+		if(!(bombList.isEmpty()))
 		{
 			for(Bomb b : bombList)
 			{
-				g.drawImage(b.bomb, b.X() * 30, b.Y() * 30);
+				if(!b.getExploded())
+				{
+					g.drawImage(b.bomb, b.X() * 30, b.Y() * 30);
+					movesMatrix[b.X()][b.Y()] = false;
+				}
+
 			}
 		}
-		
+		else
+			System.out.println("trololo");
+			
 	}
 
 	@Override
@@ -151,7 +159,6 @@ public class Play extends BasicGameState{
 					p1.setOrientation(3);
 				}
 		
-
 		
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
@@ -160,8 +167,12 @@ public class Play extends BasicGameState{
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
 				p1.getFirePower(), p1, p1.X(), p1.Y()));
 				p1.setBombAmt(p1.getBombAmt() - 1);
-			}
-			
+			}	
+		}
+		if(!bombList.isEmpty())
+		{
+			if(bombList.get(0).getExploded() == true)
+				bombList.remove(0);
 		}
 	}
 
@@ -171,3 +182,4 @@ public class Play extends BasicGameState{
 	}
 
 }
+ 
