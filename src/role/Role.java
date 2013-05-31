@@ -4,7 +4,7 @@ import network.Reciever;
 import startMenu.Model;
 
 public abstract class Role implements Reciever {
-
+ 
    private Integer port;
    private String ipAddress; 
    private Model model;
