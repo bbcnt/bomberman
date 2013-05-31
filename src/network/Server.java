@@ -9,7 +9,7 @@ public class Server extends NetworkComponent {
    
    ServerSocket serverSocket;
    Thread thread;
-   Role role;
+   Role role; 
    
    public Server(Role role) {
       this.role = role;

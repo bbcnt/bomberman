@@ -6,7 +6,7 @@ import startMenu.Model;
 public class ClientRole extends Role {
 
    Client client;
-   
+    
    public ClientRole(Model model) {
       super(model);
    }
