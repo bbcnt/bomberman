@@ -28,7 +28,7 @@ public class Game extends StateBasedGame {
 		this.enterState(play); //Permet de choisir le premier state à afficher
 				
 	}
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		AppGameContainer appGc;
 		try{
 			appGc = new AppGameContainer(new Game(gameName));
@@ -43,6 +43,6 @@ public class Game extends StateBasedGame {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 
 }

@@ -1,6 +1,11 @@
 package startMenu;
 
+import game.Game;
+
 import java.util.Observable;
+
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
 
 import role.*;
 
@@ -73,5 +78,19 @@ public class Model {
       screenObservers.notifyAllObservers();
    }
 
-   
+   public void StartGame(String gameName) {
+	   AppGameContainer appGc;
+		try{
+			appGc = new AppGameContainer(new Game(gameName));
+			appGc.setDisplayMode(810, 650, false);
+			appGc.setShowFPS(false);
+			appGc.setMinimumLogicUpdateInterval(150);
+			appGc.setTargetFrameRate(60);
+			appGc.start();
+			
+		}
+		catch(SlickException c){
+			c.printStackTrace();
+		}
+	   }
 }
