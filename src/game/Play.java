@@ -12,6 +12,7 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Play extends BasicGameState{
 
 	private Image indestructible;
+	private Image destructible;
 	private Image background;
 	private Image[] hero1;
 	private Player p1;
@@ -33,6 +34,7 @@ public class Play extends BasicGameState{
 		map = new Map();
 		map.initMap();
 		indestructible = new Image("res/indestructible.png");
+		destructible = new Image("res/destructible.png");
 		background = new Image("res/background_tile.png");
 		hero1 = new Image[4];
 		hero1[0] = new Image("res/hero_down.png");
@@ -64,6 +66,7 @@ public class Play extends BasicGameState{
 			movesMatrix[0][j] = false;
 		}
 		
+		
 		//Partie chargée BDD
 		for(int i = 1; i < 26; i++)
 		{
@@ -83,6 +86,9 @@ public class Play extends BasicGameState{
 				
 			}
 		}
+		g.drawImage(destructible, 30 * 15, 30 * 9);
+		movesMatrix[15][9] = false;
+		
 		switch(p1.getOrientation())
 		{
 		case 0: 	
@@ -119,8 +125,6 @@ public class Play extends BasicGameState{
 
 			}
 		}
-		else
-			System.out.println("trololo");
 			
 	}
 

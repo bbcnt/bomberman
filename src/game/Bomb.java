@@ -69,6 +69,7 @@ public class Bomb extends TimerTask {
 	public void run() {
 		
 		this.exploded = true;
+		this.explode();
 	}
 
 
