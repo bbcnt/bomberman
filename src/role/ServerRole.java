@@ -21,7 +21,7 @@ public class ServerRole extends Role {
       this.getModel().setScreen("started");
    }
    
-   public void send(String message) {
+   public void send(Object message) {
       server.sendMessage(message);
    }
 }

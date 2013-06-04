@@ -18,7 +18,7 @@ public class ClientRole extends Role {
       this.getModel().setScreen("connected");
    }
    
-   public void send(String message) {
+   public void send(Object message) {
       client.sendMessage(message);
    }
 }

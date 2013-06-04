@@ -1,9 +1,11 @@
 package role;
 
-import network.Reciever;
+import game.Player;
+import game.PlayerNetworkData;
+import network.Receiver;
 import startMenu.Model;
 
-public abstract class Role implements Reciever {
+public abstract class Role implements Receiver {
  
    private Integer port;
    private String ipAddress; 
@@ -63,9 +65,10 @@ public abstract class Role implements Reciever {
    
    @Override
    public void recieve(Object message) {
-      model.setScreen((String)message);
+      //model.setScreen((String)message);
+      model.getGame().getPlaySession().getP1().setNetworkData((PlayerNetworkData)message);
    }
    
-   public abstract void send(String message);
+   public abstract void send(Object message);
    
 }

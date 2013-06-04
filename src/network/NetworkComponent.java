@@ -13,7 +13,7 @@ public abstract class NetworkComponent implements Runnable {
       connections = new LinkedList<Connection>();
    }
     
-   public void sendMessage(String message) {
+   public void sendMessage(Object message) {
       for (Connection connection : connections) {
          connection.send(message);
       }

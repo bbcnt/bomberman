@@ -3,13 +3,17 @@ package game;
 //import org.lwjgl.input.Mouse;
 import java.util.ArrayList;
 
+import network.Receiver;
+
 import org.lwjgl.opengl.Drawable;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.tiled.TileSet;
 import org.newdawn.slick.tiled.TiledMap;
 
-public class Play extends BasicGameState{
+import role.Role;
+
+public class Play extends BasicGameState implements Receiver {
 
 	private Image indestructible;
 	private Image destructible;
@@ -21,10 +25,11 @@ public class Play extends BasicGameState{
 
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
-	//private TiledMap map = null;
+	//private TiledMap map = null;	
+	private Role networkAccess;
 	
-	public Play(int state){
-		
+	public Play(int state, Role networkAccess){
+	   this.networkAccess = networkAccess; 
 	}
 	
 	@Override
@@ -134,12 +139,14 @@ public class Play extends BasicGameState{
 	
 		
 		Input input = gc.getInput();
+		Boolean changement = false;
 		
 		if(input.isKeyDown(Input.KEY_DOWN))
 			if(p1.Y() + 1 <= Map.HEIGHT)
 				if(movesMatrix[p1.X()][p1.Y() + 1] == true) {
 					p1.setY(p1.Y() +1);
 					p1.setOrientation(0);
+					changement = true;
 				}
 
 		if(input.isKeyDown(Input.KEY_UP))
@@ -147,6 +154,7 @@ public class Play extends BasicGameState{
 				if(movesMatrix[p1.X()][p1.Y() - 1] == true) {
 					p1.setY(p1.Y() - 1);
 					p1.setOrientation(1);
+					changement = true;
 				}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
@@ -154,6 +162,7 @@ public class Play extends BasicGameState{
 				if(movesMatrix[p1.X() - 1][p1.Y()] == true) {
 					p1.setX(p1.X() - 1);
 					p1.setOrientation(2);
+					changement = true;
 				}
 		
 		if(input.isKeyDown(Input.KEY_RIGHT))
@@ -161,6 +170,7 @@ public class Play extends BasicGameState{
 				if(movesMatrix[p1.X() + 1][p1.Y()] == true) {
 					p1.setX(p1.X() + 1);
 					p1.setOrientation(3);
+					changement = true;
 				}
 		
 		
@@ -171,19 +181,37 @@ public class Play extends BasicGameState{
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
 				p1.getFirePower(), p1, p1.X(), p1.Y()));
 				p1.setBombAmt(p1.getBombAmt() - 1);
+				changement = true;
 			}	
 		}
 		if(!bombList.isEmpty())
 		{
 			if(bombList.get(0).getExploded() == true)
 				bombList.remove(0);
+			changement = true;
 		}
+		
+		if (changement) {
+		    networkAccess.send(this.p1.getNetworkData());
+		}
+		
 	}
 
 	@Override
 	public int getID() {
 		return 1;
 	}
+	
+	public Player getP1() {
+	   return p1;
+	}
+	
+
+
+   @Override
+   public void recieve(Object message) {
+      this.p1 = (Player)message;
+   }
 
 }
  

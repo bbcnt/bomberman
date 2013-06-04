@@ -16,6 +16,8 @@ public class Model {
    private ScreenObservers screenObservers;
    private String screen;
    
+   private Game game;
+   
    class ServerIpObservers extends Observable {
       public void notifyAllObservers() {
          setChanged();
@@ -81,7 +83,8 @@ public class Model {
    public void StartGame(String gameName) {
 	   AppGameContainer appGc;
 		try{
-			appGc = new AppGameContainer(new Game(gameName));
+		   game = new Game(gameName, role);
+			appGc = new AppGameContainer(game);
 			appGc.setDisplayMode(810, 650, false);
 			appGc.setShowFPS(false);
 			appGc.setMinimumLogicUpdateInterval(150);
@@ -92,5 +95,9 @@ public class Model {
 		catch(SlickException c){
 			c.printStackTrace();
 		}
-	   }
+   }
+   
+   public Game getGame() {
+      return game;
+   }
 }

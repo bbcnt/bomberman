@@ -79,6 +79,7 @@ public class View extends JFrame implements Observer {
                model.getRole().send("POKE" + pokeCounter++);
             } else {
                ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
+               model.StartGame(Game.gameName);
             }
          }
 		});
