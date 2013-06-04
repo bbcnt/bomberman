@@ -1,7 +1,5 @@
 package game;
 
-import java.io.Serializable;
-
 import org.newdawn.slick.*;
 
 public class Player {
@@ -18,6 +16,7 @@ public class Player {
 	private boolean alive;
    private int firePower;
    private int bombAmt;
+
    
    private PlayerNetworkData networkData;
 
@@ -51,26 +50,29 @@ public class Player {
     
     public int X() { return posX;}
     public int Y() { return posY;}
-    public void setX(int x) { posX = x; networkData.setPosX(x);}
-    public void setY(int y) { posY = y; networkData.setPosY(y);}
+    public synchronized void setX(int x) { posX = x; networkData.setPosX(x);}
+    public synchronized void setY(int y) { posY = y; networkData.setPosY(y);}
     public int getBombAmt(){ return bombAmt; }
-    public void setBombAmt(int a){ bombAmt = a; networkData.setBombAmt(a);}
+    public synchronized void setBombAmt(int a){ bombAmt = a; networkData.setBombAmt(a);}
     public int getFirePower() { return firePower; }
-    public void setFirePower(int fp) { firePower = fp; networkData.setFirePower(fp);}
+    public synchronized void setFirePower(int fp) { firePower = fp; networkData.setFirePower(fp);}
     public int getOrientation() { return orientation; }
-    public void setOrientation(int o) { orientation = o; networkData.setOrientation(o);}
-    public PlayerNetworkData getNetworkData() {
-       return networkData;
-    }
+    public synchronized void setOrientation(int o) { orientation = o; networkData.setOrientation(o);}
+    private synchronized void setAlive(boolean alive) {this.alive = alive; networkData.setAlive(alive);}
+    private synchronized void setNumber(int number) {this.number = number; networkData.setNumber(number);}
+    
+    
+    public PlayerNetworkData getNetworkData() { return networkData;}
     public void setNetworkData(PlayerNetworkData networkData) {
        this.networkData = networkData;
-       networkData.setPosX(networkData.getPosX());
-       networkData.setPosY(networkData.getPosY());
-       networkData.setAlive(networkData.isAlive());
-       networkData.setBombAmt(networkData.getBombAmt());
-       networkData.setFirePower(networkData.getFirePower());
-       networkData.setNumber(networkData.getNumber());
-       networkData.setOrientation(networkData.getOrientation());
+       this.setX(networkData.getPosX());
+       this.setY(networkData.getPosY());
+       this.setAlive(networkData.isAlive());
+       this.setBombAmt(networkData.getBombAmt());
+       this.setFirePower(networkData.getFirePower());
+       this.setNumber(networkData.getNumber());
+       this.setOrientation(networkData.getOrientation());
     }
-	
+
+    
 }

@@ -13,7 +13,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import role.Role;
 
-public class Play extends BasicGameState implements Receiver {
+public class Play extends BasicGameState {
 
 	private Image indestructible;
 	private Image destructible;
@@ -56,7 +56,7 @@ public class Play extends BasicGameState implements Receiver {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		
+	   		
 		//Contour
 		for(int i = 0; i < 27; i++)
 		{
@@ -136,17 +136,16 @@ public class Play extends BasicGameState implements Receiver {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-	
-		
+	   
 		Input input = gc.getInput();
-		Boolean changement = false;
+		Boolean hasChanged = false;
 		
 		if(input.isKeyDown(Input.KEY_DOWN))
 			if(p1.Y() + 1 <= Map.HEIGHT)
 				if(movesMatrix[p1.X()][p1.Y() + 1] == true) {
 					p1.setY(p1.Y() +1);
 					p1.setOrientation(0);
-					changement = true;
+					hasChanged = true;
 				}
 
 		if(input.isKeyDown(Input.KEY_UP))
@@ -154,7 +153,7 @@ public class Play extends BasicGameState implements Receiver {
 				if(movesMatrix[p1.X()][p1.Y() - 1] == true) {
 					p1.setY(p1.Y() - 1);
 					p1.setOrientation(1);
-					changement = true;
+					hasChanged = true;
 				}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
@@ -162,7 +161,7 @@ public class Play extends BasicGameState implements Receiver {
 				if(movesMatrix[p1.X() - 1][p1.Y()] == true) {
 					p1.setX(p1.X() - 1);
 					p1.setOrientation(2);
-					changement = true;
+					hasChanged = true;
 				}
 		
 		if(input.isKeyDown(Input.KEY_RIGHT))
@@ -170,7 +169,7 @@ public class Play extends BasicGameState implements Receiver {
 				if(movesMatrix[p1.X() + 1][p1.Y()] == true) {
 					p1.setX(p1.X() + 1);
 					p1.setOrientation(3);
-					changement = true;
+					hasChanged = true;
 				}
 		
 		
@@ -181,17 +180,18 @@ public class Play extends BasicGameState implements Receiver {
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
 				p1.getFirePower(), p1, p1.X(), p1.Y()));
 				p1.setBombAmt(p1.getBombAmt() - 1);
-				changement = true;
+				hasChanged = true;
 			}	
 		}
 		if(!bombList.isEmpty())
 		{
-			if(bombList.get(0).getExploded() == true)
+			if(bombList.get(0).getExploded() == true) {
 				bombList.remove(0);
-			changement = true;
+				hasChanged = true;
+			}
 		}
 		
-		if (changement) {
+		if (hasChanged) {
 		    networkAccess.send(this.p1.getNetworkData());
 		}
 		
@@ -206,12 +206,6 @@ public class Play extends BasicGameState implements Receiver {
 	   return p1;
 	}
 	
-
-
-   @Override
-   public void recieve(Object message) {
-      this.p1 = (Player)message;
-   }
 
 }
  
