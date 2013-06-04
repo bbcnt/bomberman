@@ -88,7 +88,7 @@ public class Model {
 			appGc.setDisplayMode(810, 650, false);
 			appGc.setShowFPS(false);
 			appGc.setMinimumLogicUpdateInterval(150);
-			appGc.setTargetFrameRate(10);
+			appGc.setTargetFrameRate(60);
 			appGc.start();
 			
 		}
