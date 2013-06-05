@@ -1,4 +1,6 @@
 package startMenu;
+import game.Game;
+
 import java.awt.*;// pour la gestion de la fenetre
 import java.awt.event.*;
 import java.io.File;
@@ -6,6 +8,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -73,6 +79,7 @@ public class View extends JFrame implements Observer {
                model.getRole().send("POKE" + pokeCounter++);
             } else {
                ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
+               model.StartGame(Game.gameName);
             }
          }
 		});
@@ -89,8 +96,14 @@ public class View extends JFrame implements Observer {
          }
 		});
 		bouton2.setPreferredSize(new Dimension(100, 40));
-		bouton2.setEnabled(false);
-		
+		bouton2.setEnabled(true);
+		bouton2.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					model.StartGame(Game.gameName);	
+					
+			}
+		});
 		ImagePanel backPanel = new ImagePanel(filename);
 		backPanel.setLayout(new GridLayout(6, 1));//position du bouton
 	   

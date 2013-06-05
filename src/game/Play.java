@@ -3,13 +3,17 @@ package game;
 //import org.lwjgl.input.Mouse;
 import java.util.ArrayList;
 
+import network.Receiver;
+
 import org.lwjgl.opengl.Drawable;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.tiled.TileSet;
 import org.newdawn.slick.tiled.TiledMap;
 
-public class Play extends BasicGameState{
+import role.Role;
+
+public class Play extends BasicGameState {
 
 	private Image indestructible;
 	private Image destructible;
@@ -21,10 +25,11 @@ public class Play extends BasicGameState{
 
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
-	//private TiledMap map = null;
+	//private TiledMap map = null;	
+	private Role networkAccess;
 	
-	public Play(int state){
-		
+	public Play(int state, Role networkAccess){
+	   this.networkAccess = networkAccess; 
 	}
 	
 	@Override
@@ -51,7 +56,7 @@ public class Play extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		
+	   		
 		//Contour
 		for(int i = 0; i < 27; i++)
 		{
@@ -131,15 +136,16 @@ public class Play extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-	
-		
+	   
 		Input input = gc.getInput();
+		Boolean hasChanged = false;
 		
 		if(input.isKeyDown(Input.KEY_DOWN))
 			if(p1.Y() + 1 <= Map.HEIGHT)
 				if(movesMatrix[p1.X()][p1.Y() + 1] == true) {
 					p1.setY(p1.Y() +1);
 					p1.setOrientation(0);
+					hasChanged = true;
 				}
 
 		if(input.isKeyDown(Input.KEY_UP))
@@ -147,6 +153,7 @@ public class Play extends BasicGameState{
 				if(movesMatrix[p1.X()][p1.Y() - 1] == true) {
 					p1.setY(p1.Y() - 1);
 					p1.setOrientation(1);
+					hasChanged = true;
 				}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
@@ -154,6 +161,7 @@ public class Play extends BasicGameState{
 				if(movesMatrix[p1.X() - 1][p1.Y()] == true) {
 					p1.setX(p1.X() - 1);
 					p1.setOrientation(2);
+					hasChanged = true;
 				}
 		
 		if(input.isKeyDown(Input.KEY_RIGHT))
@@ -161,6 +169,7 @@ public class Play extends BasicGameState{
 				if(movesMatrix[p1.X() + 1][p1.Y()] == true) {
 					p1.setX(p1.X() + 1);
 					p1.setOrientation(3);
+					hasChanged = true;
 				}
 		
 		
@@ -171,19 +180,32 @@ public class Play extends BasicGameState{
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
 				p1.getFirePower(), p1, p1.X(), p1.Y()));
 				p1.setBombAmt(p1.getBombAmt() - 1);
+				hasChanged = true;
 			}	
 		}
 		if(!bombList.isEmpty())
 		{
-			if(bombList.get(0).getExploded() == true)
+			if(bombList.get(0).getExploded() == true) {
 				bombList.remove(0);
+				hasChanged = true;
+			}
 		}
+		
+		if (hasChanged) {
+		    networkAccess.send(this.p1.getNetworkData());
+		}
+		
 	}
 
 	@Override
 	public int getID() {
 		return 1;
 	}
+	
+	public Player getP1() {
+	   return p1;
+	}
+	
 
 }
  

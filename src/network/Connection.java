@@ -6,17 +6,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-
+ 
 public class Connection implements Runnable {
 
    private ObjectOutputStream output;
    private ObjectInputStream input;
    private Socket socket;
-   private Reciever reciever;
+   private Receiver reciever;
    private Thread thread;
    
    
-   public Connection(Socket socket, Reciever reciever) {
+   public Connection(Socket socket, Receiver reciever) {
       this.reciever = reciever;
       this.socket = socket;
       initialiseOutputInput();
@@ -24,7 +24,7 @@ public class Connection implements Runnable {
       thread.start();
    }
    
-   public Connection(InetAddress serverIp, Integer serverPort, Reciever reciever) {
+   public Connection(InetAddress serverIp, Integer serverPort, Receiver reciever) {
       this.reciever = reciever;
       try {
          this.socket = new Socket(serverIp, serverPort);

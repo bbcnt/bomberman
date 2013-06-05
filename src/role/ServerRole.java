@@ -6,7 +6,7 @@ import network.utils.NetworkUtils;
 import startMenu.Model;
 
 public class ServerRole extends Role {
-   
+    
    private Server server;
    
    public ServerRole(Model model) {
@@ -21,7 +21,7 @@ public class ServerRole extends Role {
       this.getModel().setScreen("started");
    }
    
-   public void send(String message) {
+   public void send(Object message) {
       server.sendMessage(message);
    }
 }

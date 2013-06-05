@@ -1,6 +1,11 @@
 package startMenu;
 
+import game.Game;
+
 import java.util.Observable;
+
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
 
 import role.*;
 
@@ -10,6 +15,8 @@ public class Model {
    private ServerIpObservers serverIpObservers;
    private ScreenObservers screenObservers;
    private String screen;
+   
+   private Game game;
    
    class ServerIpObservers extends Observable {
       public void notifyAllObservers() {
@@ -73,5 +80,24 @@ public class Model {
       screenObservers.notifyAllObservers();
    }
 
+   public void StartGame(String gameName) {
+	   AppGameContainer appGc;
+		try{
+		   game = new Game(gameName, role);
+			appGc = new AppGameContainer(game);
+			appGc.setDisplayMode(810, 650, false);
+			appGc.setShowFPS(false);
+			appGc.setMinimumLogicUpdateInterval(150);
+			appGc.setTargetFrameRate(60);
+			appGc.start();
+			
+		}
+		catch(SlickException c){
+			c.printStackTrace();
+		}
+   }
    
+   public Game getGame() {
+      return game;
+   }
 }
