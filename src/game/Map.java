@@ -9,8 +9,7 @@ import java.sql.Statement;
 
 public class Map {
 	
-	DBAccess dbAccess;
-	this.dbAccess = new DBAccess("jdbc:sqlite:Midas.sqlite3");
+	//this.dbAccess = new DBAccess("jdbc:sqlite:Midas.sqlite3");
 	
 	public static final int WIDTH = 27;
 	public static final int HEIGHT = 19;
