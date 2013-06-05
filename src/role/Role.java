@@ -66,7 +66,7 @@ public abstract class Role implements Receiver {
    @Override
    public void recieve(Object message) {
       //model.setScreen((String)message);
-      model.getGame().getPlaySession().getP1().setNetworkData((PlayerNetworkData)message);
+      model.getGame().getPlaySession().getP2().setNetworkData((PlayerNetworkData)message);
    }
    
    public abstract void send(Object message);

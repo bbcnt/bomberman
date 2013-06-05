@@ -20,6 +20,7 @@ public class Play extends BasicGameState {
 	private Image background;
 	private Image[] hero1;
 	private Player p1;
+	private Player p2;
 	private boolean[][] movesMatrix = new boolean[Map.WIDTH][Map.HEIGHT];
 	int time = 0;
 
@@ -48,6 +49,7 @@ public class Play extends BasicGameState {
 		hero1[3] = new Image("res/hero_right.png");
 		
 		p1 = new Player(hero1, 5, 5, 1);
+		p2 = new Player(hero1, 15, 15, 2);
 		//map = new TiledMap("res/map.tmx");
 		
 			
@@ -110,6 +112,23 @@ public class Play extends BasicGameState {
 			break;
 			
 		}
+		switch(p2.getOrientation())
+		{
+		case 0: 	
+			g.drawImage(p2.hero_down, p2.X() * 30, (p2.Y() * 30) -15 );
+			break;
+		case 1: 
+			g.drawImage(p2.hero_up, p2.X() * 30, (p2.Y() * 30) -15 );
+			break;
+		case 2:
+			g.drawImage(p2.hero_left, p2.X() * 30, (p2.Y() * 30) -15 );
+			break;
+		case 3: 
+			g.drawImage(p2.hero_right, p2.X() * 30, (p2.Y() * 30) -15 );
+			break;
+			
+		}
+		
 		//g.drawImage(p1.hero, p1.X() * 30, (p1.Y() * 30) -15 ); //essayer avec y = 15
 		//map.render(0, 0, 0); //Dessin du background
 		//map.render(0, 0, 1); //Dessin des indéstructibles
@@ -204,6 +223,10 @@ public class Play extends BasicGameState {
 	
 	public Player getP1() {
 	   return p1;
+	}
+	
+	public Player getP2() {
+	   return p2;
 	}
 	
 
