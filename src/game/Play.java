@@ -39,6 +39,7 @@ public class Play extends BasicGameState {
 		
 		map = new Map();
 		map.initMap();
+		
 		indestructible = new Image("res/indestructible.png");
 		destructible = new Image("res/destructible.png");
 		background = new Image("res/background_tile.png");

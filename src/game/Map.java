@@ -5,85 +5,70 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import bomberman.DBAccess;
 
+/***
+ * Classe permettant de construire la carte du jeu.
+ * Récupère les informations sur une BDD SQLite distante.
+ */
 public class Map {
 	
 	//this.dbAccess = new DBAccess("jdbc:sqlite:Midas.sqlite3");
 	
-	public static final int WIDTH = 27;
+	public static final int WIDTH  = 27;
 	public static final int HEIGHT = 19;
 	
-	public static final int TILE_SIZE = 30;
+	private int[][] constructibles = new int[WIDTH][HEIGHT];
+	private int[][] objects        = new int[WIDTH][HEIGHT];
 	
-	private int[][]     data           = new int[WIDTH][HEIGHT];
-	private boolean[][] destructible   = new boolean[WIDTH][HEIGHT];
-	private boolean[][] indestructible = new boolean[WIDTH][HEIGHT];
-	//private boolean[][] bonus = new Bonus[WIDTH][HEIGHT];
+	private ArrayList<DBData> mapElements = new ArrayList<DBData> ();
 
+	/***
+	 * Constructeur sans paramètre de Map()
+	 * Crée le contour de la carte
+	 */
 	public Map()//dbMap dbMap)
 	{
+		for(int i = 0; i < WIDTH; i++)
+			for(int j = 0; j < HEIGHT; j++)
+				constructibles[i][j] = 0; // par défaut, que du sol, aucun bloc
+		
+		//Contour
 		for(int i = 0; i < 27; i++)
 		{
-			for(int j = 0; j < 19; j++)
-			{
-				data[i][j] = 0;
-				destructible[i][j] = false;
-				indestructible[i][j] = false;
-			}
+			constructibles[i][0] = 1; // 1 = indestructible
+			constructibles[i][HEIGHT -1] = 1;
+		}
+		for(int j = 0; j < 19; j++)
+		{
+			constructibles[0][j] = 1;
+			constructibles[WIDTH-1][j] = 1;
 		}
 	}
-	
+	/** Fonction qui récupère l'information sur la map dans la base de donnée
+	 * 
+	 * @param String: le nom de la base de données
+	 * @return une liste de DBData (int x,int y, int data)
+	 */
+	/***
+	 * Méthode permettant de créer le carte finale.
+	 * @return -
+	 * @param  -
+	 */
 	public void initMap()
 	{
-		int var = 0;
-		for(int x= 0; x < 27; x++)
-		{
-			for(int y = 0; y < 19; y++)
-			{
-				//data[x][y] = récupérer le x, y de la base de données.
-				data[x][y] = var++ % 2;
-				
-				if(data[x][y] == 0)
-				{
-					indestructible[x][y] = false;
-					
-				}
-				else	
-				{
-					indestructible[x][y] = true;
-				}
-			}
-		}
+		mapElements = DBAccess.getMap("Bomberman", 1);
+		for(int i = 0; i < mapElements.size(); i++)
+			constructibles[mapElements.get(i).getX()][mapElements.get(i).getY()] 
+					= mapElements.get(i).getData();
 	}
 	
 	//GETTERS
-	public int getData(int x, int y)
-	{
-		return data[x][y];
-	}
-	public boolean getDestructible(int x, int y)
-	{
-		return destructible[x][y];
-	}
-	public boolean getIndestructible(int x, int y)
-	{
-		return indestructible[x][y];
-	}
+
 	
 	//SETTERS
-	public void setData(int x, int y, int i)
-	{
-		data[x][y] = i;
-	}
-	public void setDestructible(int x, int y, boolean b)
-	{
-		destructible[x][y] = b;
-	}
-	public void setIndestructible(int x, int y, boolean b)
-	{
-		indestructible[x][y] = b;
-	}
-	
 	
 }

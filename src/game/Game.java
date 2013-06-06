@@ -11,7 +11,6 @@ public class Game extends StateBasedGame {
 	public Image background = null;
 	public static final String gameName = "Bomberman 2013";
 	
-	public static final int gameStart = 0;
 	public static final int play      = 1;
 	public static final int gameEnd   = 2;
 	
@@ -23,13 +22,11 @@ public class Game extends StateBasedGame {
 	{
 		super(gameName); //Titre du jeu
 		this.networkAccess = networkAccess;
-		this.addState(new GameStart(gameStart));
 		playSession = new Play(play, networkAccess);
 		this.addState(playSession);
 		this.addState(new GameEnd(gameEnd));
 	}
 	public void initStatesList(GameContainer gc) throws SlickException{
-		this.getState(gameStart).init(gc, this);
 		this.getState(play).init(gc, this);
 		this.getState(gameEnd).init(gc, this);
 		this.enterState(play); //Permet de choisir le premier state à afficher
