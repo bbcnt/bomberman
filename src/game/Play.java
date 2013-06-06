@@ -111,7 +111,6 @@ public class Play extends BasicGameState {
 	private void drawInventory(Graphics g) throws SlickException
 	{
 		g.drawImage(new Image("res/score.png"), 0, 570);
-		for(Player p : playerList)
 		
 		g.drawString(" : " + p1.getBombAmt(), 45, 615);
 		g.drawString(" : " + p1.getFirePower(), 200, 615);
@@ -129,8 +128,6 @@ public class Play extends BasicGameState {
 		
 		for(Player p : playerList)
 		{
-			
-			System.out.println(p.getOrientation());
 			switch(p.getOrientation())
 			{
 			case 0: 	
