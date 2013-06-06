@@ -14,7 +14,7 @@ import org.sqlite.SQLiteConfig;
 public class DBAccess {
 	
 	static String dataBaseToOpen = "";
-	static int numMap = 0;
+	static int numMap = 1;
 
    /**
     * @param args
@@ -25,7 +25,6 @@ public class DBAccess {
 		numMap = numMapGiven;
 
 		ArrayList<DBData> map = new ArrayList<DBData>();
-	    DBData dbData = new DBData();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         String dbPath = "jdbc:sqlite:" + dataBaseToOpen;
@@ -44,6 +43,7 @@ public class DBAccess {
           // pour un select
           ResultSet result = preparedStatement.executeQuery();
           while (result.next()) {
+      	     DBData dbData = new DBData();
         	 dbData.setX(result.getInt(1));
         	 dbData.setY(result.getInt(2));
         	 dbData.setData(result.getInt(3));

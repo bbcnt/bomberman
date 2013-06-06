@@ -20,9 +20,9 @@ public class Map {
 	
 	public static final int WIDTH  = 27;
 	public static final int HEIGHT = 19;
+	public static final int ELEMENT_SIZE = 30;
 	
 	private int[][] constructibles = new int[WIDTH][HEIGHT];
-	private int[][] objects        = new int[WIDTH][HEIGHT];
 	
 	private ArrayList<DBData> mapElements = new ArrayList<DBData> ();
 
@@ -30,29 +30,24 @@ public class Map {
 	 * Constructeur sans paramètre de Map()
 	 * Crée le contour de la carte
 	 */
-	public Map()//dbMap dbMap)
+	public Map()
 	{
 		for(int i = 0; i < WIDTH; i++)
 			for(int j = 0; j < HEIGHT; j++)
 				constructibles[i][j] = 0; // par défaut, que du sol, aucun bloc
 		
 		//Contour
-		for(int i = 0; i < 27; i++)
+		for(int i = 0; i < WIDTH; i++)
 		{
 			constructibles[i][0] = 1; // 1 = indestructible
 			constructibles[i][HEIGHT -1] = 1;
 		}
-		for(int j = 0; j < 19; j++)
+		for(int j = 0; j < HEIGHT; j++)
 		{
 			constructibles[0][j] = 1;
 			constructibles[WIDTH-1][j] = 1;
 		}
 	}
-	/** Fonction qui récupère l'information sur la map dans la base de donnée
-	 * 
-	 * @param String: le nom de la base de données
-	 * @return une liste de DBData (int x,int y, int data)
-	 */
 	/***
 	 * Méthode permettant de créer le carte finale.
 	 * @return -
@@ -61,14 +56,31 @@ public class Map {
 	public void initMap()
 	{
 		mapElements = DBAccess.getMap("Bomberman", 1);
-		for(int i = 0; i < mapElements.size(); i++)
-			constructibles[mapElements.get(i).getX()][mapElements.get(i).getY()] 
-					= mapElements.get(i).getData();
+		
+		for(int index = 0; index < mapElements.size(); index++)
+		{
+			constructibles[mapElements.get(index).getX()]
+						  [mapElements.get(index).getY()] 
+								  = mapElements.get(index).getData();
+		}
+		
+	}
+	/***
+	 * Permet de récupérer la matrice contenant les points stockés dans la BD.
+	 * @param -
+	 * @return Tableau int[][] des éléments à construire
+	 */
+	public int[][] getConstructibles() {
+		return constructibles;
 	}
 	
-	//GETTERS
+	/***
+	 * Permet de modifier la matrice contenant les points stockés dans la BD.
+	 * @param point à modifier int[][]
+	 * @return -
+	 */
+	public void setConstructibles(int[][] constructibles) {
+		this.constructibles = constructibles;
+	}
 
-	
-	//SETTERS
-	
 }

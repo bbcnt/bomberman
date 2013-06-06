@@ -19,14 +19,15 @@ public class Play extends BasicGameState {
 	private Image destructible;
 	private Image background;
 	private Image[] hero1;
+	private Image[] hero2;
 	private Player p1;
 	private Player p2;
 	private boolean[][] movesMatrix = new boolean[Map.WIDTH][Map.HEIGHT];
-	int time = 0;
 
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
-	//private TiledMap map = null;	
+	private Player[] playerList;
+	
 	private Role networkAccess;
 	
 	public Play(int state, Role networkAccess){
@@ -41,110 +42,125 @@ public class Play extends BasicGameState {
 		map.initMap();
 		
 		indestructible = new Image("res/indestructible.png");
-		destructible = new Image("res/destructible.png");
+		destructible = new Image("res/destructible2.png");
 		background = new Image("res/background_tile.png");
 		hero1 = new Image[4];
+		hero2 = new Image[4];
+		
 		hero1[0] = new Image("res/hero_down.png");
 		hero1[1] = new Image("res/hero_up.png");
 		hero1[2] = new Image("res/hero_left.png");
 		hero1[3] = new Image("res/hero_right.png");
 		
-		p1 = new Player(hero1, 5, 5, 1);
-		p2 = new Player(hero1, 15, 15, 2);
-		//map = new TiledMap("res/map.tmx");
+		hero2[0] = new Image("res/hero2_down.png");
+		hero2[1] = new Image("res/hero2_up.png");
+		hero2[2] = new Image("res/hero2_left.png");
+		hero2[3] = new Image("res/hero2_right.png");
 		
-			
+		p1 = new Player(hero1, 1, 1, 1);
+		p2 = new Player(hero2, 25, 17, 2);
+		
+		playerList = new Player[2];
+		playerList[0] = p1;
+		playerList[1] = p2;
+		
+		//playerList = new ArrayList<Player>();
 	}
 
+	/*** 
+	 * Cette méthode permet de dessiner la carte du jeu en fonction
+	 * d'une carte stockée dans une base de données. Elle fait appel à 
+	 * la variable map de type Map.
+	 * @param Map map, la carte à dessiner
+	 * @param Graphics g, nécessaire pour dessiner dans la méthode render
+     * @return -
+	 */
+	private void drawMap(Map map, Graphics g)
+	{
+		for(int i = 0; i < Map.WIDTH; i++)
+		{
+			for(int j = 0; j < Map.HEIGHT; j++)
+			{				
+				switch(map.getConstructibles()[i][j])
+				{
+				case 0:
+					g.drawImage(background, i * Map.ELEMENT_SIZE ,
+											j * Map.ELEMENT_SIZE);
+					movesMatrix[i][j] = true;
+					break;
+				case 1:
+					g.drawImage(indestructible, i * Map.ELEMENT_SIZE ,
+												j * Map.ELEMENT_SIZE);
+					movesMatrix[i][j] = false;
+					break;
+				case 2: 
+					g.drawImage(destructible, i * Map.ELEMENT_SIZE ,
+											  j * Map.ELEMENT_SIZE);
+					movesMatrix[i][j] = false;
+					break;
+				}
+			}
+		}
+	}
+	
+	/***
+	 * Permet d'afficher l'inventaire des joueurs
+	 * @param g, variable Graphics pour le dessin
+	 * @throws SlickException
+	 */
+	private void drawInventory(Graphics g) throws SlickException
+	{
+		g.drawImage(new Image("res/score.png"), 0, 570);
+		for(Player p : playerList)
+		
+		g.drawString(" : " + p1.getBombAmt(), 45, 615);
+		g.drawString(" : " + p1.getFirePower(), 200, 615);
+		
+		g.drawString(" : " + p2.getBombAmt(), 450, 615);
+		g.drawString(" : " + p2.getFirePower(), 590, 615);
+	}
+	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 	   		
-		//Contour
-		for(int i = 0; i < 27; i++)
-		{
-			g.drawImage(indestructible, i * 30, 0);
-			g.drawImage(indestructible, i * 30, 18 * 30);
-			movesMatrix[i][0] = false;
-		}
-		for(int j = 0; j < 19; j++)
-		{
-			g.drawImage(indestructible, 0, j * 30);
-			g.drawImage(indestructible, 26 * 30, j * 30);
-			movesMatrix[0][j] = false;
-		}
+		drawMap(map, g);
+		drawInventory(g);
 		
-		
-		//Partie chargée BDD
-		for(int i = 1; i < 26; i++)
+		for(Player p : playerList)
 		{
-			for(int j = 1; j < 18; j++)
+			
+			System.out.println(p.getOrientation());
+			switch(p.getOrientation())
 			{
-				/*if(map.getData(i,j) == 0)
-				{*/
-					g.drawImage(background, i * 30, j * 30);
-					movesMatrix[i][j] = true;
-					
-				/*}
-				if(map.getData(i,j) == 1)
-				{
-					g.drawImage(indestructible, i * 30, j * 30);
-					movesMatrix[i][j] = false;
-				}*/
+			case 0: 	
+				g.drawImage(p.hero_down, p.X() * Map.ELEMENT_SIZE, 
+						                (p.Y() * Map.ELEMENT_SIZE) -15 );
+				break;
+			case 1: 
+				g.drawImage(p.hero_up, p.X() * Map.ELEMENT_SIZE, 
+						              (p.Y() * Map.ELEMENT_SIZE) -15 );
+				break;
+			case 2:
+				g.drawImage(p.hero_left, p.X() * Map.ELEMENT_SIZE, 
+						                (p.Y() * Map.ELEMENT_SIZE) -15 );
+				break;
+			case 3: 
+				g.drawImage(p.hero_right, p.X() * Map.ELEMENT_SIZE, 
+						                 (p.Y() * Map.ELEMENT_SIZE) -15 );
+				break;
 				
 			}
 		}
-		g.drawImage(destructible, 30 * 15, 30 * 9);
-		movesMatrix[15][9] = false;
-		
-		switch(p1.getOrientation())
-		{
-		case 0: 	
-			g.drawImage(p1.hero_down, p1.X() * 30, (p1.Y() * 30) -15 );
-			break;
-		case 1: 
-			g.drawImage(p1.hero_up, p1.X() * 30, (p1.Y() * 30) -15 );
-			break;
-		case 2:
-			g.drawImage(p1.hero_left, p1.X() * 30, (p1.Y() * 30) -15 );
-			break;
-		case 3: 
-			g.drawImage(p1.hero_right, p1.X() * 30, (p1.Y() * 30) -15 );
-			break;
-			
-		}
-		switch(p2.getOrientation())
-		{
-		case 0: 	
-			g.drawImage(p2.hero_down, p2.X() * 30, (p2.Y() * 30) -15 );
-			break;
-		case 1: 
-			g.drawImage(p2.hero_up, p2.X() * 30, (p2.Y() * 30) -15 );
-			break;
-		case 2:
-			g.drawImage(p2.hero_left, p2.X() * 30, (p2.Y() * 30) -15 );
-			break;
-		case 3: 
-			g.drawImage(p2.hero_right, p2.X() * 30, (p2.Y() * 30) -15 );
-			break;
-			
-		}
-		
-		//g.drawImage(p1.hero, p1.X() * 30, (p1.Y() * 30) -15 ); //essayer avec y = 15
-		//map.render(0, 0, 0); //Dessin du background
-		//map.render(0, 0, 1); //Dessin des indéstructibles
-		g.drawImage(new Image("res/score.png"), 0, 571);
-		g.drawString(" : " + p1.getBombAmt(), 45, 615);
-		g.drawString(" : " + p1.getFirePower(), 200, 615);
-		
-		
+				
 		if(!(bombList.isEmpty()))
 		{
 			for(Bomb b : bombList)
 			{
 				if(!b.getExploded())
 				{
-					g.drawImage(b.bomb, b.X() * 30, b.Y() * 30);
+					g.drawImage(b.bomb, b.X() * Map.ELEMENT_SIZE, 
+							            b.Y() * Map.ELEMENT_SIZE);
 					movesMatrix[b.X()][b.Y()] = false;
 				}
 
