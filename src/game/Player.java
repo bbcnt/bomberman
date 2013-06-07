@@ -5,15 +5,15 @@ import org.newdawn.slick.*;
 public class Player {
 	
    public Image hero_down;
-	public Image hero_up;
-	public Image hero_left;
-	public Image hero_right;
-	private int orientation; // 0 up, 1 left, 2 down, 3 right
-	private int posX;
-	private int posY;
-	private int number;
+   public Image hero_up;
+   public Image hero_left;
+   public Image hero_right;
+   private int orientation; // 0 up, 1 left, 2 down, 3 right
+   private int posX;
+   private int posY;
+   private int number;
 	
-	private boolean alive;
+   private boolean alive;
    private int firePower;
    private int bombAmt;
 

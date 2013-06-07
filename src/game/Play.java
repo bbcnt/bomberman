@@ -205,6 +205,24 @@ public class Play extends BasicGameState {
 					hasChanged = true;
 				}
 		
+		//TEST 
+		
+		if(input.isKeyDown(Input.KEY_S))
+			if(p2.Y() + 1 <= Map.HEIGHT)
+				if(movesMatrix[p2.X()][p2.Y() + 1] == true) {
+					p2.setY(p2.Y() +1);
+					p2.setOrientation(0);
+					hasChanged = true;
+				}
+
+		if(input.isKeyDown(Input.KEY_W))
+			if(p2.Y() - 1 >= 0)
+				if(movesMatrix[p2.X()][p2.Y() - 1] == true) {
+					p2.setY(p2.Y() - 1);
+					p2.setOrientation(1);
+					hasChanged = true;
+				}
+		
 		
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
