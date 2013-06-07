@@ -1,6 +1,8 @@
 package network;
 
 
+import game.PlayerNetworkData;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -53,6 +55,8 @@ public class Connection implements Runnable {
    
    public void send(Object message) {
       try {
+         System.out.println("SEND: " + (PlayerNetworkData)message);
+         output.reset();
          output.writeObject(message);
       } catch (IOException e) {
          e.printStackTrace();
@@ -63,7 +67,11 @@ public class Connection implements Runnable {
    public void run() {
       while (true) {
          try {
-            reciever.recieve(input.readObject());
+
+            Object temp = input.readObject();
+            System.out.println("GET " + temp);
+            reciever.recieve(temp);
+            
          } catch (Exception e) {
             e.printStackTrace();
             try {
