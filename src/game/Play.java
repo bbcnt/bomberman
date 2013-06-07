@@ -173,59 +173,62 @@ public class Play extends BasicGameState {
 		Input input = gc.getInput();
 		Boolean hasChanged = false;
 		
-		if(input.isKeyDown(Input.KEY_DOWN))
-			if(p1.Y() + 1 <= Map.HEIGHT)
-				if(movesMatrix[p1.X()][p1.Y() + 1] == true) {
-					p1.setY(p1.Y() +1);
-					p1.setOrientation(0);
-					hasChanged = true;
-				}
-
-		if(input.isKeyDown(Input.KEY_UP))
-			if(p1.Y() - 1 >= 0)
-				if(movesMatrix[p1.X()][p1.Y() - 1] == true) {
-					p1.setY(p1.Y() - 1);
-					p1.setOrientation(1);
-					hasChanged = true;
-				}
-		
-		if(input.isKeyDown(Input.KEY_LEFT))
-			if(p1.X() - 1 >= 0)
-				if(movesMatrix[p1.X() - 1][p1.Y()] == true) {
-					p1.setX(p1.X() - 1);
-					p1.setOrientation(2);
-					hasChanged = true;
-				}
-		
-		if(input.isKeyDown(Input.KEY_RIGHT))
-			if(p1.X() + 1 <= Map.WIDTH)
-				if(movesMatrix[p1.X() + 1][p1.Y()] == true) {
-					p1.setX(p1.X() + 1);
-					p1.setOrientation(3);
-					hasChanged = true;
-				}
-		
-		
-		if(input.isKeyPressed(Input.KEY_SPACE))
+		for(Player p : playerList)
 		{
-			if(p1.getBombAmt() > 0)
+			if(input.isKeyDown(Input.KEY_DOWN))
+				if(p.Y() + 1 <= Map.HEIGHT)
+					if(movesMatrix[p.X()][p.Y() + 1] == true) {
+						p.setY(p.Y() +1);
+						p.setOrientation(0);
+						hasChanged = true;
+					}
+	
+			if(input.isKeyDown(Input.KEY_UP))
+				if(p.Y() - 1 >= 0)
+					if(movesMatrix[p.X()][p.Y() - 1] == true) {
+						p.setY(p.Y() - 1);
+						p.setOrientation(1);
+						hasChanged = true;
+					}
+			
+			if(input.isKeyDown(Input.KEY_LEFT))
+				if(p.X() - 1 >= 0)
+					if(movesMatrix[p.X() - 1][p.Y()] == true) {
+						p.setX(p.X() - 1);
+						p.setOrientation(2);
+						hasChanged = true;
+					}
+			
+			if(input.isKeyDown(Input.KEY_RIGHT))
+				if(p.X() + 1 <= Map.WIDTH)
+					if(movesMatrix[p.X() + 1][p.Y()] == true) {
+						p.setX(p.X() + 1);
+						p.setOrientation(3);
+						hasChanged = true;
+					}
+			
+			
+			if(input.isKeyPressed(Input.KEY_SPACE))
 			{
-				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
-				p1.getFirePower(), p1, p1.X(), p1.Y()));
-				p1.setBombAmt(p1.getBombAmt() - 1);
-				hasChanged = true;
-			}	
-		}
-		if(!bombList.isEmpty())
-		{
-			if(bombList.get(0).getExploded() == true) {
-				bombList.remove(0);
-				hasChanged = true;
+				if(p.getBombAmt() > 0)
+				{
+					bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
+					p.getFirePower(), p, p.X(), p.Y()));
+					p.setBombAmt(p.getBombAmt() - 1);
+					hasChanged = true;
+				}	
 			}
-		}
-		
-		if (hasChanged) {
-		    networkAccess.send(this.p1.getNetworkData());
+			if(!bombList.isEmpty())
+			{
+				if(bombList.get(0).getExploded() == true) {
+					bombList.remove(0);
+					hasChanged = true;
+				}
+			}
+			
+			if (hasChanged) {
+			    networkAccess.send(this.p1.getNetworkData());
+			}
 		}
 		
 	}
