@@ -71,4 +71,6 @@ public abstract class Role implements Receiver {
    
    public abstract void send(Object message);
    
+   public abstract boolean amITheServer();
+   
 }

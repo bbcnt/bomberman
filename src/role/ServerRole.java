@@ -24,4 +24,8 @@ public class ServerRole extends Role {
    public void send(Object message) {
       server.sendMessage(message);
    }
+   
+   public boolean amITheServer() {
+      return true;
+   }
 }

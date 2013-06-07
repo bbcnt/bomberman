@@ -21,4 +21,8 @@ public class ClientRole extends Role {
    public void send(Object message) {
       client.sendMessage(message);
    }
+   
+   public boolean amITheServer() {
+      return false;
+   }
 }
