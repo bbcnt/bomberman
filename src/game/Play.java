@@ -27,6 +27,7 @@ public class Play extends BasicGameState {
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
 	private Player[] playerList;
+	private Player p;
 	
 	private Role networkAccess;
 	
@@ -170,60 +171,46 @@ public class Play extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 	   
+		if(networkAccess.amITheServer())
+			p = p1;
+		else
+			p = p2;
+		
 		Input input = gc.getInput();
 		Boolean hasChanged = false;
 		
-		if(input.isKeyDown(Input.KEY_DOWN))
-			if(p1.Y() + 1 <= Map.HEIGHT)
-				if(movesMatrix[p1.X()][p1.Y() + 1] == true) {
-					p1.setY(p1.Y() +1);
-					p1.setOrientation(0);
+		if(input.isKeyPressed(Input.KEY_DOWN))
+			if(p.Y() + 1 <= Map.HEIGHT)
+				if(movesMatrix[p.X()][p.Y() + 1] == true) {
+					p.setY(p1.Y() +1);
+					p.setOrientation(0);
 					hasChanged = true;
 				}
 
-		if(input.isKeyDown(Input.KEY_UP))
-			if(p1.Y() - 1 >= 0)
-				if(movesMatrix[p1.X()][p1.Y() - 1] == true) {
-					p1.setY(p1.Y() - 1);
-					p1.setOrientation(1);
+		if(input.isKeyPressed(Input.KEY_UP))
+			if(p.Y() - 1 >= 0)
+				if(movesMatrix[p.X()][p.Y() - 1] == true) {
+					p.setY(p.Y() - 1);
+					p.setOrientation(1);
 					hasChanged = true;
 				}
 		
-		if(input.isKeyDown(Input.KEY_LEFT))
-			if(p1.X() - 1 >= 0)
-				if(movesMatrix[p1.X() - 1][p1.Y()] == true) {
-					p1.setX(p1.X() - 1);
-					p1.setOrientation(2);
+		if(input.isKeyPressed(Input.KEY_LEFT))
+			if(p.X() - 1 >= 0)
+				if(movesMatrix[p.X() - 1][p.Y()] == true) {
+					p.setX(p.X() - 1);
+					p.setOrientation(2);
 					hasChanged = true;
 				}
 		
-		if(input.isKeyDown(Input.KEY_RIGHT))
-			if(p1.X() + 1 <= Map.WIDTH)
-				if(movesMatrix[p1.X() + 1][p1.Y()] == true) {
-					p1.setX(p1.X() + 1);
-					p1.setOrientation(3);
+		if(input.isKeyPressed(Input.KEY_RIGHT))
+			if(p.X() + 1 <= Map.WIDTH)
+				if(movesMatrix[p.X() + 1][p.Y()] == true) {
+					p.setX(p.X() + 1);
+					p.setOrientation(3);
 					hasChanged = true;
 				}
-		
-		//TEST 
-		
-		if(input.isKeyDown(Input.KEY_S))
-			if(p2.Y() + 1 <= Map.HEIGHT)
-				if(movesMatrix[p2.X()][p2.Y() + 1] == true) {
-					p2.setY(p2.Y() +1);
-					p2.setOrientation(0);
-					hasChanged = true;
-				}
-
-		if(input.isKeyDown(Input.KEY_W))
-			if(p2.Y() - 1 >= 0)
-				if(movesMatrix[p2.X()][p2.Y() - 1] == true) {
-					p2.setY(p2.Y() - 1);
-					p2.setOrientation(1);
-					hasChanged = true;
-				}
-		
-		
+					
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
 			if(p1.getBombAmt() > 0)
