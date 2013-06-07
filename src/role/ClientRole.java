@@ -23,6 +23,6 @@ public class ClientRole extends Role {
    }
    
    public boolean amITheServer() {
-      return false;
+      return false; 
    }
 }
