@@ -8,7 +8,6 @@ import role.Role;
 
 public class Game extends StateBasedGame {
 
-	public Image background = null;
 	public static final String gameName = "Bomberman 2013";
 	
 	public static final int play      = 1;

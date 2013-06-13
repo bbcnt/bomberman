@@ -69,6 +69,7 @@ public class Play extends BasicGameState {
 		
 		p1 = new Player(hero1, 1, 1, 1);
 		p2 = new Player(hero2, 25, 17, 2);
+		p = null;
 		
 		playerList = new Player[2];
 		playerList[0] = p1;
@@ -331,7 +332,7 @@ public class Play extends BasicGameState {
 		if(input.isKeyPressed(Input.KEY_DOWN))
 			if(p.Y() + 1 <= Map.HEIGHT)
 				if(movesMatrix[p.X()][p.Y() + 1] == true) {
-					p.setY(p1.Y() +1);
+					p.setY(p.Y() +1);
 					p.setOrientation(0);
 					hasChanged = true;
 				}
@@ -393,7 +394,7 @@ public class Play extends BasicGameState {
 			
 		}
 		if (hasChanged) {
-		    networkAccess.send(this.p1.getNetworkData());
+		    networkAccess.send(this.p.getNetworkData());
 		}
 		
 	}
