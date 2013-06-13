@@ -1,13 +1,18 @@
 package game;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.newdawn.slick.*;
 
-public class Bomb extends TimerTask {
+public class Bomb extends TimerTask implements Serializable {
 
-	public Image bomb;
+	/**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   public Image bomb;
 	private int timeLeft;
 	private int radius;
 	private Player creator;
