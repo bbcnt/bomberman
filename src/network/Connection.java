@@ -80,7 +80,6 @@ public class Connection implements Runnable {
     */
    public void send(Object message) {
       try {
-         System.out.println("SEND: " + (PlayerNetworkData)message);
          output.reset();
          output.writeObject(message);
       } catch (IOException e) {

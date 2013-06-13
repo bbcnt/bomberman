@@ -368,7 +368,7 @@ public class Play extends BasicGameState {
 			   Bomb b = new Bomb(new Image("res/bomb.png"), 5, 
 		            p1.getFirePower(), p1, p.X(), p.Y());
 				bombList.add(b);
-				networkAccess.send(b);
+				//networkAccess.send(b);
 				p1.setBombAmt(p1.getBombAmt() - 1);
 				hasChanged = true;
 			}	

@@ -6,12 +6,8 @@ import java.util.TimerTask;
 
 import org.newdawn.slick.*;
 
-public class Bomb extends TimerTask implements Serializable {
+public class Bomb extends TimerTask {
 
-	/**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
    public Image bomb;
 	private int timeLeft;
 	private int radius;
