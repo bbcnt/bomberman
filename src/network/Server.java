@@ -3,18 +3,30 @@ package network;
 import java.io.IOException;
 import java.net.*;
 
-import role.Role;
+import role.ServerRole;
 
+/**
+ * Cette classe représente un serveur réseau
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Server extends NetworkComponent {
    
-   ServerSocket serverSocket;
-   Thread thread;
-   Role role; 
+   private ServerSocket serverSocket;
+   private Thread thread;
+   private ServerRole serverRole; 
    
-   public Server(Role role) {
-      this.role = role;
+   public Server(ServerRole serverRole) {
+      this.serverRole = serverRole;
    }
    
+   /**
+    * Cette méthode permet de démarrer le serveur
+    * @param port indique le numéro de port pour le serveur
+    */
    public void startServer(int port) {
 
       try {
@@ -31,12 +43,15 @@ public class Server extends NetworkComponent {
 
    }
    
+   /**
+    * Cette méthode gère les nouvelles connextion des clients
+    */
    public void run() {
       while (true) {
          try {
             System.out.println("Waiting for connections");
             Socket socket = serverSocket.accept();
-            super.getConnections().add(new Connection(socket, role));
+            super.getConnections().add(new Connection(socket, serverRole));
             System.out.println("Connection accepted");
             
          } catch (IOException e) {
@@ -45,7 +60,5 @@ public class Server extends NetworkComponent {
          }
       }
    }
-
-   
 
 }

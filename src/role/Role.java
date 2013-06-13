@@ -1,6 +1,5 @@
 package role;
 
-import game.Player;
 import game.PlayerNetworkData;
 import network.Receiver;
 import startMenu.Model;

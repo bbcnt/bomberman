@@ -1,25 +1,36 @@
 package network;
  
-
 import java.io.IOException;
 import java.net.*;
 
-import role.Role;
+import role.ClientRole;
 
+/**
+ * Cette classe représente le client d'une connexion réseau
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Client extends NetworkComponent {
    
-   Socket socket;
-   Thread thread;
-   Role role;
+   private Thread thread;
+   private ClientRole clientRole;
    
-   public Client(Role role) {
-      this.role = role;
+   public Client(ClientRole clientRole) {
+      this.clientRole = clientRole;
    }
    
+   /**
+    * Cette méthode permet de se connecter à un serveur
+    * @param serverIpString
+    * @param serverPort
+    */
    public void connect(String serverIpString, int serverPort) {
       
       InetAddress serverIp = null;
-      socket = null;
+      Socket socket = null;
       
       try {
          serverIp = InetAddress.getByName(serverIpString);
@@ -37,12 +48,15 @@ public class Client extends NetworkComponent {
          System.exit(1);
       }
       
-      super.getConnections().add(new Connection(socket, role));
+      super.getConnections().add(new Connection(socket, clientRole));
       
       thread = new Thread(this);
       thread.start();
    }
    
+   /**
+    * ??????????????????????????????????????????????????????????????????????????
+    */
    @Override
    public void run() {
    }
