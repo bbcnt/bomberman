@@ -13,7 +13,7 @@ public class Player {
    private int posY;
    private int number;
 	
-   private boolean alive;
+   public boolean alive;
    private int firePower;
    private int bombAmt;
 
@@ -58,7 +58,7 @@ public class Player {
     public synchronized void setFirePower(int fp) { firePower = fp; networkData.setFirePower(fp);}
     public int getOrientation() { return orientation; }
     public synchronized void setOrientation(int o) { orientation = o; networkData.setOrientation(o);}
-    private synchronized void setAlive(boolean alive) {this.alive = alive; networkData.setAlive(alive);}
+    public synchronized void setAlive(boolean alive) {this.alive = alive; networkData.setAlive(alive);}
     private synchronized void setNumber(int number) {this.number = number; networkData.setNumber(number);}
     
     

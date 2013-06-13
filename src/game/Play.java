@@ -18,14 +18,22 @@ public class Play extends BasicGameState {
 	private Image indestructible;
 	private Image destructible;
 	private Image background;
+	private Image imagetest;
 	private Image[] hero1;
 	private Image[] hero2;
 	private Player p1;
 	private Player p2;
 	private boolean[][] movesMatrix = new boolean[Map.WIDTH][Map.HEIGHT];
-
+	private boolean[][] boom = new boolean[Map.WIDTH][Map.HEIGHT];
+	private int[][] tmpBoom = new int[Map.WIDTH][Map.HEIGHT];
+	private int[][] Bloc = new int[Map.WIDTH][Map.HEIGHT];
+	
+	boolean mort = false;
+	static boolean explosion = false;
+	static boolean firstTime = true;
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
+	private ArrayList<Fire> explosionList = new ArrayList<Fire>();
 	private Player[] playerList;
 	private Player p;
 	
@@ -45,6 +53,7 @@ public class Play extends BasicGameState {
 		indestructible = new Image("res/indestructible.png");
 		destructible = new Image("res/destructible2.png");
 		background = new Image("res/background_tile.png");
+		imagetest = new Image("res/bonus_bomb_amt.png");
 		hero1 = new Image[4];
 		hero2 = new Image[4];
 		
@@ -81,24 +90,60 @@ public class Play extends BasicGameState {
 		for(int i = 0; i < Map.WIDTH; i++)
 		{
 			for(int j = 0; j < Map.HEIGHT; j++)
-			{				
+			{	
+				boom[i][j] = true;
 				switch(map.getConstructibles()[i][j])
 				{
 				case 0:
 					g.drawImage(background, i * Map.ELEMENT_SIZE ,
 											j * Map.ELEMENT_SIZE);
 					movesMatrix[i][j] = true;
+					Bloc[i][j] = 0;
+					tmpBoom[i][j] = 0;
 					break;
 				case 1:
 					g.drawImage(indestructible, i * Map.ELEMENT_SIZE ,
 												j * Map.ELEMENT_SIZE);
 					movesMatrix[i][j] = false;
+					Bloc[i][j] = 1;
+					tmpBoom[i][j] = 1;
 					break;
 				case 2: 
 					g.drawImage(destructible, i * Map.ELEMENT_SIZE ,
 											  j * Map.ELEMENT_SIZE);
 					movesMatrix[i][j] = false;
+					Bloc[i][j] = 2;
+					tmpBoom[i][j] = 2;
 					break;
+				}
+			}
+		}
+	}
+	
+	private void MiseaJour(Map map, Graphics g)
+	{
+		for(int i = 0; i < Map.WIDTH; i++)
+		{
+			for(int j = 0; j < Map.HEIGHT; j++)
+			{	
+				
+				switch(Bloc[i][j])
+				{
+				case 0:
+					g.drawImage(background, i * Map.ELEMENT_SIZE ,
+											j * Map.ELEMENT_SIZE);
+					break;
+				case 1:
+					g.drawImage(indestructible, i * Map.ELEMENT_SIZE ,
+												j * Map.ELEMENT_SIZE);
+					break;
+				case 2: 
+					g.drawImage(destructible, i * Map.ELEMENT_SIZE ,
+											  j * Map.ELEMENT_SIZE);
+					break;
+				default:
+					g.drawImage(imagetest, i * Map.ELEMENT_SIZE ,
+							  j * Map.ELEMENT_SIZE);
 				}
 			}
 		}
@@ -120,13 +165,31 @@ public class Play extends BasicGameState {
 		g.drawString(" : " + p2.getFirePower(), 590, 615);
 	}
 	
+
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-	   		
-		drawMap(map, g);
-		drawInventory(g);
-		
+
+		if(firstTime){
+			drawMap(map, g);
+			drawInventory(g);
+			firstTime = false;
+		}else{
+			if(explosion){
+				for(int i = 0; i < Map.WIDTH; i++)
+				{
+					for(int j = 0; j < Map.HEIGHT; j++)
+					{	
+						Bloc[i][j] = tmpBoom[i][j];
+					}
+				}
+				explosion = false;
+			}
+				MiseaJour(map, g);
+				drawInventory(g);
+				
+		}
+
 		for(Player p : playerList)
 		{
 			switch(p.getOrientation())
@@ -150,6 +213,11 @@ public class Play extends BasicGameState {
 				
 			}
 		}
+		
+		if(!p1.alive)
+		{
+			g.drawImage(new Image("res/test-1.png"), 10 * 30, 10 * 30);
+		}
 				
 		if(!(bombList.isEmpty()))
 		{
@@ -164,7 +232,88 @@ public class Play extends BasicGameState {
 
 			}
 		}
+		if(!(explosionList.isEmpty()))
+		{
+			boolean top, down, right, left;
+			for(Fire f : explosionList)
+			{
+				top = down = left = right = true;
+				movesMatrix[f.X()][f.Y()] = true;
+				
+				if(!f.getBoom())
+				{
+					for(int i = 1; i <= f.getRadius() ; i++)
+					{
+
+						if(top && (movesMatrix[f.X()][f.Y()-i] || Bloc[f.X()][f.Y()-i] == 2))
+						{
+							g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()-i) * Map.ELEMENT_SIZE);
+							movesMatrix[f.X()][f.Y()-i] = true;
+							if(Bloc[f.X()][f.Y()-i] == 2)
+							{
+								top = false;
+								tmpBoom[f.X()][f.Y()-i] = 0;
+							}
+						}
+						else
+						{
+							top = false;
+						}
+
+						if(right && (movesMatrix[f.X()+i][f.Y()] || Bloc[f.X()+i][f.Y()] == 2))
+						{
+							g.drawImage(f.fire, (f.X()+i) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
+							movesMatrix[f.X()+i][f.Y()] = true;
+							if(Bloc[f.X()+i][f.Y()] == 2)
+							{
+								right = false;
+								tmpBoom[f.X()+i][f.Y()] = 0;
+							}
+						}
+						else
+						{
+							right = false;
+						}
+
+						if(down && (movesMatrix[f.X()][f.Y()+i] || Bloc[f.X()][f.Y()+i] == 2))
+						{
+							g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()+i) * Map.ELEMENT_SIZE);
+							movesMatrix[f.X()][f.Y()+i] = true;
+							if(Bloc[f.X()][f.Y()+i] == 2)
+							{
+								down = false;
+								tmpBoom[f.X()][f.Y()+i] = 0;
+							}
+						}
+						else
+						{
+							down = false;
+						}
+
+						if(left && (movesMatrix[f.X()-i][f.Y()] || Bloc[f.X()-i][f.Y()] == 2))
+						{
+							g.drawImage(f.fire, (f.X()-i) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
+							movesMatrix[f.X()-i][f.Y()] = true;
+							if(Bloc[f.X()-i][f.Y()] == 2)
+							{
+								left = false;
+								tmpBoom[f.X()-i][f.Y()] = 0;
+							}
+						}
+						else
+						{
+							left = false;
+						}
+						
+					
+						g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
+						movesMatrix[f.X()][f.Y()] = true;
+					}
+				}
+			}
+			//explosion = true;
 			
+		}
 	}
 
 	@Override
@@ -224,11 +373,25 @@ public class Play extends BasicGameState {
 		if(!bombList.isEmpty())
 		{
 			if(bombList.get(0).getExploded() == true) {
+				explosionList.add(new Fire(new Image("res/Boom.png"),
+						3, /*bombList.get(0).getRadius()*/ 5, bombList.get(0).X(), bombList.get(0).Y()));
 				bombList.remove(0);
 				hasChanged = true;
 			}
 		}
-		
+		if(!explosionList.isEmpty())
+		{
+			if(explosionList.get(0).getBoom() == true) {
+				explosionList.remove(0);
+				explosion = true;
+				hasChanged = true;
+			}
+			if(movesMatrix[p1.X()][p1.Y()] == false){
+				p1.setAlive(false);
+				hasChanged = true;
+			}
+			
+		}
 		if (hasChanged) {
 		    networkAccess.send(this.p1.getNetworkData());
 		}
