@@ -42,6 +42,7 @@ public class Play extends BasicGameState {
 	
 	public Play(int state, Role networkAccess){
 	   this.networkAccess = networkAccess; 
+	   
 	}
 	
 	@Override
@@ -72,7 +73,11 @@ public class Play extends BasicGameState {
 		
 		p1 = new Player(hero1, 1, 1, 1);
 		p2 = new Player(hero2, 25, 17, 2);
-		p = null;
+      if(networkAccess.amITheServer())
+         p = p1;
+      else
+         p = p2;
+		
 		
 		playerList = new Player[2];
 		playerList[0] = p1;
@@ -196,6 +201,9 @@ public class Play extends BasicGameState {
 
 		for(Player p : playerList)
 		{
+		   if (!p.alive) {
+		      continue;
+		   }
 			switch(p.getOrientation())
 			{
 			case 0: 	
@@ -218,7 +226,7 @@ public class Play extends BasicGameState {
 			}
 		}
 		
-		if(!p1.alive)
+		if(!p.alive)
 		{
 			g.drawImage(new Image("res/test-1.png"), 10 * 30, 10 * 30);
 		}
@@ -323,11 +331,6 @@ public class Play extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-	   
-		if(networkAccess.amITheServer())
-			p = p1;
-		else
-			p = p2;
 		
 		Input input = gc.getInput();
 		Boolean hasChanged = false;
@@ -371,7 +374,7 @@ public class Play extends BasicGameState {
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
                   p.getFirePower(), p, p.X(), p.Y()));
 				networkAccess.send(new BombNetworkData(p.getFirePower(), p.X(), p.Y()));
-				p1.setBombAmt(p.getBombAmt() - 1);
+				p.setBombAmt(p.getBombAmt() - 1);
 				hasChanged = true;
 			}	
 		}
@@ -391,11 +394,10 @@ public class Play extends BasicGameState {
 				explosion = true;
 				hasChanged = true;
 			}
-			if(movesMatrix[p1.X()][p1.Y()] == false){
-				p1.setAlive(false);
+			if(movesMatrix[p.X()][p.Y()] == false){
+				p.setAlive(false);
 				hasChanged = true;
-			}
-			
+			}		
 		}
 		if (hasChanged) {
 		    networkAccess.send(this.p.getNetworkData());

@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 
 import game.Bomb;
 import game.BombNetworkData;
+import game.KillNetworkData;
 import game.Player;
 import game.PlayerNetworkData;
 import network.Receiver;
@@ -73,22 +74,24 @@ public abstract class Role implements Receiver {
    
    @Override
    public void recieve(Object message) {
-      //model.setScreen((String)message);
+
+      Player other = null;
+      if (amITheServer()) {
+         other = model.getGame().getPlaySession().getP2();
+      } else {
+         other = model.getGame().getPlaySession().getP1();
+      }
+      
       if (message instanceof PlayerNetworkData) {
-         model.getGame().getPlaySession().getP2().setNetworkData((PlayerNetworkData)message);
+         other.setNetworkData((PlayerNetworkData)message);
       } else if (message instanceof BombNetworkData) {
-         Player other = null;
-         if (amITheServer()) {
-            other = model.getGame().getPlaySession().getP2();
-         } else {
-            other = model.getGame().getPlaySession().getP1();
-         }
-         
          int x = ((BombNetworkData)message).getX();
          int y = ((BombNetworkData)message).getY();
          int radius = ((BombNetworkData)message).getRadius();
 
          model.getGame().getPlaySession().addBombFromNetwork(other, x, y, radius);
+      } else if (message instanceof KillNetworkData) {
+         
       }
    }
    
