@@ -365,8 +365,10 @@ public class Play extends BasicGameState {
 		{
 			if(p1.getBombAmt() > 0)
 			{
-				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
-				p1.getFirePower(), p1, p1.X(), p1.Y()));
+			   Bomb b = new Bomb(new Image("res/bomb.png"), 5, 
+		            p1.getFirePower(), p1, p.X(), p.Y());
+				bombList.add(b);
+				networkAccess.send(b);
 				p1.setBombAmt(p1.getBombAmt() - 1);
 				hasChanged = true;
 			}	
@@ -411,6 +413,14 @@ public class Play extends BasicGameState {
 	public Player getP2() {
 	   return p2;
 	}
+
+   /**
+    * @return the bombList
+    */
+   public ArrayList<Bomb> getBombList() {
+      return bombList;
+   }
+	
 	
 
 }

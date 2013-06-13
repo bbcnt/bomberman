@@ -1,5 +1,8 @@
 package role;
 
+import java.util.ArrayList;
+
+import game.Bomb;
 import game.PlayerNetworkData;
 import network.Receiver;
 import startMenu.Model;
@@ -65,7 +68,11 @@ public abstract class Role implements Receiver {
    @Override
    public void recieve(Object message) {
       //model.setScreen((String)message);
-      model.getGame().getPlaySession().getP2().setNetworkData((PlayerNetworkData)message);
+      if (message instanceof PlayerNetworkData) {
+         model.getGame().getPlaySession().getP2().setNetworkData((PlayerNetworkData)message);
+      } else if (message instanceof Bomb) {
+         model.getGame().getPlaySession().getBombList().add((Bomb)message);
+      }
    }
    
    public abstract void send(Object message);
