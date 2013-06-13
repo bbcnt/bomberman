@@ -19,6 +19,7 @@ public class Play extends BasicGameState {
 	private Image destructible;
 	private Image background;
 	private Image imagetest;
+	private Image imageBombe;
 	private Image[] hero1;
 	private Image[] hero2;
 	private Player p1;
@@ -66,6 +67,8 @@ public class Play extends BasicGameState {
 		hero2[1] = new Image("res/hero2_up.png");
 		hero2[2] = new Image("res/hero2_left.png");
 		hero2[3] = new Image("res/hero2_right.png");
+		
+		imageBombe = new Image("res/bomb.png");
 		
 		p1 = new Player(hero1, 1, 1, 1);
 		p2 = new Player(hero2, 25, 17, 2);
@@ -363,13 +366,12 @@ public class Play extends BasicGameState {
 					
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
-			if(p1.getBombAmt() > 0)
+			if(p.getBombAmt() > 0)
 			{
-			   Bomb b = new Bomb(new Image("res/bomb.png"), 5, 
-		            p1.getFirePower(), p1, p.X(), p.Y());
-				bombList.add(b);
-				//networkAccess.send(b);
-				p1.setBombAmt(p1.getBombAmt() - 1);
+				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
+                  p.getFirePower(), p, p.X(), p.Y()));
+				networkAccess.send(new BombNetworkData(p.getFirePower(), p.X(), p.Y()));
+				p1.setBombAmt(p.getBombAmt() - 1);
 				hasChanged = true;
 			}	
 		}
@@ -414,12 +416,10 @@ public class Play extends BasicGameState {
 	   return p2;
 	}
 
-   /**
-    * @return the bombList
-    */
-   public ArrayList<Bomb> getBombList() {
-      return bombList;
-   }
+	public void addBombFromNetwork(Player other, int x, int y, int radius) {
+      bombList.add(new Bomb(imageBombe, 5, 
+            radius, other, x, y));
+	}
 	
 	
 

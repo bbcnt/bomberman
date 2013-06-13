@@ -1,8 +1,14 @@
 package role;
 
 import java.util.ArrayList;
+import org.lwjgl.opengl.Drawable;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 import game.Bomb;
+import game.BombNetworkData;
+import game.Player;
 import game.PlayerNetworkData;
 import network.Receiver;
 import startMenu.Model;
@@ -70,8 +76,19 @@ public abstract class Role implements Receiver {
       //model.setScreen((String)message);
       if (message instanceof PlayerNetworkData) {
          model.getGame().getPlaySession().getP2().setNetworkData((PlayerNetworkData)message);
-      } else if (message instanceof Bomb) {
-         model.getGame().getPlaySession().getBombList().add((Bomb)message);
+      } else if (message instanceof BombNetworkData) {
+         Player other = null;
+         if (amITheServer()) {
+            other = model.getGame().getPlaySession().getP2();
+         } else {
+            other = model.getGame().getPlaySession().getP1();
+         }
+         
+         int x = ((BombNetworkData)message).getX();
+         int y = ((BombNetworkData)message).getY();
+         int radius = ((BombNetworkData)message).getRadius();
+
+         model.getGame().getPlaySession().addBombFromNetwork(other, x, y, radius);
       }
    }
    
