@@ -337,6 +337,10 @@ public class Play extends BasicGameState {
 					
 						g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
 						movesMatrix[f.X()][f.Y()] = true;
+						if(p.X() == f.X() && p.Y() == (f.Y()))
+						{
+							mort = true;
+						}
 					}
 				}
 			}
