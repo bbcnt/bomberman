@@ -1,12 +1,9 @@
 package startMenu;
 
 import game.Game;
-
 import java.util.Observable;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
-
 import role.*;
 
 public class Model {
@@ -15,7 +12,6 @@ public class Model {
    private ServerIpObservers serverIpObservers;
    private ScreenObservers screenObservers;
    private String screen;
-   
    private Game game;
    
    class ServerIpObservers extends Observable {

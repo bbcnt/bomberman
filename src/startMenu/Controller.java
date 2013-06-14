@@ -10,8 +10,5 @@ public class Controller {
       model.addScreenObserver(view);
      
    }
-   public static void main(String[] args) {
-	   new Controller();
-   }
 
 }
