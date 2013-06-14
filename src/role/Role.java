@@ -1,14 +1,6 @@
 package role;
 
-import java.util.ArrayList;
-import org.lwjgl.opengl.Drawable;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
-import game.Bomb;
 import game.BombNetworkData;
-import game.KillNetworkData;
 import game.Player;
 import game.PlayerNetworkData;
 import network.Receiver;
@@ -85,13 +77,22 @@ public abstract class Role implements Receiver {
       if (message instanceof PlayerNetworkData) {
          other.setNetworkData((PlayerNetworkData)message);
       } else if (message instanceof BombNetworkData) {
-         int x = ((BombNetworkData)message).getX();
-         int y = ((BombNetworkData)message).getY();
-         int radius = ((BombNetworkData)message).getRadius();
+         BombNetworkData bomb = (BombNetworkData)message;
+         int x = bomb.getX();
+         int y = bomb.getY();
+         int radius = bomb.getRadius();
 
          model.getGame().getPlaySession().addBombFromNetwork(other, x, y, radius);
-      } else if (message instanceof KillNetworkData) {
-         
+      } else if (message instanceof int[][]) {
+         int bloc[][] = (int[][])message;
+         // Fusion la matrice des blocs
+         for (int i = 0; i < bloc.length; i++) {
+            for (int y = 0; y < bloc[0].length; y++) {
+               if (model.getGame().getPlaySession().getBloc()[i][y] > bloc[i][y]) {
+                  model.getGame().getPlaySession().getBloc()[i][y] = bloc[i][y];
+               }
+            }
+         }
       }
    }
    

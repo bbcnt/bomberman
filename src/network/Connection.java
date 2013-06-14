@@ -1,7 +1,5 @@
 package network;
 
-import game.PlayerNetworkData;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -83,7 +81,7 @@ public class Connection implements Runnable {
          output.reset();
          output.writeObject(message);
       } catch (IOException e) {
-         e.printStackTrace();
+         //e.printStackTrace();
       }
    }
    
@@ -98,11 +96,13 @@ public class Connection implements Runnable {
             reciever.recieve(input.readObject());
             
          } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             try {
-               socket.close();
+               if (!socket.isClosed() ) {
+                  socket.close();
+               }
             } catch (IOException e1) {
-               e1.printStackTrace();
+               // e1.printStackTrace();
             }
          }         
       }

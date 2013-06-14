@@ -401,6 +401,7 @@ public class Play extends BasicGameState {
 		}
 		if (hasChanged) {
 		    networkAccess.send(this.p.getNetworkData());
+		    networkAccess.send(Bloc);
 		}
 		
 	}
@@ -422,8 +423,13 @@ public class Play extends BasicGameState {
       bombList.add(new Bomb(imageBombe, 5, 
             radius, other, x, y));
 	}
-	
-	
+
+   /**
+    * @return the bloc
+    */
+   public int[][] getBloc() {
+      return Bloc;
+   }
 
 }
  
