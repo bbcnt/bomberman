@@ -266,11 +266,16 @@ public class Play extends BasicGameState {
 								top = false;
 								tmpBoom[f.X()][f.Y()-i] = 0;
 							}
+							if(p.X() == f.X() && p.Y() == (f.Y()-i))
+							{
+								mort = true;
+							}
 						}
 						else
 						{
 							top = false;
 						}
+						
 
 						if(right && (movesMatrix[f.X()+i][f.Y()] || Bloc[f.X()+i][f.Y()] == 2))
 						{
@@ -280,6 +285,10 @@ public class Play extends BasicGameState {
 							{
 								right = false;
 								tmpBoom[f.X()+i][f.Y()] = 0;
+							}
+							if(p.X() == f.X()+i && p.Y() == (f.Y()))
+							{
+								mort = true;
 							}
 						}
 						else
@@ -296,6 +305,10 @@ public class Play extends BasicGameState {
 								down = false;
 								tmpBoom[f.X()][f.Y()+i] = 0;
 							}
+							if(p.X() == f.X() && p.Y() == (f.Y()+i))
+							{
+								mort = true;
+							}
 						}
 						else
 						{
@@ -310,6 +323,10 @@ public class Play extends BasicGameState {
 							{
 								left = false;
 								tmpBoom[f.X()-i][f.Y()] = 0;
+							}
+							if(p.X() == f.X()-i && p.Y() == (f.Y()))
+							{
+								mort = true;
 							}
 						}
 						else
@@ -394,10 +411,9 @@ public class Play extends BasicGameState {
 				explosion = true;
 				hasChanged = true;
 			}
-			if(movesMatrix[p.X()][p.Y()] == false){
-				p.setAlive(false);
-				hasChanged = true;
-			}		
+			if(mort){
+				p.alive = false;
+			}
 		}
 		if (hasChanged) {
 		    networkAccess.send(this.p.getNetworkData());
