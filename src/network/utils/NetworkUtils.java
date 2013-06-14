@@ -1,5 +1,7 @@
 package network.utils;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -33,9 +35,28 @@ public class NetworkUtils {
       return ipAddress;
    }
    
-   public static void getPrincipalNetworkInterfaces() {
+   
+   
+   public static void getPrincipalNetworkInterfaces()
+   		throws SocketException {
       //try {
          
+	   Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+		while (interfaces.hasMoreElements()){
+		    NetworkInterface current = interfaces.nextElement();
+		    //System.out.println(current);
+		    if (!current.isUp() || current.isLoopback() || current.isVirtual() || current.getDisplayName().contains("Virtual")) continue;
+		    Enumeration<InetAddress> addresses = current.getInetAddresses();
+		        InetAddress current_addr = addresses.nextElement();
+		        if (current_addr instanceof Inet4Address)
+		        	  System.out.println(current_addr.getHostAddress());
+		        	else if (current_addr instanceof Inet6Address)
+		        	  System.out.println(current_addr.getHostAddress());
+		        if (current_addr.isLoopbackAddress()) continue;
+		        
+
+		    }
+		}
          
         // for (Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces(); e.hasMoreElements();)
         //    final NetworkInterface i = e.nextElement();
@@ -50,10 +71,14 @@ public class NetworkUtils {
          // TODO Auto-generated catch block
         // e.printStackTrace();
       //}
-   }
    
    public static void main(String[] args) {
-      getPrincipalNetworkInterfaces();
+      try {
+		getPrincipalNetworkInterfaces();
+	} catch (SocketException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
 
 
