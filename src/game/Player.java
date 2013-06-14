@@ -41,7 +41,7 @@ public class Player {
     	orientation = 0;
     	this.number = number;
     	alive = true;
-    	firePower = 1;
+    	firePower = 2;
     	bombAmt = 1;
     	
     	

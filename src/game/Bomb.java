@@ -31,7 +31,7 @@ public class Bomb extends TimerTask {
 		this.y = y;
 		this.bomb = image;
 		this.timer = new Timer();
-        this.timer.schedule(this, 4000);
+        this.timer.schedule(this, 3000);
 
 		/*this.directions[0] = true;
 		this.directions[1] = true;

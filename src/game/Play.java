@@ -2,6 +2,7 @@ package game;
 
 //import org.lwjgl.input.Mouse;
 import java.util.ArrayList;
+import java.util.Random;
 
 import network.Receiver;
 
@@ -19,6 +20,8 @@ public class Play extends BasicGameState {
 	private Image destructible;
 	private Image background;
 	private Image imagetest;
+   private Image bonusBombAmt;
+   private Image bonusBombRadius;
 	private Image imageBombe;
 	private Image[] hero1;
 	private Image[] hero2;
@@ -28,6 +31,7 @@ public class Play extends BasicGameState {
 	private boolean[][] boom = new boolean[Map.WIDTH][Map.HEIGHT];
 	private int[][] tmpBoom = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] Bloc = new int[Map.WIDTH][Map.HEIGHT];
+	private int[][] bonusMatrix = new int[Map.WIDTH][Map.HEIGHT];
 	
 	boolean mort = false;
 	static boolean explosion = false;
@@ -37,6 +41,7 @@ public class Play extends BasicGameState {
 	private ArrayList<Fire> explosionList = new ArrayList<Fire>();
 	private Player[] playerList;
 	private Player p;
+	private Music mainMusic;
 	
 	private Role networkAccess;
 	
@@ -58,6 +63,8 @@ public class Play extends BasicGameState {
 		imagetest = new Image("res/bonus_bomb_amt.png");
 		hero1 = new Image[4];
 		hero2 = new Image[4];
+	   bonusBombAmt =  new Image("res/bonus_bomb_amt.png");
+	   bonusBombRadius = new Image("res/bonus_radius.png");
 		
 		hero1[0] = new Image("res/hero_down.png");
 		hero1[1] = new Image("res/hero_up.png");
@@ -70,6 +77,9 @@ public class Play extends BasicGameState {
 		hero2[3] = new Image("res/hero2_right.png");
 		
 		imageBombe = new Image("res/bomb.png");
+
+      mainMusic = new Music("res/mainMusic.ogg");
+      mainMusic.loop();
 		
 		p1 = new Player(hero1, 1, 1, 1);
 		p2 = new Player(hero2, 25, 17, 2);
@@ -101,6 +111,7 @@ public class Play extends BasicGameState {
 			for(int j = 0; j < Map.HEIGHT; j++)
 			{	
 				boom[i][j] = true;
+				bonusMatrix[i][j] = 0;
 				switch(map.getConstructibles()[i][j])
 				{
 				case 0:
@@ -127,7 +138,35 @@ public class Play extends BasicGameState {
 				}
 			}
 		}
+	    if(networkAccess.amITheServer()) {
+	         createBonus();
+	    }
 	}
+	
+   private void createBonus()
+   {
+      Random r = new Random();
+      int coordX, coordY, bonusType;
+      int bonusPlaced = 0;
+      coordX = 0 + r.nextInt(Map.WIDTH);
+      coordY = 0 + r.nextInt(Map.HEIGHT);
+      bonusType = 1 + r.nextInt(2);
+      
+      int bonusAmt = 20; // 20 max, parfois moins car 2 fois le même tirage
+      
+      while(bonusPlaced < bonusAmt)
+      {
+         if(Bloc[coordX][coordY] == 2) //A placer sous des blocs 
+                                 //destructibles
+         {
+            bonusMatrix[coordX][coordY] = bonusType;
+            bonusPlaced++;
+         }
+         coordX = 0 + r.nextInt(Map.WIDTH);
+         coordY = 0 + r.nextInt(Map.HEIGHT);
+         bonusType = 1 + r.nextInt(2);
+      }
+   }
 	
 	private void MiseaJour(Map map, Graphics g)
 	{
@@ -141,6 +180,12 @@ public class Play extends BasicGameState {
 				case 0:
 					g.drawImage(background, i * Map.ELEMENT_SIZE ,
 											j * Map.ELEMENT_SIZE);
+		         if(bonusMatrix[i][j] == 1) //bonus quantite
+		            g.drawImage(bonusBombAmt, i * Map.ELEMENT_SIZE, 
+	                                      j * Map.ELEMENT_SIZE);
+	             if(bonusMatrix[i][j] == 2) //bonus rayon
+	               g.drawImage(bonusBombRadius, i * Map.ELEMENT_SIZE, 
+	                                         j * Map.ELEMENT_SIZE);
 					break;
 				case 1:
 					g.drawImage(indestructible, i * Map.ELEMENT_SIZE ,
@@ -362,6 +407,14 @@ public class Play extends BasicGameState {
 					p.setY(p.Y() +1);
 					p.setOrientation(0);
 					hasChanged = true;
+	             if(bonusMatrix[p.X()][p.Y()] != 0)
+	             {
+	                if(bonusMatrix[p.X()][p.Y()] == 1)
+	                   p.setBombAmt(p.getBombAmt() +1);
+	                if(bonusMatrix[p.X()][p.Y()] == 2)
+	                   p.setFirePower(p.getFirePower() +1);
+	                bonusMatrix[p.X()][p.Y()] = 0;
+	             }
 				}
 
 		if(input.isKeyPressed(Input.KEY_UP))
@@ -370,6 +423,14 @@ public class Play extends BasicGameState {
 					p.setY(p.Y() - 1);
 					p.setOrientation(1);
 					hasChanged = true;
+	              if(bonusMatrix[p.X()][p.Y()] != 0)
+	                {
+	                   if(bonusMatrix[p.X()][p.Y()] == 1)
+	                      p.setBombAmt(p.getBombAmt() +1);
+	                   if(bonusMatrix[p.X()][p.Y()] == 2)
+	                      p.setFirePower(p.getFirePower() +1);
+	                   bonusMatrix[p.X()][p.Y()] = 0;
+	                }
 				}
 		
 		if(input.isKeyPressed(Input.KEY_LEFT))
@@ -378,6 +439,14 @@ public class Play extends BasicGameState {
 					p.setX(p.X() - 1);
 					p.setOrientation(2);
 					hasChanged = true;
+               if(bonusMatrix[p.X()][p.Y()] != 0)
+               {
+                  if(bonusMatrix[p.X()][p.Y()] == 1)
+                     p.setBombAmt(p.getBombAmt() +1);
+                  if(bonusMatrix[p.X()][p.Y()] == 2)
+                     p.setFirePower(p.getFirePower() +1);
+                  bonusMatrix[p.X()][p.Y()] = 0;
+               }
 				}
 		
 		if(input.isKeyPressed(Input.KEY_RIGHT))
@@ -386,6 +455,14 @@ public class Play extends BasicGameState {
 					p.setX(p.X() + 1);
 					p.setOrientation(3);
 					hasChanged = true;
+               if(bonusMatrix[p.X()][p.Y()] != 0)
+               {
+                  if(bonusMatrix[p.X()][p.Y()] == 1)
+                     p.setBombAmt(p.getBombAmt() +1);
+                  if(bonusMatrix[p.X()][p.Y()] == 2)
+                     p.setFirePower(p.getFirePower() +1);
+                  bonusMatrix[p.X()][p.Y()] = 0;
+               }
 				}
 					
 		if(input.isKeyPressed(Input.KEY_SPACE))
@@ -403,7 +480,7 @@ public class Play extends BasicGameState {
 		{
 			if(bombList.get(0).getExploded() == true) {
 				explosionList.add(new Fire(new Image("res/Boom.png"),
-						3, /*bombList.get(0).getRadius()*/ 5, bombList.get(0).X(), bombList.get(0).Y()));
+						3, bombList.get(0).getRadius(), bombList.get(0).X(), bombList.get(0).Y()));
 				bombList.remove(0);
 				hasChanged = true;
 			}

@@ -27,7 +27,7 @@ public class Fire extends TimerTask {
 		this.y = y;
 		this.fire = image;
 		this.timer = new Timer();
-        this.timer.schedule(this, 4000);
+        this.timer.schedule(this, 3000);
 	}
 	
 	public void update()
