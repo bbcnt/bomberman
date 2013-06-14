@@ -5,6 +5,14 @@ import network.Server;
 import network.utils.NetworkUtils;
 import startMenu.Model;
 
+/**
+ * Cette class représente le rôle du serveur pour le joueur
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class ServerRole extends Role {
     
    private Server server;
@@ -14,6 +22,10 @@ public class ServerRole extends Role {
       super.setIpAddress(NetworkUtils.getLocalIp());
    }
    
+   /**
+    * Cette méthode permet de demarrer le serveur
+    * @param port
+    */
    public void startServer(Integer port) {
       server = new Server(this);
       server.startServer(port);
@@ -21,11 +33,20 @@ public class ServerRole extends Role {
       this.getModel().setScreen("started");
    }
    
+   /* (non-Javadoc)
+    * @see role.Role#send()
+    */
+   @Override
    public void send(Object message) {
       server.sendMessage(message);
    }
    
+   /* (non-Javadoc)
+    * @see role.Role#amITheServer()
+    */
+   @Override
    public boolean amITheServer() {
       return true;
-   }
+   }   
+   
 }

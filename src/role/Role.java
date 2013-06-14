@@ -6,6 +6,14 @@ import game.PlayerNetworkData;
 import network.Receiver;
 import startMenu.Model;
 
+/**
+ * Cette class représente un rôle du joueur dans le jeu
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public abstract class Role implements Receiver {
  
    private Integer port;
@@ -64,6 +72,10 @@ public abstract class Role implements Receiver {
       this.connected = connected;
    }
    
+   /**
+    * Cette méthode traite les données reçues à travers du réseau
+    * @param le massage reçu à travers du réseau
+    */
    @Override
    public void recieve(Object message) {
 
@@ -85,7 +97,7 @@ public abstract class Role implements Receiver {
          model.getGame().getPlaySession().addBombFromNetwork(other, x, y, radius);
       } else if (message instanceof int[][]) {
          int bloc[][] = (int[][])message;
-         // Fusion la matrice des blocs
+         // Fusioner la matrice des blocs
          for (int i = 0; i < bloc.length; i++) {
             for (int y = 0; y < bloc[0].length; y++) {
                if (model.getGame().getPlaySession().getBloc()[i][y] > bloc[i][y]) {
@@ -96,8 +108,16 @@ public abstract class Role implements Receiver {
       }
    }
    
+   /**
+    * Cette méthode permet d'envoyer un message (objet quelconque) à travers du réseau
+    * @param message
+    */
    public abstract void send(Object message);
    
+   /**
+    * Cette méthode indique si l'application joue la rôle du serveur ou pas
+    * @return
+    */
    public abstract boolean amITheServer();
    
 }

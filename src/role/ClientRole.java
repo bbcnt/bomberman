@@ -3,6 +3,15 @@ package role;
 import network.Client;
 import startMenu.Model;
 
+
+/**
+ * Cette class représente le rôle du client pour le joueur
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class ClientRole extends Role {
 
    Client client;
@@ -11,6 +20,11 @@ public class ClientRole extends Role {
       super(model);
    }
    
+   /**
+    * Cette méthode permet de se connecter à un serveur
+    * @param serverIp
+    * @param serverPort
+    */
    public void connectServer(String serverIp, Integer serverPort) {
       client = new Client(this);
       client.connect(serverIp, serverPort);
@@ -18,10 +32,17 @@ public class ClientRole extends Role {
       this.getModel().setScreen("connected");
    }
    
+   /* (non-Javadoc)
+    * @see role.Role#send()
+    */
+   @Override
    public void send(Object message) {
       client.sendMessage(message);
    }
    
+   /* (non-Javadoc)
+    * @see role.Role#amITheServer()
+    */
    public boolean amITheServer() {
       return false; 
    }
