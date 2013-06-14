@@ -96,4 +96,5 @@ public class Model {
    public Game getGame() {
       return game;
    }
+   
 }
