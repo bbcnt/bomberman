@@ -4,18 +4,13 @@ package game;
 import java.util.ArrayList;
 import java.util.Random;
 
-import network.Receiver;
-
-import org.lwjgl.opengl.Drawable;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
-import org.newdawn.slick.tiled.TileSet;
-import org.newdawn.slick.tiled.TiledMap;
 
 import role.Role;
 
 public class Play extends BasicGameState {
-
+	
 	private Image indestructible;
 	private Image destructible;
 	private Image background;
@@ -463,7 +458,7 @@ public class Play extends BasicGameState {
                      p.setFirePower(p.getFirePower() +1);
                   bonusMatrix[p.X()][p.Y()] = 0;
                }
-				}
+			}
 					
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
@@ -500,6 +495,7 @@ public class Play extends BasicGameState {
 		    networkAccess.send(this.p.getNetworkData());
 		    networkAccess.send(Bloc);
 		}
+		
 		
 	}
 
