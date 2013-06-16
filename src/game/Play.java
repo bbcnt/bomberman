@@ -519,16 +519,27 @@ public class Play extends BasicGameState {
 	   return p2;
 	}
 
-  public void networkUpdate(BombNetworkData bomb) {
+   public void networkUpdate(BombNetworkData bomb) {
      
-     Player other = null;
-     if (networkAccess.amITheServer()) {
-        other = p2;
-     } else {
-        other = p1;
-     }
-     bombList.add(new Bomb(imageBombe, 5, bomb.getRadius(), other, bomb.getX(), bomb.getY())); 
-  }
+      Player other = null;
+      if (networkAccess.amITheServer()) {
+         other = p2;
+      } else {
+         other = p1;
+      }
+      bombList.add(new Bomb(imageBombe, 5, bomb.getRadius(), other, bomb.getX(), bomb.getY())); 
+   }
+   
+   public void networkUpdate(BlocNetworkData blocNetworkData) {
+      int[][] b = blocNetworkData.getBloc();
+      for (int i = 0; i < b.length; i++) {
+         for (int y = 0; y < b[0].length; y++) {
+            if (this.Bloc[i][y] > b[i][y]) {
+               this.Bloc[i][y] = b[i][y];
+            }
+         }
+      }
+   }
 
    /**
     * @return the bloc
