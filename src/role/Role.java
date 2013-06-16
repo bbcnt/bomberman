@@ -1,6 +1,8 @@
 package role;
 
+import game.BlocNetworkData;
 import game.BombNetworkData;
+import game.BonusNetworkData;
 import game.Player;
 import game.PlayerNetworkData;
 import network.Receiver;
@@ -88,20 +90,36 @@ public abstract class Role implements Receiver {
       
       if (message instanceof PlayerNetworkData) {
          other.setNetworkData((PlayerNetworkData)message);
-      } else if (message instanceof BombNetworkData) {
+      }
+      
+      if (message instanceof BombNetworkData) {
          BombNetworkData bomb = (BombNetworkData)message;
          int x = bomb.getX();
          int y = bomb.getY();
          int radius = bomb.getRadius();
 
          model.getGame().getPlaySession().addBombFromNetwork(other, x, y, radius);
-      } else if (message instanceof int[][]) {
-         int bloc[][] = (int[][])message;
+      }
+      
+      if (message instanceof BlocNetworkData) {
+         int bloc[][] = ((BlocNetworkData)message).getBloc();
          // Fusioner la matrice des blocs
          for (int i = 0; i < bloc.length; i++) {
             for (int y = 0; y < bloc[0].length; y++) {
                if (model.getGame().getPlaySession().getBloc()[i][y] > bloc[i][y]) {
                   model.getGame().getPlaySession().getBloc()[i][y] = bloc[i][y];
+               }
+            }
+         }
+      }
+      
+      if (message instanceof BonusNetworkData) {
+         int bloc[][] = ((BonusNetworkData)message).getBonus();
+         // Fusioner la matrice des blocs
+         for (int i = 0; i < bloc.length; i++) {
+            for (int y = 0; y < bloc[0].length; y++) {
+               if (model.getGame().getPlaySession().getBonusMatrix()[i][y] > bloc[i][y]) {
+                  model.getGame().getPlaySession().getBonusMatrix()[i][y] = bloc[i][y];
                }
             }
          }

@@ -50,6 +50,7 @@ public class Connection implements Runnable {
          thread.start();
       } catch (IOException e) {
          e.printStackTrace();
+         System.exit(1);
       }
    }
    
@@ -66,8 +67,10 @@ public class Connection implements Runnable {
          }
          catch (IOException e2) {
             e.printStackTrace();
+            System.exit(1);
          }
          e.printStackTrace();
+         System.exit(1);
       }
    }
    
@@ -81,7 +84,8 @@ public class Connection implements Runnable {
          output.reset();
          output.writeObject(message);
       } catch (IOException e) {
-         //e.printStackTrace();
+         e.printStackTrace();
+         System.exit(1);
       }
    }
    
@@ -96,13 +100,15 @@ public class Connection implements Runnable {
             reciever.recieve(input.readObject());
             
          } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
+            System.exit(1);
             try {
                if (!socket.isClosed() ) {
                   socket.close();
                }
             } catch (IOException e1) {
-               // e1.printStackTrace();
+                e1.printStackTrace();
+                System.exit(1);
             }
          }         
       }

@@ -135,6 +135,12 @@ public class Play extends BasicGameState {
 		}
 	    if(networkAccess.amITheServer()) {
 	         createBonus();
+	    } else {
+	       for (int i = 0; i < bonusMatrix.length; i++) {
+	          for (int j = 0; j < bonusMatrix[0].length; j++) {
+	             bonusMatrix[i][j] = 10;
+	          }
+	       }
 	    }
 	}
 	
@@ -493,7 +499,8 @@ public class Play extends BasicGameState {
 		}
 		if (hasChanged) {
 		    networkAccess.send(this.p.getNetworkData());
-		    networkAccess.send(Bloc);
+		    networkAccess.send(new BlocNetworkData(Bloc));
+		    networkAccess.send(new BonusNetworkData(bonusMatrix));
 		}
 		
 		
@@ -523,6 +530,15 @@ public class Play extends BasicGameState {
    public int[][] getBloc() {
       return Bloc;
    }
+
+   /**
+    * @return the bonusMatrix
+    */
+   public int[][] getBonusMatrix() {
+      return bonusMatrix;
+   }
+   
+   
 
 }
  
