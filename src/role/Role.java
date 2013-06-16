@@ -89,7 +89,7 @@ public abstract class Role implements Receiver {
       }
       
       if (message instanceof PlayerNetworkData) {
-         other.setNetworkData((PlayerNetworkData)message);
+         other.networkUpdate((PlayerNetworkData)message);
       }
       
       if (message instanceof BombNetworkData) {

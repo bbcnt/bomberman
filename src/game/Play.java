@@ -498,7 +498,7 @@ public class Play extends BasicGameState {
 			}
 		}
 		if (hasChanged) {
-		    networkAccess.send(this.p.getNetworkData());
+		    networkAccess.send(new PlayerNetworkData(p));
 		    networkAccess.send(new BlocNetworkData(Bloc));
 		    networkAccess.send(new BonusNetworkData(bonusMatrix));
 		}
