@@ -540,6 +540,17 @@ public class Play extends BasicGameState {
          }
       }
    }
+   
+   public void networkUpdate(BonusNetworkData bonusNetworkData) {
+      int[][] b = bonusNetworkData.getBonus();
+      for (int i = 0; i < b.length; i++) {
+         for (int y = 0; y < b[0].length; y++) {
+            if (this.bonusMatrix[i][y] > b[i][y]) {
+               this.bonusMatrix[i][y] = b[i][y];
+            }
+         }
+      }
+   }
 
    /**
     * @return the bloc

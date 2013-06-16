@@ -102,15 +102,7 @@ public abstract class Role implements Receiver {
       }
       
       if (message instanceof BonusNetworkData) {
-         int bloc[][] = ((BonusNetworkData)message).getBonus();
-         // Fusioner la matrice des blocs
-         for (int i = 0; i < bloc.length; i++) {
-            for (int y = 0; y < bloc[0].length; y++) {
-               if (model.getGame().getPlaySession().getBonusMatrix()[i][y] > bloc[i][y]) {
-                  model.getGame().getPlaySession().getBonusMatrix()[i][y] = bloc[i][y];
-               }
-            }
-         }
+         model.getGame().getPlaySession().networkUpdate((BonusNetworkData)message);
       }
    }
    
