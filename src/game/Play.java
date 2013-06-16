@@ -519,10 +519,16 @@ public class Play extends BasicGameState {
 	   return p2;
 	}
 
-	public void addBombFromNetwork(Player other, int x, int y, int radius) {
-      bombList.add(new Bomb(imageBombe, 5, 
-            radius, other, x, y));
-	}
+  public void networkUpdate(BombNetworkData bomb) {
+     
+     Player other = null;
+     if (networkAccess.amITheServer()) {
+        other = p2;
+     } else {
+        other = p1;
+     }
+     bombList.add(new Bomb(imageBombe, 5, bomb.getRadius(), other, bomb.getX(), bomb.getY())); 
+  }
 
    /**
     * @return the bloc

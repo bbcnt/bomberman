@@ -94,11 +94,7 @@ public abstract class Role implements Receiver {
       
       if (message instanceof BombNetworkData) {
          BombNetworkData bomb = (BombNetworkData)message;
-         int x = bomb.getX();
-         int y = bomb.getY();
-         int radius = bomb.getRadius();
-
-         model.getGame().getPlaySession().addBombFromNetwork(other, x, y, radius);
+         model.getGame().getPlaySession().networkUpdate(bomb);
       }
       
       if (message instanceof BlocNetworkData) {
