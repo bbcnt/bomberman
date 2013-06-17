@@ -11,6 +11,9 @@ import role.Role;
 
 public class Play extends BasicGameState {
 	
+   static boolean explosion = false;
+   static boolean firstTime = true;
+   
 	private Image indestructible;
 	private Image destructible;
 	private Image background;
@@ -20,24 +23,21 @@ public class Play extends BasicGameState {
 	private Image imageBombe;
 	private Image[] hero1;
 	private Image[] hero2;
-	private Player p1;
-	private Player p2;
 	private boolean[][] movesMatrix = new boolean[Map.WIDTH][Map.HEIGHT];
 	private boolean[][] boom = new boolean[Map.WIDTH][Map.HEIGHT];
 	private int[][] tmpBoom = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] Bloc = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] bonusMatrix = new int[Map.WIDTH][Map.HEIGHT];
-	
 	boolean mort = false;
-	static boolean explosion = false;
-	static boolean firstTime = true;
+	private Music mainMusic;
+	
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
 	private ArrayList<Fire> explosionList = new ArrayList<Fire>();
 	private Player[] playerList;
 	private Player p;
-	private Music mainMusic;
-	
+	private Player p1;
+	private Player p2;
 	private Role networkAccess;
 	
 	public Play(int state, Role networkAccess){
@@ -46,8 +46,7 @@ public class Play extends BasicGameState {
 	}
 	
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) 
-			throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		
 		map = new Map();
 		map.initMap();
