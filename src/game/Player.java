@@ -11,7 +11,6 @@ public class Player {
    private int orientation; // 0 up, 1 left, 2 down, 3 right
    private int posX;
    private int posY;
-   private int number;
 	
    public boolean alive;
    private int firePower;
@@ -28,7 +27,6 @@ public class Player {
     	posX = x;
     	posY = y;
     	orientation = 0;
-    	this.number = number;
     	alive = true;
     	firePower = 2;
     	bombAmt = 1;
@@ -48,7 +46,6 @@ public class Player {
     public int getOrientation() { return orientation; }
     public synchronized void setOrientation(int o) { orientation = o;}
     public synchronized void setAlive(boolean alive) {this.alive = alive;}
-    private synchronized void setNumber(int number) {this.number = number;}
     
     public void networkUpdate(PlayerNetworkData networkData) {
        this.setX(networkData.getPosX());
@@ -56,7 +53,6 @@ public class Player {
        this.setAlive(networkData.isAlive());
        this.setBombAmt(networkData.getBombAmt());
        this.setFirePower(networkData.getFirePower());
-       this.setNumber(networkData.getNumber());
        this.setOrientation(networkData.getOrientation());
     }
 

@@ -5,16 +5,10 @@ import java.awt.*;// pour la gestion de la fenetre
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.SlickException;
-
 import java.util.Observable;
 import java.util.Observer;
-
 import role.*;
 import startMenu.Model.ScreenObservers;
 import startMenu.Model.ServerIpObservers;
@@ -23,25 +17,26 @@ import startMenu.Model.StartObservers;
 public class View extends JFrame implements Observer {
 	 
 	
-	private Container container = getContentPane();
-	private ComboPanel comboPanel = new ComboPanel();
-	private JComboBox comboPanel2 = new JComboBox();
+	/**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   private ComboPanel comboPanel = new ComboPanel();
+	private JComboBox<String> comboPanel2 = new JComboBox<String>();
 	private JButton bouton = new JButton("Rejoindre");
-	private JLabel serverStatusMessages = new JLabel("servermessages");
-	private JButton bouton1 = new JButton("Créer");
-	private JButton bouton2 = new JButton("Lancer");
-	private JLabel titre = new JLabel("BOMBERMAN");
-	private JLabel ipAdress = new JLabel("IP: xxx.xxx.xxx");
-	private JLabel ipserver = new JLabel("IP Serveur:");
-	private JLabel portserver = new JLabel("Port:");
-	private Font titreFont = new Font ("Serif", Font.BOLD | Font.ITALIC,64);
+	private JButton buttonServerCreate = new JButton("Créer");
+	private JButton buttonServerStart = new JButton("Lancer");
+	private JLabel title = new JLabel("BOMBERMAN");
+	private JLabel ipAddress = new JLabel("IP: xxx.xxx.xxx");
+	private JLabel ipServer = new JLabel("IP Serveur:");
+	private JLabel portServer = new JLabel("Port:");
+	private Font titleFont = new Font ("Serif", Font.BOLD | Font.ITALIC,64);
 	private Font ipFont = new Font ("Serif", Font.BOLD | Font.ITALIC,40);
    private String filename = new String("res/Bomberman2.jpg");
-   private JTextField iptext = new JTextField(10);
-   private JTextField porttext = new JTextField(10);
+   private JTextField ipText = new JTextField(10);
+   private JTextField portText = new JTextField(10);
    private JPanel[] panel = new JPanel[5];
    
-   private int pokeCounter = 0;
    private Model model;
 
 
@@ -54,16 +49,16 @@ public class View extends JFrame implements Observer {
 		setVisible(true);//permet de rendre visible la fenetre
 		setResizable(false);
 		
-		setTitle("BomberMan");// definir le titre
-		titre.setHorizontalAlignment(JLabel.RIGHT);
-		titre.setFont(titreFont);
-	    titre.setForeground(Color.magenta);
-		ipAdress.setFont(ipFont);
-		ipAdress.setForeground(Color.magenta);
-		ipserver.setForeground(Color.magenta);
-		portserver.setForeground(Color.magenta);
+		setTitle("BomberMan");// definir le title
+		title.setHorizontalAlignment(JLabel.RIGHT);
+		title.setFont(titleFont);
+	    title.setForeground(Color.magenta);
+		ipAddress.setFont(ipFont);
+		ipAddress.setForeground(Color.magenta);
+		ipServer.setForeground(Color.magenta);
+		portServer.setForeground(Color.magenta);
 			try {
-				titre.setIcon(new ImageIcon(ImageIO.read( new File("res/logo.gif") ) ));
+				title.setIcon(new ImageIcon(ImageIO.read( new File("res/logo.gif") ) ));
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -77,27 +72,27 @@ public class View extends JFrame implements Observer {
          @Override
          public void actionPerformed(ActionEvent e) {
             if (!model.getRole().getConnected()) {
-               ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
+               ((ClientRole)model.getRole()).connectServer(ipText.getText(), Integer.valueOf(portText.getText()));
                while (!model.getRole().getConnected()) { } // attendre jusqu'à ce que la connexion soit établie.
                model.getRole().send("clientConnected");
                bouton.setEnabled(false);
             }
          }
 		});
-		bouton1.setPreferredSize(new Dimension(100, 40));
-		bouton1.setEnabled(true);
-		bouton1.addActionListener(new ActionListener() {
+		buttonServerCreate.setPreferredSize(new Dimension(100, 40));
+		buttonServerCreate.setEnabled(true);
+		buttonServerCreate.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent arg0) {
             if (!model.getRole().getConnected()) {
-               ((ServerRole)model.getRole()).startServer(Integer.valueOf(porttext.getText()));
-               bouton1.setEnabled(false);
+               ((ServerRole)model.getRole()).startServer(Integer.valueOf(portText.getText()));
+               buttonServerCreate.setEnabled(false);
             }
          }
 		});
-		bouton2.setPreferredSize(new Dimension(100, 40));
-		bouton2.setEnabled(false);
-		bouton2.addActionListener(new ActionListener(){
+		buttonServerStart.setPreferredSize(new Dimension(100, 40));
+		buttonServerStart.setEnabled(false);
+		buttonServerStart.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
             ((ServerRole)model.getRole()).send("startGame");
@@ -108,7 +103,7 @@ public class View extends JFrame implements Observer {
 		backPanel.setLayout(new GridLayout(6, 1));//position du bouton
 	   
 		comboPanel2.addItem("--");
-		comboPanel2.setEditable(true);
+		comboPanel2.setEditable(false); // sélection de la carte prévue, mais pas encore implémentée
 		comboPanel2.setMaximumRowCount(4);
 		
 		panel[0] = new JPanel();
@@ -126,8 +121,8 @@ public class View extends JFrame implements Observer {
 		panel[3].setVisible(false);
 		panel[4].setVisible(false);
 		
-		panel[0].add(titre);
-		panel[1].add(ipAdress);
+		panel[0].add(title);
+		panel[1].add(ipAddress);
 		panel[2].add(comboPanel);
 
 		backPanel.add(panel[0]);
@@ -146,7 +141,11 @@ public class View extends JFrame implements Observer {
 
 	class ImagePanel extends JPanel {
 
-		  private Image img;
+		  /**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+      private Image img;
 
 		  public ImagePanel(String img) {
 		    this(new ImageIcon(img).getImage());
@@ -170,8 +169,12 @@ public class View extends JFrame implements Observer {
 	 
 
 	public class ComboPanel extends JPanel {
-		private String choices[] = { "--","Client", "Serveur"};
-		private JComboBox combo = new JComboBox();
+		/**
+       * 
+       */
+      private static final long serialVersionUID = 1L;
+      private String choices[] = { "--","Client", "Serveur"};
+		private JComboBox<String> combo = new JComboBox<String>();
 		public ComboPanel(){
 			
 			for(int i = 0; i < choices.length; i++)
@@ -184,17 +187,17 @@ public class View extends JFrame implements Observer {
 						panel[3].setVisible(true);
 						panel[4].setVisible(true);
 						
-						panel[3].remove(bouton1);
-						panel[3].remove(bouton2);
-						panel[4].remove(portserver);
-						panel[4].remove(porttext);
+						panel[3].remove(buttonServerCreate);
+						panel[3].remove(buttonServerStart);
+						panel[4].remove(portServer);
+						panel[4].remove(portText);
 						panel[4].remove(comboPanel2);
 						
 						panel[3].add(bouton);
-						panel[4].add(ipserver);
-						panel[4].add(iptext);
-						panel[4].add(portserver);
-						panel[4].add(porttext);
+						panel[4].add(ipServer);
+						panel[4].add(ipText);
+						panel[4].add(portServer);
+						panel[4].add(portText);
 						panel[4].validate();
 						panel[4].repaint();
 						panel[3].validate();
@@ -209,13 +212,13 @@ public class View extends JFrame implements Observer {
 						panel[4].setVisible(true);
 						
 						panel[3].remove(bouton);
-						panel[4].remove(ipserver);
-					    panel[4].remove(iptext);
+						panel[4].remove(ipServer);
+					    panel[4].remove(ipText);
 						
-					    panel[3].add(bouton1);
-						panel[3].add(bouton2);
-						panel[4].add(portserver);
-						panel[4].add(porttext);
+					    panel[3].add(buttonServerCreate);
+						panel[3].add(buttonServerStart);
+						panel[4].add(portServer);
+						panel[4].add(portText);
 						panel[4].add(comboPanel2);
 						panel[4].validate();
 						panel[4].repaint();
@@ -230,12 +233,12 @@ public class View extends JFrame implements Observer {
 						panel[3].setVisible(false);
 						panel[4].setVisible(false);
 						panel[3].remove(bouton);
-						panel[4].remove(ipserver);
-						panel[4].remove(iptext);
-						panel[3].remove(bouton1);
-						panel[3].remove(bouton2);
-						panel[4].remove(portserver);
-						panel[4].remove(porttext);
+						panel[4].remove(ipServer);
+						panel[4].remove(ipText);
+						panel[3].remove(buttonServerCreate);
+						panel[3].remove(buttonServerStart);
+						panel[4].remove(portServer);
+						panel[4].remove(portText);
 						panel[4].remove(comboPanel2);
 						panel[4].validate();
 						panel[4].repaint();
@@ -253,18 +256,18 @@ public class View extends JFrame implements Observer {
    public void update(Observable obs, Object arg) {
       
       if (obs instanceof ServerIpObservers){
-         ipAdress.setText(model.getRole().getIpAddress());
+         ipAddress.setText(model.getRole().getIpAddress());
          repaint();
       }
       
       if(obs instanceof ScreenObservers) {
          bouton.setText((String)arg);
-         bouton1.setText((String)arg);
+         buttonServerCreate.setText((String)arg);
          repaint();
       }
 
       if (obs instanceof StartObservers) {
-         bouton2.setEnabled(true);
+         buttonServerStart.setEnabled(true);
       }
       
    }

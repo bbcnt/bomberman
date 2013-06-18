@@ -12,7 +12,6 @@ public class PlayerNetworkData implements Serializable {
    private int orientation; // 0 up, 1 left, 2 down, 3 right
    private int posX;
    private int posY;
-   private int number;
    private boolean alive;
    private int firePower;
    private int bombAmt;
@@ -22,7 +21,6 @@ public class PlayerNetworkData implements Serializable {
       orientation = p.getOrientation();
       posX = p.X();
       posY = p.Y();
-      number = 234;
       alive = p.alive;
       firePower = p.getFirePower();
       bombAmt = p.getBombAmt();
@@ -50,12 +48,6 @@ public class PlayerNetworkData implements Serializable {
       return posY;
    }
 
-   /**
-    * @return the number
-    */
-   protected int getNumber() {
-      return number;
-   }
 
    /**
     * @return the alive
