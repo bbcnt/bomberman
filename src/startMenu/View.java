@@ -103,8 +103,9 @@ public class View extends JFrame implements Observer {
 		backPanel.setLayout(new GridLayout(6, 1));//position du bouton
 	   
 		comboPanel2.addItem("--");
-		comboPanel2.setEditable(false); // sélection de la carte prévue, mais pas encore implémentée
+		comboPanel2.setEditable(true);
 		comboPanel2.setMaximumRowCount(4);
+		comboPanel2.setVisible(false); // sélection de la carte prévue, mais pas encore implémentée
 		
 		panel[0] = new JPanel();
 		panel[1] = new JPanel();
