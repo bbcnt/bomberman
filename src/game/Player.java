@@ -17,9 +17,6 @@ public class Player {
    private int firePower;
    private int bombAmt;
 
-   
-   private PlayerNetworkData networkData;
-
 	
     public Player(Image[] image, int x, int y, int number)
     {
@@ -54,7 +51,6 @@ public class Player {
     private synchronized void setNumber(int number) {this.number = number;}
     
     public void networkUpdate(PlayerNetworkData networkData) {
-       this.networkData = networkData;
        this.setX(networkData.getPosX());
        this.setY(networkData.getPosY());
        this.setAlive(networkData.isAlive());
