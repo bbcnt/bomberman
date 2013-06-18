@@ -18,8 +18,8 @@ public class Play extends BasicGameState {
 	private Image destructible;
 	private Image background;
 	private Image imagetest;
-   private Image bonusBombAmt;
-   private Image bonusBombRadius;
+	private Image bonusBombAmt;
+	private Image bonusBombRadius;
 	private Image imageBombe;
 	private Image[] hero1;
 	private Image[] hero2;
@@ -28,8 +28,8 @@ public class Play extends BasicGameState {
 	private int[][] tmpBoom = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] Bloc = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] bonusMatrix = new int[Map.WIDTH][Map.HEIGHT];
-	boolean mort = false;
-	private Music mainMusic;
+	private Boolean[] mort;
+
 	
 	private Map map = null;
 	private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
@@ -39,6 +39,9 @@ public class Play extends BasicGameState {
 	private Player p1;
 	private Player p2;
 	private Role networkAccess;
+	
+	private Music mainMusic;
+	private Music gameOverMusic;
 	
 	public Play(int state, Role networkAccess){
 	   this.networkAccess = networkAccess; 
@@ -57,8 +60,8 @@ public class Play extends BasicGameState {
 		imagetest = new Image("res/bonus_bomb_amt.png");
 		hero1 = new Image[4];
 		hero2 = new Image[4];
-	   bonusBombAmt =  new Image("res/bonus_bomb_amt.png");
-	   bonusBombRadius = new Image("res/bonus_radius.png");
+	    bonusBombAmt =  new Image("res/bonus_bomb_amt.png");
+	    bonusBombRadius = new Image("res/bonus_radius.png");
 		
 		hero1[0] = new Image("res/hero_down.png");
 		hero1[1] = new Image("res/hero_up.png");
@@ -72,16 +75,20 @@ public class Play extends BasicGameState {
 		
 		imageBombe = new Image("res/bomb.png");
 
-      mainMusic = new Music("res/mainMusic.ogg");
-      mainMusic.loop();
+		mainMusic = new Music("res/mainMusic.ogg");
+		gameOverMusic = new Music("res/gameOver.ogg");
+		mainMusic.loop();
 		
-		p1 = new Player(hero1, 1, 1, 1);
-		p2 = new Player(hero2, 25, 17, 2);
-      if(networkAccess.amITheServer())
-         p = p1;
-      else
-         p = p2;
+		p1 = new Player(hero1, 1, 1, 0);
+		p2 = new Player(hero2, 25, 17, 1);
+		if(networkAccess.amITheServer())
+			p = p1;
+		else
+			p = p2;
 		
+		mort = new Boolean[2];
+		mort[0] = false;
+		mort[1] = false;
 		
 		playerList = new Player[2];
 		playerList[0] = p1;
@@ -244,6 +251,19 @@ public class Play extends BasicGameState {
 				
 		}
 
+		if(mort[p.getNumber()])
+		{
+			mainMusic.stop();
+			gameOverMusic.loop();
+			sbg.enterState(2);
+		}
+			
+		if(mort[(p.getNumber() +1) % 2])
+		{
+			mainMusic.stop();
+			sbg.enterState(0);
+		}
+		
 		for(Player p : playerList)
 		{
 		   if (!p.alive) {
@@ -313,7 +333,7 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X() && p.Y() == (f.Y()-i))
 							{
-								mort = true;
+								mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -333,7 +353,7 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X()+i && p.Y() == (f.Y()))
 							{
-								mort = true;
+								mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -352,7 +372,7 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X() && p.Y() == (f.Y()+i))
 							{
-								mort = true;
+								mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -371,7 +391,7 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X()-i && p.Y() == (f.Y()))
 							{
-								mort = true;
+								mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -384,7 +404,7 @@ public class Play extends BasicGameState {
 						movesMatrix[f.X()][f.Y()] = true;
 						if(p.X() == f.X() && p.Y() == (f.Y()))
 						{
-							mort = true;
+							mort[p.getNumber()] = true;
 						}
 					}
 				}
@@ -492,7 +512,7 @@ public class Play extends BasicGameState {
 				explosion = true;
 				hasChanged = true;
 			}
-			if(mort){
+			if(mort[p.getNumber()]){
 				p.alive = false;
 			}
 		}

@@ -15,6 +15,7 @@ public class PlayerNetworkData implements Serializable {
    private boolean alive;
    private int firePower;
    private int bombAmt;
+   private int number;
    
    
    public PlayerNetworkData(Player p) {
@@ -24,6 +25,7 @@ public class PlayerNetworkData implements Serializable {
       alive = p.alive;
       firePower = p.getFirePower();
       bombAmt = p.getBombAmt();
+      number = p.getNumber();
    }
    
    
@@ -75,6 +77,14 @@ public class PlayerNetworkData implements Serializable {
     */
    protected static long getSerialversionuid() {
       return serialVersionUID;
+   }
+
+
+   /**
+    * @return the number
+    */
+   public int getNumber() {
+      return number;
    }
   
 }
