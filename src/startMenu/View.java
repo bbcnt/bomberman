@@ -36,7 +36,7 @@ public class View extends JFrame implements Observer {
 	private JLabel portserver = new JLabel("Port:");
 	private Font titreFont = new Font ("Serif", Font.BOLD | Font.ITALIC,64);
 	private Font ipFont = new Font ("Serif", Font.BOLD | Font.ITALIC,40);
-   private String filename = new String("Bomberman2.jpg");
+   private String filename = new String("res/Bomberman2.jpg");
    private JTextField iptext = new JTextField(10);
    private JTextField porttext = new JTextField(10);
    private JPanel[] panel = new JPanel[5];
@@ -63,7 +63,7 @@ public class View extends JFrame implements Observer {
 		ipserver.setForeground(Color.magenta);
 		portserver.setForeground(Color.magenta);
 			try {
-				titre.setIcon(new ImageIcon(ImageIO.read( new File("logo.gif") ) ));
+				titre.setIcon(new ImageIcon(ImageIO.read( new File("res/logo.gif") ) ));
 				
 			} catch (IOException e) {
 				e.printStackTrace();
