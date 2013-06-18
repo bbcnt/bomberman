@@ -18,6 +18,7 @@ import java.util.Observer;
 import role.*;
 import startMenu.Model.ScreenObservers;
 import startMenu.Model.ServerIpObservers;
+import startMenu.Model.StartObservers;
 
 public class View extends JFrame implements Observer {
 	 
@@ -75,11 +76,11 @@ public class View extends JFrame implements Observer {
 		bouton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            if (model.getRole().getConnected()) {
-               model.getRole().send("POKE" + pokeCounter++);
-            } else {
+            if (!model.getRole().getConnected()) {
                ((ClientRole)model.getRole()).connectServer(iptext.getText(), Integer.valueOf(porttext.getText()));
-               model.StartGame(Game.gameName);
+               while (!model.getRole().getConnected()) { } // attendre jusqu'à ce que la connexion soit établie.
+               model.getRole().send("clientConnected");
+               bouton.setEnabled(false);
             }
          }
 		});
@@ -88,20 +89,19 @@ public class View extends JFrame implements Observer {
 		bouton1.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent arg0) {
-            if (model.getRole().getConnected()) {
-               model.getRole().send("POKE" + pokeCounter++);
-            } else {
+            if (!model.getRole().getConnected()) {
                ((ServerRole)model.getRole()).startServer(Integer.valueOf(porttext.getText()));
+               bouton1.setEnabled(false);
             }
          }
 		});
 		bouton2.setPreferredSize(new Dimension(100, 40));
-		bouton2.setEnabled(true);
+		bouton2.setEnabled(false);
 		bouton2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					model.StartGame(Game.gameName);	
-					
+            ((ServerRole)model.getRole()).send("startGame");
+				model.StartGame(Game.gameName);	
 			}
 		});
 		ImagePanel backPanel = new ImagePanel(filename);
@@ -255,12 +255,17 @@ public class View extends JFrame implements Observer {
       if (obs instanceof ServerIpObservers){
          ipAdress.setText(model.getRole().getIpAddress());
          repaint();
-      } else if(obs instanceof ScreenObservers) {
+      }
+      
+      if(obs instanceof ScreenObservers) {
          bouton.setText((String)arg);
          bouton1.setText((String)arg);
          repaint();
       }
 
+      if (obs instanceof StartObservers) {
+         bouton2.setEnabled(true);
+      }
       
    }
 

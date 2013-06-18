@@ -3,11 +3,12 @@ package role;
 import game.BlocNetworkData;
 import game.BombNetworkData;
 import game.BonusNetworkData;
+import game.Game;
 import game.Player;
 import game.PlayerNetworkData;
 import network.Receiver;
 import startMenu.Model;
-
+ 
 /**
  * Cette class représente un rôle du joueur dans le jeu
  * @author Julien Bignens
@@ -81,29 +82,42 @@ public abstract class Role implements Receiver {
    @Override
    public void recieve(Object message) {
 
-      Player other = null;
-      if (amITheServer()) {
-         other = model.getGame().getPlaySession().getP2();
-      } else {
-         other = model.getGame().getPlaySession().getP1();
-      }
+      if (message instanceof String) {
+         switch ((String)message) {
+         case "startGame":
+            model.StartGame(Game.gameName);
+         case "clientConnected":
+            model.getStartObservers().notifyAllObservers();
+         }
+      } 
       
-      if (message instanceof PlayerNetworkData) {
-         other.networkUpdate((PlayerNetworkData)message);
+      if (model.getGame() != null) {
+         Player other = null;
+         if (amITheServer()) {
+            other = model.getGame().getPlaySession().getP2();
+         } else {
+            other = model.getGame().getPlaySession().getP1();
+         }
+         
+         if (message instanceof PlayerNetworkData) {
+            other.networkUpdate((PlayerNetworkData)message);
+         }
+         
+         if (message instanceof BombNetworkData) {
+            BombNetworkData bomb = (BombNetworkData)message;
+            model.getGame().getPlaySession().networkUpdate(bomb);
+         }
+         
+         if (message instanceof BlocNetworkData) {
+            model.getGame().getPlaySession().networkUpdate((BlocNetworkData)message);
+         }
+         
+         if (message instanceof BonusNetworkData) {
+            model.getGame().getPlaySession().networkUpdate((BonusNetworkData)message);
+         }
+         
       }
-      
-      if (message instanceof BombNetworkData) {
-         BombNetworkData bomb = (BombNetworkData)message;
-         model.getGame().getPlaySession().networkUpdate(bomb);
-      }
-      
-      if (message instanceof BlocNetworkData) {
-         model.getGame().getPlaySession().networkUpdate((BlocNetworkData)message);
-      }
-      
-      if (message instanceof BonusNetworkData) {
-         model.getGame().getPlaySession().networkUpdate((BonusNetworkData)message);
-      }
+
    }
    
    /**

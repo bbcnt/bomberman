@@ -8,6 +8,7 @@ public class Controller {
       View view = new View(model);
       model.addServerIpObserver(view);
       model.addScreenObserver(view);
+      model.addStartObserver(view);
      
    }
 

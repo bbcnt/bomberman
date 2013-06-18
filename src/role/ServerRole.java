@@ -30,7 +30,7 @@ public class ServerRole extends Role {
       server = new Server(this);
       server.startServer(port);
       super.setConnected(true);
-      this.getModel().setScreen("started");
+      this.getModel().setScreen("demarré");
    }
    
    /* (non-Javadoc)

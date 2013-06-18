@@ -29,7 +29,7 @@ public class ClientRole extends Role {
       client = new Client(this);
       client.connect(serverIp, serverPort);
       super.setConnected(true);
-      this.getModel().setScreen("connected");
+      this.getModel().setScreen("connecté");
    }
    
    /* (non-Javadoc)

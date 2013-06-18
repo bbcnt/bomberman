@@ -11,17 +11,25 @@ public class Model {
    private Role role;
    private ServerIpObservers serverIpObservers;
    private ScreenObservers screenObservers;
+   private StartObservers startObservers;
    private String screen;
    private Game game;
    
-   class ServerIpObservers extends Observable {
+   public class ServerIpObservers extends Observable {
       public void notifyAllObservers() {
          setChanged();
          notifyObservers(role.getIpAddress());
       }
    }
    
-   class ScreenObservers extends Observable {
+   public class ScreenObservers extends Observable {
+      public void notifyAllObservers() {
+         setChanged();
+         notifyObservers(screen);
+      } 
+   }
+   
+   public class StartObservers extends Observable {
       public void notifyAllObservers() {
          setChanged();
          notifyObservers(screen);
@@ -31,6 +39,7 @@ public class Model {
    public Model() {
       serverIpObservers = new ServerIpObservers();
       screenObservers = new ScreenObservers();
+      startObservers = new StartObservers();
    }
       
    public Role getRole() {
@@ -49,6 +58,13 @@ public class Model {
     */
    public void addScreenObserver(View view) {
       this.screenObservers.addObserver(view);
+   }
+   
+   /**
+    * @param view the view to set
+    */
+   public void addStartObserver(View view) {
+      this.startObservers.addObserver(view);
    }
    
    public void setRoleToClient() {
@@ -96,5 +112,13 @@ public class Model {
    public Game getGame() {
       return game;
    }
+
+   /**
+    * @return the startObservers
+    */
+   public StartObservers getStartObservers() {
+      return startObservers;
+   }
+   
    
 }
