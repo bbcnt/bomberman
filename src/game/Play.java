@@ -233,6 +233,7 @@ public class Play extends BasicGameState {
 		if(!playerList[p.getNumber()].alive && 
 				playerList[(p.getNumber() +1 ) % 2].alive)
 		{
+			networkAccess.send(new PlayerNetworkData(p));
 			mainMusic.stop();
 			gameOverMusic.loop();
 			sbg.enterState(2);
