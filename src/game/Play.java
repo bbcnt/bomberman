@@ -230,14 +230,16 @@ public class Play extends BasicGameState {
 	
 	private void testDead(StateBasedGame sbg)
 	{
-		if(mort[p.getNumber()])
+		if(!playerList[p.getNumber()].alive && 
+				playerList[(p.getNumber() +1 ) % 2].alive)
 		{
 			mainMusic.stop();
 			gameOverMusic.loop();
 			sbg.enterState(2);
+
 		}
-			
-		if(mort[(p.getNumber() +1) % 2])
+		if(playerList[p.getNumber()].alive && 
+				!playerList[(p.getNumber() + 1) % 2].alive)
 		{
 			mainMusic.stop();
 			gameWinMusic.loop();
@@ -341,7 +343,8 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X() && p.Y() == (f.Y()-i))
 							{
-								mort[p.getNumber()] = true;
+								playerList[p.getNumber()].alive = false;
+								//mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -361,7 +364,8 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X()+i && p.Y() == (f.Y()))
 							{
-								mort[p.getNumber()] = true;
+								playerList[p.getNumber()].alive = false;
+								//mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -380,7 +384,8 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X() && p.Y() == (f.Y()+i))
 							{
-								mort[p.getNumber()] = true;
+								playerList[p.getNumber()].alive = false;
+								//mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -399,7 +404,8 @@ public class Play extends BasicGameState {
 							}
 							if(p.X() == f.X()-i && p.Y() == (f.Y()))
 							{
-								mort[p.getNumber()] = true;
+								playerList[p.getNumber()].alive = false;
+								//mort[p.getNumber()] = true;
 							}
 						}
 						else
@@ -412,7 +418,8 @@ public class Play extends BasicGameState {
 						movesMatrix[f.X()][f.Y()] = true;
 						if(p.X() == f.X() && p.Y() == (f.Y()))
 						{
-							mort[p.getNumber()] = true;
+							playerList[p.getNumber()].alive = false;
+							//mort[p.getNumber()] = true;
 						}
 					}
 				}
@@ -520,9 +527,9 @@ public class Play extends BasicGameState {
 				explosion = true;
 				hasChanged = true;
 			}
-			if(mort[p.getNumber()]){
-				p.alive = false;
-			}
+			/*if(mort[p.getNumber()]){
+				playerList[p.getNumber()].alive = false;
+			}*/
 		}
 		if (hasChanged) {
 		    networkAccess.send(new PlayerNetworkData(p));

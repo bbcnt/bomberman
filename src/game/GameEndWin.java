@@ -16,18 +16,12 @@ public class GameEndWin extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg) 
 			throws SlickException {
 		
-		ready = new Image("res/ready.png");
-		background = new Image("res/menu_background.png");
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		
-		
-		g.drawImage(background, 0, 0);
-		g.drawString("Are you ready?", 330, 150);
-		g.drawImage(ready, 300, 220);
 	}
 
 	@Override
