@@ -522,8 +522,8 @@ public class Play extends BasicGameState {
 				explosion = true;
 				hasChanged = true;
 			}
-			/*if(mort[p.getNumber()]){
-				playerList[p.getNumber()].alive = false;
+			/*if(mort[p.getNumber()]){ 
+				playerList[p.getNumber()].alive = false; 
 			}*/
 		}
 
