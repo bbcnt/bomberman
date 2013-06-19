@@ -236,6 +236,7 @@ public class Play extends BasicGameState {
 			mainMusic.stop();
 			gameOverMusic.loop();
 			sbg.enterState(2);
+			System.out.println("un est mort");
 
 		}
 		if(playerList[p.getNumber()].alive && 
@@ -271,8 +272,6 @@ public class Play extends BasicGameState {
 				
 		}
 
-		//On test si un des 2 joueurs est mort
-		testDead(sbg);
 		
 		for(Player p : playerList)
 		{
@@ -301,10 +300,6 @@ public class Play extends BasicGameState {
 			}
 		}
 		
-		if(!p.alive)
-		{
-			g.drawImage(new Image("res/test-1.png"), 10 * 30, 10 * 30);
-		}
 				
 		if(!(bombList.isEmpty()))
 		{
@@ -531,6 +526,11 @@ public class Play extends BasicGameState {
 				playerList[p.getNumber()].alive = false;
 			}*/
 		}
+
+		//On test si un des 2 joueurs est mort
+		System.out.println(playerList[(p.getNumber() + 1) % 2].alive);
+		testDead(sbg);
+		
 		if (hasChanged) {
 		    networkAccess.send(new PlayerNetworkData(p));
 		    networkAccess.send(new BlocNetworkData(Bloc));
