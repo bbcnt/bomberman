@@ -13,6 +13,7 @@ public class Play extends BasicGameState {
 	
    static boolean explosion = false;
    static boolean firstTime = true;
+   static final int MAX_ITEM = 5;
    
 	private Image indestructible;
 	private Image destructible;
@@ -28,7 +29,6 @@ public class Play extends BasicGameState {
 	private int[][] tmpBoom = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] Bloc = new int[Map.WIDTH][Map.HEIGHT];
 	private int[][] bonusMatrix = new int[Map.WIDTH][Map.HEIGHT];
-	private Boolean[] mort;
 
 	
 	private Map map = null;
@@ -50,7 +50,8 @@ public class Play extends BasicGameState {
 	}
 	
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) 
+			throws SlickException {
 		
 		map = new Map();
 		map.initMap();
@@ -87,10 +88,6 @@ public class Play extends BasicGameState {
 			p = p1;
 		else
 			p = p2;
-		
-		mort = new Boolean[2];
-		mort[0] = false;
-		mort[1] = false;
 		
 		playerList = new Player[2];
 		playerList[0] = p1;
@@ -161,7 +158,7 @@ public class Play extends BasicGameState {
       coordY = 0 + r.nextInt(Map.HEIGHT);
       bonusType = 1 + r.nextInt(2);
       
-      int bonusAmt = 20; // 20 max, parfois moins car 2 fois le même tirage
+      int bonusAmt = 25; // 25 max, parfois moins car 2 fois le même tirage
       
       while(bonusPlaced < bonusAmt)
       {
@@ -221,10 +218,33 @@ public class Play extends BasicGameState {
 	{
 		g.drawImage(new Image("res/score.png"), 0, 570);
 		
+		if(p1.getBombAmt() == 0)
+			g.setColor(Color.red);
+		else if(p1.getBombAmt() == MAX_ITEM)
+			g.setColor(Color.green);
+		else
+			g.setColor(Color.white);
+		
 		g.drawString(" : " + p1.getBombAmt(), 45, 615);
+		
+		if(p1.getFirePower() == MAX_ITEM)
+			g.setColor(Color.green);
+		else
+			g.setColor(Color.white);
 		g.drawString(" : " + p1.getFirePower(), 200, 615);
 		
+		if(p2.getBombAmt() == 0)
+			g.setColor(Color.red);
+		else if(p2.getBombAmt() == MAX_ITEM)
+			g.setColor(Color.green);
+		else
+			g.setColor(Color.white);
 		g.drawString(" : " + p2.getBombAmt(), 450, 615);
+		
+		if(p2.getFirePower() == MAX_ITEM)
+			g.setColor(Color.green);
+		else
+			g.setColor(Color.white);	
 		g.drawString(" : " + p2.getFirePower(), 590, 615);
 	}
 	
@@ -329,9 +349,11 @@ public class Play extends BasicGameState {
 					for(int i = 1; i <= f.getRadius() ; i++)
 					{
 
-						if(top && (movesMatrix[f.X()][f.Y()-i] || Bloc[f.X()][f.Y()-i] == 2))
+						if(top && (movesMatrix[f.X()][f.Y()-i] || 
+								Bloc[f.X()][f.Y()-i] == 2))
 						{
-							g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()-i) * Map.ELEMENT_SIZE);
+							g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, 
+									            (f.Y()-i) * Map.ELEMENT_SIZE);
 							movesMatrix[f.X()][f.Y()-i] = true;
 							if(Bloc[f.X()][f.Y()-i] == 2)
 							{
@@ -339,10 +361,7 @@ public class Play extends BasicGameState {
 								tmpBoom[f.X()][f.Y()-i] = 0;
 							}
 							if(p.X() == f.X() && p.Y() == (f.Y()-i))
-							{
 								playerList[p.getNumber()].alive = false;
-								//mort[p.getNumber()] = true;
-							}
 						}
 						else
 						{
@@ -350,9 +369,11 @@ public class Play extends BasicGameState {
 						}
 						
 
-						if(right && (movesMatrix[f.X()+i][f.Y()] || Bloc[f.X()+i][f.Y()] == 2))
+						if(right && (movesMatrix[f.X()+i][f.Y()] || 
+								Bloc[f.X()+i][f.Y()] == 2))
 						{
-							g.drawImage(f.fire, (f.X()+i) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
+							g.drawImage(f.fire, (f.X()+i) * Map.ELEMENT_SIZE, 
+									            (f.Y()) * Map.ELEMENT_SIZE);
 							movesMatrix[f.X()+i][f.Y()] = true;
 							if(Bloc[f.X()+i][f.Y()] == 2)
 							{
@@ -360,19 +381,18 @@ public class Play extends BasicGameState {
 								tmpBoom[f.X()+i][f.Y()] = 0;
 							}
 							if(p.X() == f.X()+i && p.Y() == (f.Y()))
-							{
 								playerList[p.getNumber()].alive = false;
-								//mort[p.getNumber()] = true;
-							}
 						}
 						else
 						{
 							right = false;
 						}
 
-						if(down && (movesMatrix[f.X()][f.Y()+i] || Bloc[f.X()][f.Y()+i] == 2))
+						if(down && (movesMatrix[f.X()][f.Y()+i] || 
+								Bloc[f.X()][f.Y()+i] == 2))
 						{
-							g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()+i) * Map.ELEMENT_SIZE);
+							g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, 
+									            (f.Y()+i) * Map.ELEMENT_SIZE);
 							movesMatrix[f.X()][f.Y()+i] = true;
 							if(Bloc[f.X()][f.Y()+i] == 2)
 							{
@@ -380,19 +400,18 @@ public class Play extends BasicGameState {
 								tmpBoom[f.X()][f.Y()+i] = 0;
 							}
 							if(p.X() == f.X() && p.Y() == (f.Y()+i))
-							{
 								playerList[p.getNumber()].alive = false;
-								//mort[p.getNumber()] = true;
-							}
 						}
 						else
 						{
 							down = false;
 						}
 
-						if(left && (movesMatrix[f.X()-i][f.Y()] || Bloc[f.X()-i][f.Y()] == 2))
+						if(left && (movesMatrix[f.X()-i][f.Y()] || 
+								Bloc[f.X()-i][f.Y()] == 2))
 						{
-							g.drawImage(f.fire, (f.X()-i) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
+							g.drawImage(f.fire, (f.X()-i) * Map.ELEMENT_SIZE, 
+									            (f.Y()) * Map.ELEMENT_SIZE);
 							movesMatrix[f.X()-i][f.Y()] = true;
 							if(Bloc[f.X()-i][f.Y()] == 2)
 							{
@@ -400,10 +419,7 @@ public class Play extends BasicGameState {
 								tmpBoom[f.X()-i][f.Y()] = 0;
 							}
 							if(p.X() == f.X()-i && p.Y() == (f.Y()))
-							{
 								playerList[p.getNumber()].alive = false;
-								//mort[p.getNumber()] = true;
-							}
 						}
 						else
 						{
@@ -411,13 +427,11 @@ public class Play extends BasicGameState {
 						}
 						
 					
-						g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, (f.Y()) * Map.ELEMENT_SIZE);
+						g.drawImage(f.fire, (f.X()) * Map.ELEMENT_SIZE, 
+								            (f.Y()) * Map.ELEMENT_SIZE);
 						movesMatrix[f.X()][f.Y()] = true;
 						if(p.X() == f.X() && p.Y() == (f.Y()))
-						{
 							playerList[p.getNumber()].alive = false;
-							//mort[p.getNumber()] = true;
-						}
 					}
 				}
 			}
@@ -441,9 +455,11 @@ public class Play extends BasicGameState {
 					hasChanged = true;
 	             if(bonusMatrix[p.X()][p.Y()] != 0)
 	             {
-	                if(bonusMatrix[p.X()][p.Y()] == 1)
+	                if(bonusMatrix[p.X()][p.Y()] == 1 && 
+	                		p.getBombAmt() < MAX_ITEM)
 	                   p.setBombAmt(p.getBombAmt() +1);
-	                if(bonusMatrix[p.X()][p.Y()] == 2)
+	                if(bonusMatrix[p.X()][p.Y()] == 2 && 
+	                		p.getFirePower() < MAX_ITEM)
 	                   p.setFirePower(p.getFirePower() +1);
 	                bonusMatrix[p.X()][p.Y()] = 0;
 	             }
@@ -457,9 +473,11 @@ public class Play extends BasicGameState {
 					hasChanged = true;
 	              if(bonusMatrix[p.X()][p.Y()] != 0)
 	                {
-	                   if(bonusMatrix[p.X()][p.Y()] == 1)
+	                   if(bonusMatrix[p.X()][p.Y()] == 1 && 
+	                		   p.getBombAmt() < MAX_ITEM)
 	                      p.setBombAmt(p.getBombAmt() +1);
-	                   if(bonusMatrix[p.X()][p.Y()] == 2)
+	                   if(bonusMatrix[p.X()][p.Y()] == 2 && 
+	                		   p.getFirePower() < MAX_ITEM)
 	                      p.setFirePower(p.getFirePower() +1);
 	                   bonusMatrix[p.X()][p.Y()] = 0;
 	                }
@@ -473,9 +491,11 @@ public class Play extends BasicGameState {
 					hasChanged = true;
                if(bonusMatrix[p.X()][p.Y()] != 0)
                {
-                  if(bonusMatrix[p.X()][p.Y()] == 1)
+                  if(bonusMatrix[p.X()][p.Y()] == 1 && 
+                		  p.getBombAmt() < MAX_ITEM)
                      p.setBombAmt(p.getBombAmt() +1);
-                  if(bonusMatrix[p.X()][p.Y()] == 2)
+                  if(bonusMatrix[p.X()][p.Y()] == 2 && 
+                		  p.getFirePower() < MAX_ITEM)
                      p.setFirePower(p.getFirePower() +1);
                   bonusMatrix[p.X()][p.Y()] = 0;
                }
@@ -489,9 +509,11 @@ public class Play extends BasicGameState {
 					hasChanged = true;
                if(bonusMatrix[p.X()][p.Y()] != 0)
                {
-                  if(bonusMatrix[p.X()][p.Y()] == 1)
+                  if(bonusMatrix[p.X()][p.Y()] == 1 && 
+                		  p.getBombAmt() < MAX_ITEM)
                      p.setBombAmt(p.getBombAmt() +1);
-                  if(bonusMatrix[p.X()][p.Y()] == 2)
+                  if(bonusMatrix[p.X()][p.Y()] == 2 && 
+                		  p.getFirePower() < MAX_ITEM)
                      p.setFirePower(p.getFirePower() +1);
                   bonusMatrix[p.X()][p.Y()] = 0;
                }
@@ -503,7 +525,8 @@ public class Play extends BasicGameState {
 			{
 				bombList.add(new Bomb(new Image("res/bomb.png"), 5, 
                   p.getFirePower(), p, p.X(), p.Y()));
-				networkAccess.send(new BombNetworkData(p.getFirePower(), p.X(), p.Y()));
+				networkAccess.send(new BombNetworkData(p.getFirePower(), 
+						p.X(), p.Y()));
 				p.setBombAmt(p.getBombAmt() - 1);
 				hasChanged = true;
 			}	
@@ -511,8 +534,9 @@ public class Play extends BasicGameState {
 		if(!bombList.isEmpty())
 		{
 			if(bombList.get(0).getExploded() == true) {
-				explosionList.add(new Fire(new Image("res/Boom.png"),
-						3, bombList.get(0).getRadius(), bombList.get(0).X(), bombList.get(0).Y()));
+				explosionList.add(new Fire(new Image("res/explosion.png"),
+						3, bombList.get(0).getRadius(), bombList.get(0).X(), 
+						bombList.get(0).Y()));
 				bombList.remove(0);
 				hasChanged = true;
 			}
@@ -524,9 +548,6 @@ public class Play extends BasicGameState {
 				explosion = true;
 				hasChanged = true;
 			}
-			/*if(mort[p.getNumber()]){ 
-				playerList[p.getNumber()].alive = false; 
-			}*/
 		}
 
 		//On test si un des 2 joueurs est mort
@@ -562,7 +583,8 @@ public class Play extends BasicGameState {
       } else {
          other = p1;
       }
-      bombList.add(new Bomb(imageBombe, 5, bomb.getRadius(), other, bomb.getX(), bomb.getY())); 
+      bombList.add(new Bomb(imageBombe, 5, bomb.getRadius(), other, 
+    		  bomb.getX(), bomb.getY())); 
    }
    
    public void networkUpdate(BlocNetworkData blocNetworkData) {
