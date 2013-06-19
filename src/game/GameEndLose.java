@@ -3,8 +3,6 @@ package game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-import sun.java2d.pipe.DrawImage;
-
 public class GameEndLose extends BasicGameState{
 
 	private Image gameLose;
