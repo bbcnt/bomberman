@@ -42,6 +42,7 @@ public class Play extends BasicGameState {
 	
 	private Music mainMusic;
 	private Music gameOverMusic;
+	private Music gameWinMusic;
 	
 	public Play(int state, Role networkAccess){
 	   this.networkAccess = networkAccess; 
@@ -77,6 +78,7 @@ public class Play extends BasicGameState {
 
 		mainMusic = new Music("res/mainMusic.ogg");
 		gameOverMusic = new Music("res/gameOver.ogg");
+		gameWinMusic = new Music("res/VictoryMusic.ogg");
 		mainMusic.loop();
 		
 		p1 = new Player(hero1, 1, 1, 0);
@@ -226,6 +228,22 @@ public class Play extends BasicGameState {
 		g.drawString(" : " + p2.getFirePower(), 590, 615);
 	}
 	
+	private void testDead(StateBasedGame sbg)
+	{
+		if(mort[p.getNumber()])
+		{
+			mainMusic.stop();
+			gameOverMusic.loop();
+			sbg.enterState(2);
+		}
+			
+		if(mort[(p.getNumber() +1) % 2])
+		{
+			mainMusic.stop();
+			gameWinMusic.loop();
+			sbg.enterState(0);
+		}
+	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -251,18 +269,8 @@ public class Play extends BasicGameState {
 				
 		}
 
-		if(mort[p.getNumber()])
-		{
-			mainMusic.stop();
-			gameOverMusic.loop();
-			sbg.enterState(2);
-		}
-			
-		if(mort[(p.getNumber() +1) % 2])
-		{
-			mainMusic.stop();
-			sbg.enterState(0);
-		}
+		//On test si un des 2 joueurs est mort
+		testDead(sbg);
 		
 		for(Player p : playerList)
 		{
