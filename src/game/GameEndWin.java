@@ -6,22 +6,20 @@ import org.newdawn.slick.state.*;
 
 public class GameEndWin extends BasicGameState{
 
-	public String mouse ="No input";
-	Image ready = null;
-	Image background = null;
+	private Image gameWin;
 	public GameEndWin(int state){
 		
 	}
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) 
 			throws SlickException {
-		
+		gameWin = new Image("res/gameWin.png");
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		
+		g.drawImage(gameWin, 0, 0);
 	}
 
 	@Override
@@ -36,8 +34,7 @@ public class GameEndWin extends BasicGameState{
 			{
 				sbg.enterState(1);
 			}
-		}
-			
+		}	
 	}
 
 	@Override

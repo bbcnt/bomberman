@@ -3,8 +3,11 @@ package game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
+import sun.java2d.pipe.DrawImage;
+
 public class GameEndLose extends BasicGameState{
 
+	private Image gameLose;
 	public GameEndLose(int state){
 		
 	}
@@ -12,6 +15,7 @@ public class GameEndLose extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg) 
 			throws SlickException {
 		
+		gameLose = new Image("res/gameOver.png");
 		
 	}
 
@@ -19,6 +23,7 @@ public class GameEndLose extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		
+		g.drawImage(gameLose, 0, 0);
 	}
 
 	@Override

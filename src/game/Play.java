@@ -243,6 +243,7 @@ public class Play extends BasicGameState {
 		if(playerList[p.getNumber()].alive && 
 				!playerList[(p.getNumber() + 1) % 2].alive)
 		{
+			//networkAccess.send(new PlayerNetworkData(p));
 			mainMusic.stop();
 			gameWinMusic.loop();
 			sbg.enterState(0);
@@ -529,7 +530,6 @@ public class Play extends BasicGameState {
 		}
 
 		//On test si un des 2 joueurs est mort
-		System.out.println(playerList[(p.getNumber() + 1) % 2].alive);
 		testDead(sbg);
 		
 		if (hasChanged) {
