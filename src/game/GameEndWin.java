@@ -4,12 +4,12 @@ import org.newdawn.slick.*;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.state.*;
 
-public class GameStart extends BasicGameState{
+public class GameEndWin extends BasicGameState{
 
 	public String mouse ="No input";
 	Image ready = null;
 	Image background = null;
-	public GameStart(int state){
+	public GameEndWin(int state){
 		
 	}
 	@Override

@@ -3,9 +3,9 @@ package game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-public class GameEnd extends BasicGameState{
+public class GameEndLose extends BasicGameState{
 
-	public GameEnd(int state){
+	public GameEndLose(int state){
 		
 	}
 	@Override
