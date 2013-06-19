@@ -76,6 +76,7 @@ public class View extends JFrame implements Observer {
                while (!model.getRole().getConnected()) { } // attendre jusqu'à ce que la connexion soit établie.
                //model.getRole().send("clientConnected");
                //bouton.setEnabled(false);
+               View.this.setVisible(false);
                model.StartGame(Game.gameName);
             }
          }
@@ -87,7 +88,7 @@ public class View extends JFrame implements Observer {
          public void actionPerformed(ActionEvent arg0) {
             if (!model.getRole().getConnected()) {
                ((ServerRole)model.getRole()).startServer(Integer.valueOf(portText.getText()));
-               //buttonServerCreate.setEnabled(false);
+               buttonServerCreate.setEnabled(false);
             }
          }
 		});
@@ -98,7 +99,8 @@ public class View extends JFrame implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
             //((ServerRole)model.getRole()).send("startGame");
-				model.StartGame(Game.gameName);	
+	           View.this.setVisible(false);
+			   model.StartGame(Game.gameName);
 			}
 		});
 		ImagePanel backPanel = new ImagePanel(filename);
