@@ -5,6 +5,14 @@ import org.newdawn.slick.state.*;
 
 import role.Role;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Game extends StateBasedGame {
 
 	public static final String gameName = "Bomberman 2013";

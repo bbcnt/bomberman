@@ -2,6 +2,14 @@ package game;
 
 import org.newdawn.slick.*;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Player {
    
    public Image hero_down;

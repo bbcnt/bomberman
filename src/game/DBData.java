@@ -1,5 +1,13 @@
 package game;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class DBData {
 	private int x;
 	private int y;

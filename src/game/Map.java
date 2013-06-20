@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import database.DBAccess;
 
 
+
 /***
  * Classe permettant de construire la carte du jeu.
  * Récupère les informations sur une BDD SQLite distante.
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
  */
+
 public class Map {
 	
 	//this.dbAccess = new DBAccess("jdbc:sqlite:Midas.sqlite3");

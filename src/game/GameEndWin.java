@@ -4,6 +4,14 @@ import org.newdawn.slick.*;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.state.*;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class GameEndWin extends BasicGameState{
 
 	private Image gameWin;

@@ -2,6 +2,14 @@ package game;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class BombNetworkData implements Serializable {
 
    /**

@@ -3,6 +3,14 @@ package game;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class GameEndLose extends BasicGameState{
 
 	private Image gameLose;

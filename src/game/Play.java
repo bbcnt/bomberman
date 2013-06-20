@@ -9,6 +9,14 @@ import org.newdawn.slick.state.*;
 
 import role.Role;
 
+/**
+ * 
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Play extends BasicGameState {
 	
    static boolean explosion = false;
