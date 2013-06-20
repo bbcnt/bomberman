@@ -99,7 +99,7 @@ public class View extends JFrame implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
             ((ServerRole)model.getRole()).send("startGame");
-	         View.this.setVisible(false);
+	         //View.this.setVisible(false);
 			   model.StartGame(Game.gameName);
 			}
 		});
