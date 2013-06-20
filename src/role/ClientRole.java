@@ -36,7 +36,7 @@ public class ClientRole extends Role {
     * @see role.Role#send()
     */
    @Override
-   public void send(Object message) {
+   public synchronized void send(Object message) {
       client.sendMessage(message);
    }
    
