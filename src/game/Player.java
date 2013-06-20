@@ -43,21 +43,97 @@ public class Player {
       
       
     }
-  
     
-    public int X() { return posX;}
-    public int Y() { return posY;}
-    public synchronized void setX(int x) { posX = x;}
-    public synchronized void setY(int y) { posY = y;}
-    public int getBombAmt(){ return bombAmt; }
-    public synchronized void setBombAmt(int a){ bombAmt = a;}
-    public int getFirePower() { return firePower; }
-    public synchronized void setFirePower(int fp) { firePower = fp;}
-    public int getOrientation() { return orientation; }
-    public int getNumber() { return number; }
-    public synchronized void setNumber(int n) { number = n; }
-    public synchronized void setOrientation(int o) { orientation = o;}
-    public synchronized void setAlive(boolean alive) {this.alive = alive;}
+    /**
+     * @return the timeLeft
+     */
+    public int X() {
+       return posX;
+    }
+    
+    /**
+     * @return the posY
+     */
+    public int Y() {
+       return posY;
+    }
+    
+    /**
+     * @param x the x to set
+     */
+    public synchronized void setX(int x) {
+       posX = x;
+    }
+    
+    /**
+     * @param y the y to set
+     */
+    public synchronized void setY(int y) {
+       posY = y;
+    }
+    
+    /**
+     * @return the bombAmt
+     */
+    public int getBombAmt(){
+       return bombAmt;
+    }
+    
+    /**
+     * @param a the bombAmt to set
+     */
+    public synchronized void setBombAmt(int a){
+       bombAmt = a;
+    }
+    
+    /**
+     * @return the firePower
+     */
+    public int getFirePower() {
+       return firePower;
+    }
+    
+    /**
+     * @param fp the firePower to set
+     */
+    public synchronized void setFirePower(int fp) {
+       firePower = fp;
+    }
+    
+    /**
+     * @return the orientation
+     */
+    public int getOrientation() {
+       return orientation;
+    }
+    
+    /**
+     * @return the number
+     */
+    public int getNumber() {
+       return number;
+    }
+    
+    /**
+     * @param n the number to set
+     */
+    public synchronized void setNumber(int n) {
+       number = n;
+    }
+    
+    /**
+     * @param o the orientation to set
+     */
+    public synchronized void setOrientation(int o) {
+       orientation = o;
+    }
+    
+    /**
+     * @param alive the alive to set
+     */
+    public synchronized void setAlive(boolean alive) {
+       this.alive = alive;
+    }
     
     /**
      * Méthode appelé par le récepteur de données du réseau qui met à jour le joueur

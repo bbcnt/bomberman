@@ -45,12 +45,47 @@ public class Fire extends TimerTask {
 			boom = true;
 	}
 
-	public int getTimeLeft(){ return timeLeft; }
-	public void setTimeLeft(int t){ timeLeft = t; }
-	public boolean getBoom() { return boom;}
-	public int getRadius() { return radius; }
-	public int X() { return x; }
-	public int Y() { return y; }
+	/**
+    * @return the timeLeft
+    */
+	public int getTimeLeft() {
+	   return timeLeft;
+	}
+	
+	/**
+    * @param t the timeLeft to set
+    */
+	public void setTimeLeft(int t) {
+	   timeLeft = t;
+	}
+	
+	/**
+    * @return the boom
+    */
+	public boolean getBoom() {
+	   return boom;
+	}
+	
+	/**
+    * @return the radius
+    */
+	public int getRadius() {
+	   return radius;
+	}
+	
+	/**
+    * @return the x
+    */
+	public int X() {
+	   return x;
+	}
+	
+	/**
+    * @return the y
+    */
+	public int Y() {
+	   return y;
+	}
 
 	@Override
 	public void run() {

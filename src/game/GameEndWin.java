@@ -54,6 +54,9 @@ public class GameEndWin extends BasicGameState{
 		}	
 	}
 
+   /**
+    * @return the le nombre d'état
+    */
 	@Override
 	public int getID() {
 		return 0;

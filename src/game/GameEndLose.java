@@ -47,6 +47,9 @@ public class GameEndLose extends BasicGameState{
 		
 	}
 
+	/**
+    * @return the le nombre d'état
+    */
 	@Override
 	public int getID() {
 		return 2;

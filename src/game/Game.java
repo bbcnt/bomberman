@@ -43,6 +43,9 @@ public class Game extends StateBasedGame {
 				
 	}
 
+	/**
+    * @return the playSession
+    */
 	public Play getPlaySession() {
 	   return playSession;
 	}
