@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Cette classe permet de transmettre les données nécessaires de la matrice
- * qui représente les blocs destructibles et indestructibles 
+ * qui contient les blocs destructibles et indestructibles 
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
@@ -13,9 +13,6 @@ import java.io.Serializable;
  */
 public class BlocNetworkData implements Serializable {
 
-   /**
-    * 
-    */
    private static final long serialVersionUID = 1L;
    private int[][] bloc;
    

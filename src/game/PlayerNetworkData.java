@@ -12,9 +12,6 @@ import java.io.Serializable;
  */
 public class PlayerNetworkData implements Serializable {
 
-   /**
-    * 
-    */
    private static final long serialVersionUID = 1L;
    
    private int orientation; // 0 up, 1 left, 2 down, 3 right

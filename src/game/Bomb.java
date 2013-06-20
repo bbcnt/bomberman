@@ -24,8 +24,6 @@ public class Bomb extends TimerTask {
 	private int y;
 	private boolean planted;
 	private Timer timer;
-
-	//private boolean directions[] = new boolean[4];
 	
 	public Bomb(Image image, int timeLeft, int radius, Player creator, int x, int y)
 	{
@@ -43,7 +41,7 @@ public class Bomb extends TimerTask {
 	}
 	
 	/**
-	 * Cette méthode détecte si le temps est découlé pour laisser exploser la bombe
+	 * Cette méthode détècte si le temps est découlé pour laisser exploser la bombe
 	 */
 	public void update()
 	{
@@ -63,14 +61,62 @@ public class Bomb extends TimerTask {
 		exploded = true;
 	}
 	
-	public int getTimeLeft(){ return timeLeft; }
-	public void setTimeLeft(int t){ timeLeft = t; }
-	public boolean getExploded() { return exploded;}
-	public int getRadius() { return radius; }
-	public int X() { return x; }
-	public int Y() { return y; }
-	public boolean isPlanted() { return planted; }
-	public void setPlanted(boolean b) { planted = b; }
+	/**
+	 * @return the timeLeft
+	 */
+	public int getTimeLeft()
+	{
+	   return timeLeft;
+	}
+	
+   /**
+    * @param t the timeLeft to set
+    */
+	public void setTimeLeft(int t){
+	   timeLeft = t;
+	}
+	
+	/**
+    * @return the exploded
+    */
+	public boolean getExploded() {
+	   return exploded;
+	}
+	
+	/**
+    * @return the radius
+    */
+	public int getRadius() {
+	   return radius;
+	   }
+	
+	/**
+    * @return the x
+    */
+	public int X() {
+	   return x;
+	}
+	
+	/**
+    * @return the y
+    */
+	public int Y() {
+	   return y;
+	}
+	
+	/**
+    * @return the planted
+    */
+	public boolean isPlanted() {
+	   return planted;
+	}
+	
+	/**
+	 * @param b the planted to set
+	 */
+	public void setPlanted(boolean b) {
+	   planted = b;
+	}
 
 	@Override
 	public void run() {

@@ -22,8 +22,6 @@ public class Fire extends TimerTask {
 	private int x;
 	private int y;
 	private Timer timer;
-
-	//private boolean directions[] = new boolean[4];
 	
 	public Fire(Image image, int timeLeft, int radius,  
 			int x, int y)
