@@ -59,6 +59,9 @@ public class Play extends BasicGameState {
 	
 	/**
 	 * Méthode de Slick: Méthode de Slick: Initialisation
+	 * @GameContainer gc, la fenêtre de Slick
+	 * @StateBasedGame sbg, l'état du jeu
+	 * @throws SlickException
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) 
@@ -103,8 +106,6 @@ public class Play extends BasicGameState {
 		playerList = new Player[2];
 		playerList[0] = p1;
 		playerList[1] = p2;
-		
-		//playerList = new ArrayList<Player>();
 	}
 
 	/*** 
@@ -113,7 +114,7 @@ public class Play extends BasicGameState {
 	 * la variable map de type Map.
 	 * @param Map map, la carte à dessiner
 	 * @param Graphics g, nécessaire pour dessiner dans la méthode render
-     * @return -
+    *
 	 */
 	private void drawMap(Map map, Graphics g)
 	{
@@ -190,8 +191,8 @@ public class Play extends BasicGameState {
 	
    /**
     * Cette méthode met à jour la carte du jeu
-    * @param map
-    * @param g
+    * @param Map map, la carte à dessiner
+    * @param Graphics g, nécessaire pour dessiner dans la méthode render
     */
 	private void MiseaJour(Map map, Graphics g)
 	{
@@ -230,7 +231,7 @@ public class Play extends BasicGameState {
 	
 	/***
 	 * Permet d'afficher l'inventaire des joueurs
-	 * @param g, variable Graphics pour le dessin
+	 * @param Graphics g, nécessaire pour dessiner dans la méthode render
 	 * @throws SlickException
 	 */
 	private void drawInventory(Graphics g) throws SlickException
@@ -269,7 +270,7 @@ public class Play extends BasicGameState {
 	
 	/**
 	 * Cette méthode determine la mort d'un joueur
-	 * @param sbg
+	 * @param StateBasedGame sbg, l'état du jeu
 	 */
 	private void testDead(StateBasedGame sbg)
 	{
@@ -294,6 +295,9 @@ public class Play extends BasicGameState {
 
 	/**
 	 * Méthode de Slick: Mis à jour de la fenêtre
+	 * @param Graphics g, nécessaire pour dessiner dans la méthode render
+	 * @GameContainer gc, la fenêtre de Slick
+	 * @throws SlickException
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -459,14 +463,14 @@ public class Play extends BasicGameState {
 							playerList[p.getNumber()].alive = false;
 					}
 				}
-			}
-			//explosion = true;
-			
+			}			
 		}
 	}
 
 	/**
 	 * Méthode de Slick: Mis à jour des données
+	 * @GameContainer gc, la fenêtre de Slick
+	 * @throws SlickException
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -590,15 +594,24 @@ public class Play extends BasicGameState {
 		
 	}
 
+	/**
+    * @return l'état du jeu
+    */
 	@Override
 	public int getID() {
 		return 1;
 	}
 	
+	/**
+    * @return the p1
+    */
 	public Player getP1() {
 	   return p1;
 	}
 	
+	/**
+    * @return the p2
+    */
 	public Player getP2() {
 	   return p2;
 	}
