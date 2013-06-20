@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
  
 /**
- * Cette classe représente une connextion ouverte. Elle est relié à un serveur ou un client
+ * Cette classe représente une connextion ouverte. Cette dernière est reliée à un serveur ou un client
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
@@ -21,7 +21,7 @@ public class Connection implements Runnable {
    private Socket socket;
    private Receiver reciever;
    private Thread thread;
-   
+
    /**
     * Constructeur appelé par le serveur
     * @param socket
@@ -55,7 +55,7 @@ public class Connection implements Runnable {
    }
    
    /**
-    * Cette méthode initialiser les objet pour la gestion des input et output
+    * Cette méthode initialise les objets pour la gestion des inputs et outputs
     */
    private void initialiseOutputInput() {
       try {
@@ -75,7 +75,7 @@ public class Connection implements Runnable {
    }
    
    /**
-    * Cette méthode permet d'envoyer un message (Objet) à traver du réseau
+    * Cette méthode permet d'envoyer un message (Objet) à travers du réseau
     * C'est une méthode du style "notifyAll" de java.util.Observable 
     * @param message
     */
