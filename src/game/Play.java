@@ -281,7 +281,6 @@ public class Play extends BasicGameState {
 			mainMusic.stop();
 			gameOverMusic.loop();
 			sbg.enterState(2);
-			System.out.println("un est mort");
 
 		}
 		if(playerList[p.getNumber()].alive && 

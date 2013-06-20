@@ -49,10 +49,8 @@ public class Server extends NetworkComponent {
    public void run() {
       while (true) {
          try {
-            System.out.println("Waiting for connections");
             Socket socket = serverSocket.accept();
             super.getConnections().add(new Connection(socket, serverRole));
-            System.out.println("Connection accepted");
             
          } catch (IOException e) {
             // TODO Auto-generated catch block
