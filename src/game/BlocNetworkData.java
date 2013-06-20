@@ -3,7 +3,8 @@ package game;
 import java.io.Serializable;
 
 /**
- * 
+ * Cette classe permet de transmettre les données nécessaires de la matrice
+ * qui représente les blocs destructibles et indestructibles 
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze

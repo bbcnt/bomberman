@@ -3,7 +3,7 @@ package game;
 import java.io.Serializable;
 
 /**
- * 
+ * Cette classe permet de transmettre les données nécessaires d'un bonus
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
