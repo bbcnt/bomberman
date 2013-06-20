@@ -1,7 +1,18 @@
 package startMenu;
 
+/**
+ * Ce le contrôler de la fenêtre principale
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Controller {
 
+   /**
+    * Ouvrir la fenêtre principale
+    */
    public Controller() {
       
       Model model = new Model();

@@ -13,7 +13,10 @@ import org.sqlite.SQLiteConfig;
 
 /**
  * Cette classe met à disposition les méthodes qui permettent d'acceder à la base de données.
- *
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
  */
 public class DBAccess {
 	

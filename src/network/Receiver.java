@@ -2,7 +2,10 @@ package network;
 
 /**
  * Interface qui met à disposition une méthode qui reçoit les messages du réseau
- * @author marcel
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
  *
  */
 public interface Receiver {

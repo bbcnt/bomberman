@@ -4,7 +4,10 @@ import startMenu.Controller;
 
 /**
  * C'est la classe principale qui contient la méthode "main".
- * @author marcel
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
  *
  */
 public class Bomberman {

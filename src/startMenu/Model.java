@@ -6,6 +6,14 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 import role.*;
 
+/**
+ * Cette classe contient tous les lien sur les autres composants qui sont nécessaire pour la gestion du jeu
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class Model {
 
    private Role role;

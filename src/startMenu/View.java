@@ -14,12 +14,17 @@ import startMenu.Model.ScreenObservers;
 import startMenu.Model.ServerIpObservers;
 import startMenu.Model.StartObservers;
 
+/**
+ * La vue en SWING qui représente le Model
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
+ *
+ */
 public class View extends JFrame implements Observer {
 	 
 	
-	/**
-    * 
-    */
    private static final long serialVersionUID = 1L;
    private ComboPanel comboPanel = new ComboPanel();
 	private JComboBox<String> comboPanel2 = new JComboBox<String>();
@@ -255,6 +260,9 @@ public class View extends JFrame implements Observer {
 	}
 
    @Override
+   /**
+    * Les différents mis à jour de la vue
+    */
    public void update(Observable obs, Object arg) {
       
       if (obs instanceof ServerIpObservers){
@@ -275,4 +283,3 @@ public class View extends JFrame implements Observer {
    }
 
 }
-

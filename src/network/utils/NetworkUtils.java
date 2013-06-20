@@ -8,7 +8,10 @@ import java.util.Enumeration;
 
 /**
  * Cette classe met à disposition certaine méthodes générales qui concernent la partie réseau
- * @author marcel
+ * @author Julien Bignens
+ * @author Bruno Carvalho
+ * @author Gaëtan Djomnang Yaze
+ * @author Marcel Sinniger
  *
  */
 public class NetworkUtils {
