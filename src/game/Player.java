@@ -59,6 +59,10 @@ public class Player {
     public synchronized void setOrientation(int o) { orientation = o;}
     public synchronized void setAlive(boolean alive) {this.alive = alive;}
     
+    /**
+     * Méthode appelé par le récepteur de données du réseau qui met à jour le joueur
+     * @param networkData
+     */
     public void networkUpdate(PlayerNetworkData networkData) {
        this.setX(networkData.getPosX());
        this.setY(networkData.getPosY());
@@ -67,7 +71,5 @@ public class Player {
        this.setFirePower(networkData.getFirePower());
        this.setOrientation(networkData.getOrientation());
        this.setNumber(networkData.getNumber());
-    }
-
-    
+    }   
 }

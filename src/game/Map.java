@@ -17,9 +17,7 @@ import database.DBAccess;
  */
 
 public class Map {
-	
-	//this.dbAccess = new DBAccess("jdbc:sqlite:Midas.sqlite3");
-	
+		
 	public static final int WIDTH  = 27;
 	public static final int HEIGHT = 19;
 	public static final int ELEMENT_SIZE = 30;

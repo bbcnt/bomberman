@@ -73,8 +73,8 @@ public class Play extends BasicGameState {
 		imagetest = new Image("res/bonus_bomb_amt.png");
 		hero1 = new Image[4];
 		hero2 = new Image[4];
-	    bonusBombAmt =  new Image("res/bonus_bomb_amt.png");
-	    bonusBombRadius = new Image("res/bonus_radius.png");
+	   bonusBombAmt =  new Image("res/bonus_bomb_amt.png");
+	   bonusBombRadius = new Image("res/bonus_radius.png");
 		
 		hero1[0] = new Image("res/hero_down.png");
 		hero1[1] = new Image("res/hero_up.png");
@@ -160,6 +160,9 @@ public class Play extends BasicGameState {
 	    }
 	}
 	
+	/**
+	 * Cette méthode crée les différents bonus de manière aléatoire
+	 */
    private void createBonus()
    {
       Random r = new Random();
@@ -185,6 +188,11 @@ public class Play extends BasicGameState {
       }
    }
 	
+   /**
+    * Cette méthode met à jour la carte du jeu
+    * @param map
+    * @param g
+    */
 	private void MiseaJour(Map map, Graphics g)
 	{
 		for(int i = 0; i < Map.WIDTH; i++)
@@ -259,6 +267,10 @@ public class Play extends BasicGameState {
 		g.drawString(" : " + p2.getFirePower(), 590, 615);
 	}
 	
+	/**
+	 * Cette méthode determine la mort d'un joueur
+	 * @param sbg
+	 */
 	private void testDead(StateBasedGame sbg)
 	{
 		if(!playerList[p.getNumber()].alive && 
@@ -274,7 +286,6 @@ public class Play extends BasicGameState {
 		if(playerList[p.getNumber()].alive && 
 				!playerList[(p.getNumber() + 1) % 2].alive)
 		{
-			//networkAccess.send(new PlayerNetworkData(p));
 			mainMusic.stop();
 			gameWinMusic.loop();
 			sbg.enterState(0);
@@ -592,6 +603,10 @@ public class Play extends BasicGameState {
 	   return p2;
 	}
 
+	/**
+	 * Méthode appelé par le récepteur de données du réseau qui met à jour les bombes
+	 * @param bomb
+	 */
    public void networkUpdate(BombNetworkData bomb) {
      
       Player other = null;
@@ -604,6 +619,10 @@ public class Play extends BasicGameState {
     		  bomb.getX(), bomb.getY())); 
    }
    
+   /**
+    * Méthode appelé par le récepteur de données du réseau qui met à la carte
+    * @param blocNetworkData
+    */
    public void networkUpdate(BlocNetworkData blocNetworkData) {
       int[][] b = blocNetworkData.getBloc();
       for (int i = 0; i < b.length; i++) {
@@ -615,6 +634,10 @@ public class Play extends BasicGameState {
       }
    }
    
+   /**
+    * Méthode appelé par le récepteur de données du réseau qui met à jour les bonus
+    * @param bonusNetworkData
+    */
    public void networkUpdate(BonusNetworkData bonusNetworkData) {
       int[][] b = bonusNetworkData.getBonus();
       for (int i = 0; i < b.length; i++) {
@@ -639,8 +662,4 @@ public class Play extends BasicGameState {
    public int[][] getBonusMatrix() {
       return bonusMatrix;
    }
-   
-   
-
 }
- 
