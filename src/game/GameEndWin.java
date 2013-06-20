@@ -5,7 +5,7 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.state.*;
 
 /**
- * 
+ * Cette classe représente l'état d'avoir gangé => "You Win!"
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze

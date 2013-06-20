@@ -4,7 +4,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 /**
- * Cette classe représente l'état d'avoir perdu
+ * Cette classe représente l'état d'avoir perdu => "Game Over"
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
