@@ -74,10 +74,10 @@ public class View extends JFrame implements Observer {
             if (!model.getRole().getConnected()) {
                ((ClientRole)model.getRole()).connectServer(ipText.getText(), Integer.valueOf(portText.getText()));
                while (!model.getRole().getConnected()) { } // attendre jusqu'à ce que la connexion soit établie.
-               //model.getRole().send("clientConnected");
-               //bouton.setEnabled(false);
-               View.this.setVisible(false);
-               model.StartGame(Game.gameName);
+               model.getRole().send("clientConnected");
+               bouton.setEnabled(false);
+               //View.this.setVisible(false);
+               //model.StartGame(Game.gameName);
             }
          }
 		});
@@ -93,13 +93,13 @@ public class View extends JFrame implements Observer {
          }
 		});
 		buttonServerStart.setPreferredSize(new Dimension(100, 40));
-		//buttonServerStart.setEnabled(false);
-		buttonServerStart.setEnabled(true);
+		buttonServerStart.setEnabled(false);
+		//buttonServerStart.setEnabled(true);
 		buttonServerStart.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-            //((ServerRole)model.getRole()).send("startGame");
-	           View.this.setVisible(false);
+            ((ServerRole)model.getRole()).send("startGame");
+	         View.this.setVisible(false);
 			   model.StartGame(Game.gameName);
 			}
 		});

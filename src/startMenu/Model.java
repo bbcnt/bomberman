@@ -92,21 +92,28 @@ public class Model {
       screenObservers.notifyAllObservers();
    }
 
-   public void StartGame(String gameName) {
-	   AppGameContainer appGc;
-		try{
-		   game = new Game(gameName, role);
-			appGc = new AppGameContainer(game);
-			appGc.setDisplayMode(810, 650, false);
-			appGc.setShowFPS(false);
-			appGc.setMinimumLogicUpdateInterval(150);
-			appGc.setTargetFrameRate(60);
-			appGc.start();
-			
-		}
-		catch(SlickException c){
-			c.printStackTrace();
-		}
+   public void StartGame(final String gameName) {
+	   Runnable gameRunnable = new Runnable() {
+         @Override
+         public void run() {
+            AppGameContainer appGc;
+            try{
+               game = new Game(gameName, role);
+               appGc = new AppGameContainer(game);
+               appGc.setDisplayMode(810, 650, false);
+               appGc.setShowFPS(false);
+               appGc.setMinimumLogicUpdateInterval(150);
+               appGc.setTargetFrameRate(60);
+               appGc.start();
+               
+            }
+            catch(SlickException c){
+               c.printStackTrace();
+            }
+         }
+      };
+      Thread gameThread = new Thread(gameRunnable);
+      gameThread.start();
    }
    
    public Game getGame() {
