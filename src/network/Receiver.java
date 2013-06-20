@@ -1,7 +1,7 @@
 package network;
 
 /**
- * Interface qui met à disposition une méthode qui reçoit les message du réseau
+ * Interface qui met à disposition une méthode qui reçoit les messages du réseau
  * @author marcel
  *
  */

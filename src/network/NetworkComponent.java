@@ -14,12 +14,15 @@ public abstract class NetworkComponent implements Runnable {
 
    LinkedList<Connection> connections;
 
+   /**
+    * Un NetworkComponent contient une liste avec toutes les connexions ouvertes
+    */
    public NetworkComponent() {
       connections = new LinkedList<Connection>();
    }
     
    /**
-    * Permet d'envoyer un message contenant un objet quelconque
+    * Permet d'envoyer un message contenant un objet quelconque à toutes les recepteurs
     * @param message
     */
    public void sendMessage(Object message) {

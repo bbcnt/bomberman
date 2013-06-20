@@ -44,7 +44,7 @@ public class Server extends NetworkComponent {
    }
    
    /**
-    * Cette méthode gère les nouvelles connextion des clients
+    * Cette méthode gère les nouvelles connextions des clients
     */
    public void run() {
       while (true) {
