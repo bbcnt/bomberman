@@ -11,12 +11,17 @@ import java.util.ArrayList;
 
 import org.sqlite.SQLiteConfig;
 
+/**
+ * Cette classe met à disposition les méthodes qui permettent d'acceder à la base de données.
+ *
+ */
 public class DBAccess {
 	
 	static String dataBaseToOpen = "";
 	static int numMap = 1;
 
    /**
+    * Cette méthode static permet de charger une carte depuis de la base de données.
     * @param args
     */
 	public static ArrayList<DBData> getMap(String dbName, int numMapGiven)
@@ -63,5 +68,4 @@ public class DBAccess {
       }
       return map;
    }
-
 }
