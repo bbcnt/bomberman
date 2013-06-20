@@ -18,18 +18,27 @@ public class GameEndWin extends BasicGameState{
 	public GameEndWin(int state){
 		
 	}
+	/**
+    * Méthode de Slick: Initialisation
+    */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) 
 			throws SlickException {
 		gameWin = new Image("res/gameWin.png");
 	}
 
+	/**
+	 * Méthode de Slick: Mis à jour de la fenêtre
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.drawImage(gameWin, 0, 0);
 	}
 
+	/**
+	 * Méthode de Slick: Mis à jour des données
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {

@@ -57,6 +57,9 @@ public class Play extends BasicGameState {
 	   
 	}
 	
+	/**
+	 * Méthode de Slick: Méthode de Slick: Initialisation
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) 
 			throws SlickException {
@@ -278,6 +281,9 @@ public class Play extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Méthode de Slick: Mis à jour de la fenêtre
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -448,6 +454,9 @@ public class Play extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Méthode de Slick: Mis à jour des données
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {

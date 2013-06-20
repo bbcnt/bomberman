@@ -4,7 +4,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 /**
- * 
+ * Cette classe représente l'état d'avoir perdu
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
@@ -17,6 +17,9 @@ public class GameEndLose extends BasicGameState{
 	public GameEndLose(int state){
 		
 	}
+	/**
+	 * Méthode de Slick: Initialisation
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) 
 			throws SlickException {
@@ -25,6 +28,9 @@ public class GameEndLose extends BasicGameState{
 		
 	}
 
+	/**
+	 * Méthode de Slick: Mis à jour de la fenêtre
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -32,6 +38,9 @@ public class GameEndLose extends BasicGameState{
 		g.drawImage(gameLose, 0, 0);
 	}
 
+	/**
+	 * Méthode de Slick: Mis à jour des données
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {

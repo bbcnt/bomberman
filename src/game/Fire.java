@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import org.newdawn.slick.*;
 
 /**
- * 
+ * Cette classe représente le feu après l'explosion de la bombe
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
@@ -38,21 +38,19 @@ public class Fire extends TimerTask {
         this.timer.schedule(this, 3000);
 	}
 	
+	/**
+	 * Cette méthode gère le cycle de vie de l'explosion (la durée du feu)
+	 */
 	public void update()
 	{
 		if(timeLeft < 1)
 			boom = true;
-
 	}
-	
 
-	
 	public int getTimeLeft(){ return timeLeft; }
 	public void setTimeLeft(int t){ timeLeft = t; }
 	public boolean getBoom() { return boom;}
 	public int getRadius() { return radius; }
-	//public boolean[] getDirections() { return directions; }
-	//public void setDirections(boolean[] d) { directions = d; }
 	public int X() { return x; }
 	public int Y() { return y; }
 
@@ -61,6 +59,4 @@ public class Fire extends TimerTask {
 		
 		this.boom = true;
 	}
-
-
 }

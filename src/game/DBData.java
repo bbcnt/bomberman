@@ -1,7 +1,7 @@
 package game;
 
 /**
- * 
+ * Cette classe représente une case de la carte chargée depuis la base de données.
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
@@ -31,6 +31,4 @@ public class DBData {
 	public void setData(int data) {
 		this.data = data;
 	}
-	
-
 }

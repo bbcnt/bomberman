@@ -6,7 +6,7 @@ import org.newdawn.slick.state.*;
 import role.Role;
 
 /**
- * 
+ * Cette méthode démarre une session du jeu
  * @author Julien Bignens
  * @author Bruno Carvalho
  * @author Gaëtan Djomnang Yaze
@@ -32,6 +32,9 @@ public class Game extends StateBasedGame {
 		this.addState(new GameEndLose(gameEndLose));
 		this.addState(new GameEndWin(gameEndWin));
 	}
+	/**
+	 * Méthode de Slick: Initialisation
+	 */
 	public void initStatesList(GameContainer gc) throws SlickException{
 		this.getState(play).init(gc, this);
 		this.getState(gameEndLose).init(gc, this);
