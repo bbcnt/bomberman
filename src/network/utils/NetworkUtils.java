@@ -1,7 +1,6 @@
 package network.utils;
 
 import java.net.Inet4Address;
-import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
@@ -32,8 +31,6 @@ public class NetworkUtils {
    		      Enumeration<InetAddress> addresses = current.getInetAddresses();
    		      InetAddress current_addr = addresses.nextElement();
    		      if (current_addr instanceof Inet4Address)
-   		         ipAddress =  current_addr.getHostAddress();
-   		      else if (current_addr instanceof Inet6Address)
    		         ipAddress =  current_addr.getHostAddress();
    		      if (current_addr.isLoopbackAddress()) continue;
    		    }
