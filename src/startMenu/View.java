@@ -23,7 +23,7 @@ public class View extends JFrame implements Observer {
    private static final long serialVersionUID = 1L;
    private ComboPanel comboPanel = new ComboPanel();
 	private JComboBox<String> comboPanel2 = new JComboBox<String>();
-	private JButton bouton = new JButton("Rejoindre");
+	private JButton buttonClient = new JButton("Rejoindre");
 	private JButton buttonServerCreate = new JButton("Créer");
 	private JButton buttonServerStart = new JButton("Lancer");
 	private JLabel title = new JLabel("BOMBERMAN");
@@ -66,18 +66,16 @@ public class View extends JFrame implements Observer {
 		
 	
 
-		bouton.setPreferredSize(new Dimension(100, 40));
-		bouton.setEnabled(true);
-		bouton.addActionListener(new ActionListener() {
+		buttonClient.setPreferredSize(new Dimension(100, 40));
+		buttonClient.setEnabled(true);
+		buttonClient.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
             if (!model.getRole().getConnected()) {
                ((ClientRole)model.getRole()).connectServer(ipText.getText(), Integer.valueOf(portText.getText()));
                while (!model.getRole().getConnected()) { } // attendre jusqu'à ce que la connexion soit établie.
                model.getRole().send("clientConnected");
-               bouton.setEnabled(false);
-               //View.this.setVisible(false);
-               //model.StartGame(Game.gameName);
+               buttonClient.setEnabled(false);
             }
          }
 		});
@@ -94,7 +92,6 @@ public class View extends JFrame implements Observer {
 		});
 		buttonServerStart.setPreferredSize(new Dimension(100, 40));
 		buttonServerStart.setEnabled(false);
-		//buttonServerStart.setEnabled(true);
 		buttonServerStart.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -104,7 +101,7 @@ public class View extends JFrame implements Observer {
 			}
 		});
 		ImagePanel backPanel = new ImagePanel(filename);
-		backPanel.setLayout(new GridLayout(6, 1));//position du bouton
+		backPanel.setLayout(new GridLayout(6, 1));//position du buttonClient
 	   
 		comboPanel2.addItem("--");
 		comboPanel2.setEditable(true);
@@ -198,7 +195,7 @@ public class View extends JFrame implements Observer {
 						panel[4].remove(portText);
 						panel[4].remove(comboPanel2);
 						
-						panel[3].add(bouton);
+						panel[3].add(buttonClient);
 						panel[4].add(ipServer);
 						panel[4].add(ipText);
 						panel[4].add(portServer);
@@ -216,7 +213,7 @@ public class View extends JFrame implements Observer {
 						panel[3].setVisible(true);
 						panel[4].setVisible(true);
 						
-						panel[3].remove(bouton);
+						panel[3].remove(buttonClient);
 						panel[4].remove(ipServer);
 					    panel[4].remove(ipText);
 						
@@ -237,7 +234,7 @@ public class View extends JFrame implements Observer {
 					if(combo.getSelectedItem().toString() == choices[0]){
 						panel[3].setVisible(false);
 						panel[4].setVisible(false);
-						panel[3].remove(bouton);
+						panel[3].remove(buttonClient);
 						panel[4].remove(ipServer);
 						panel[4].remove(ipText);
 						panel[3].remove(buttonServerCreate);
@@ -266,7 +263,7 @@ public class View extends JFrame implements Observer {
       }
       
       if(obs instanceof ScreenObservers) {
-         bouton.setText((String)arg);
+         buttonClient.setText((String)arg);
          buttonServerCreate.setText((String)arg);
          repaint();
       }

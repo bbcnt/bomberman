@@ -23,14 +23,14 @@ public class ServerRole extends Role {
    }
    
    /**
-    * Cette méthode permet de demarrer le serveur
+    * Cette méthode permet de démarrer le serveur
     * @param port
     */
    public void startServer(Integer port) {
       server = new Server(this);
       server.startServer(port);
       super.setConnected(true);
-      this.getModel().setScreen("demarré");
+      this.getModel().setScreen("Démarré");
    }
    
    /* (non-Javadoc)
