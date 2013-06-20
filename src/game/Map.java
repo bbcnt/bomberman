@@ -2,7 +2,8 @@ package game;
 
 import java.util.ArrayList;
 
-import bomberman.DBAccess;
+import database.DBAccess;
+
 
 /***
  * Classe permettant de construire la carte du jeu.

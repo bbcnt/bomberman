@@ -1,4 +1,4 @@
-package bomberman;
+package database;
 
 import game.DBData;
 
